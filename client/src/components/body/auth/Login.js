@@ -7,8 +7,9 @@ import { useDispatch } from "react-redux";
 
 import { makeStyles } from "@material-ui/core/styles";
 import TextField from "@material-ui/core/TextField";
-import { Typography, Button } from "@material-ui/core";
+import { Typography, Button, Container } from "@material-ui/core";
 import { set } from "mongoose";
+import DefaultLayout from "../../../templates/defaultTheme";
 
 const initialState = {
     email: "",
@@ -23,18 +24,6 @@ const useStyles = makeStyles((theme) => ({
         margin: "auto",
         color: "#444",
         padding: "0 15px",
-    },
-    root: {
-        "& > *": {
-            margin: theme.spacing(1),
-            width: "25ch",
-        },
-    },
-    forgotLink: {
-        paddingLeft: "20px",
-    },
-    loginLink: {
-        paddingLeft: "20px",
     },
 }));
 
@@ -67,7 +56,7 @@ function Login() {
     };
 
     return (
-        <div className="login_page">
+        <Container className="login_page">
             <Typography variant="h3">Welcome to CloudFair</Typography>
             <Typography>Sign in to access your account. Not registered?</Typography>
             <Link to="/register" className={classes.registerLink}>
@@ -80,7 +69,6 @@ function Login() {
                     {/* <TextField id="email" margin="dense" label="Email Address" id="email" name="email" defaultValue={email} onChange={handleChangeInput} />
                     <br />
                     <TextField id="password" margin="dense" name="password" label="Password" type="password" defaultValue={password} onChange={handleChangeInput} /> */}
-
                     <TextField
                         id="email"
                         margin="dense"
@@ -126,7 +114,7 @@ function Login() {
                     </Link>
                 </div>
             </form>
-        </div>
+        </Container>
     );
 }
 

@@ -6,6 +6,7 @@
         "@fontsource/roboto": "^4.4.2",
         "@material-ui/core": "^4.11.4",
         "@material-ui/icons": "^4.11.2",
+        "@microsoft/rush-stack-compiler-3.3": "^0.9.47",
         "@testing-library/jest-dom": "^5.12.0",
         "@testing-library/react": "^11.2.7",
         "@testing-library/user-event": "^12.8.3",
@@ -16,6 +17,7 @@
         "react-router-dom": "^5.2.0",
         "react-scripts": "4.0.3",
         "redux": "^4.1.0",
+        "typescript": "^4.3.2",
         "web-vitals": "^1.1.2"
     },
     "scripts": {

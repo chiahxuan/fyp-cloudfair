@@ -5,10 +5,14 @@ import { useDispatch, useSelector } from "react-redux";
 import { dispatchLogin, fetchUser, dispatchGetUser } from "./redux/actions/authAction";
 
 import Header from "./components/header/Header";
+import Footer from "./components/footer/Footer";
 import Body from "./components/body/Body";
 import axios from "axios";
+import { makeStyles } from "@material-ui/core/styles";
 
-function App() {
+const useStyles = makeStyles(() => ({}));
+
+function DefaultLayout() {
     const dispatch = useDispatch();
     const token = useSelector((state) => state.token);
     const auth = useSelector((state) => state.auth);
@@ -42,9 +46,10 @@ function App() {
             <div className="App">
                 <Header />
                 <Body />
+                <Footer />
             </div>
         </Router>
     );
 }
 
-export default App;
+export default DefaultLayout;
