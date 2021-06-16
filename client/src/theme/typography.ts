@@ -2,7 +2,7 @@ import Breakpoints from "./breakpoint";
 import { TypographyOptions } from "@material-ui/core/styles/createTypography";
 
 const typography: TypographyOptions = {
-    fontFamily: [`"Karla"`, `san-serif`].join(","),
+    // fontFamily: [`"Karla"`, `san-serif`].join(","),
     fontSize: 16,
     /*indicate the page name, only one  each page.*/
     h1: {

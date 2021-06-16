@@ -7,7 +7,7 @@ import { useDispatch } from "react-redux";
 
 import { makeStyles } from "@material-ui/core/styles";
 import TextField from "@material-ui/core/TextField";
-import { Typography, Button } from "@material-ui/core";
+import { Typography, Button, Container } from "@material-ui/core";
 import { set } from "mongoose";
 
 import { showSuccessMsg, showErrMsg } from "../../utils/notification/Notification";
@@ -79,7 +79,7 @@ function Register() {
     };
 
     return (
-        <div className={classes.login_page}>
+        <Container className={classes.login_page}>
             <h2>Register</h2>
             {err && showErrMsg(err)}
             {success && showSuccessMsg(success)}
@@ -161,7 +161,7 @@ function Register() {
                     </Link>
                 </div>
             </form>
-        </div>
+        </Container>
     );
 }
 

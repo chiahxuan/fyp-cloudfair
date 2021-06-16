@@ -1,4 +1,3 @@
-import logo from "./logo.svg";
 import { BrowserRouter as Router } from "react-router-dom";
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
@@ -8,9 +7,8 @@ import Header from "./components/header/Header";
 import Footer from "./components/footer/Footer";
 import Body from "./components/body/Body";
 import axios from "axios";
-import { makeStyles } from "@material-ui/core/styles";
-
-const useStyles = makeStyles(() => ({}));
+import { ThemeProvider } from "@material-ui/core/styles";
+import { theme } from "./theme";
 
 function DefaultLayout() {
     const dispatch = useDispatch();
@@ -43,11 +41,12 @@ function DefaultLayout() {
     }, [token, dispatch]);
     return (
         <Router>
-            <div className="App">
+            <ThemeProvider theme={theme}>
                 <Header />
                 <Body />
                 <Footer />
-            </div>
+            </ThemeProvider>
+            {/* <div className="App"></div> */}
         </Router>
     );
 }

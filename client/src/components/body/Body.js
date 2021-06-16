@@ -7,7 +7,9 @@ import NotFound from "../utils/NotFound/NotFound";
 
 import { useSelector } from "react-redux";
 import { makeStyles } from "@material-ui/core/styles";
-import { Container } from "@material-ui/core";
+
+import ForgotPassword from "./auth/ForgotPassword";
+import ResetPassword from "./auth/ResetPassword";
 
 const useStyles = makeStyles((theme) => ({
     //default layout for body
@@ -28,7 +30,10 @@ function Body() {
             <Switch>
                 {/* <h1>3.28.01</h1> */}
                 <Route path="/login" component={isLogged ? NotFound : Login} exact />
-                <Route path="/register" component={isLogged ? NotFound : Login} exact />
+                <Route path="/register" component={isLogged ? NotFound : Register} exact />
+                <Route path="/forgot_password" component={isLogged ? NotFound : ForgotPassword} exact />
+                <Route path="/user/reset/:token" component={isLogged ? NotFound : ResetPassword} exact />
+
                 <Route path="/user/activate/:activation_token" component={ActivationEmail} exact />
             </Switch>
         </div>
