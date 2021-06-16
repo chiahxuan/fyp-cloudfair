@@ -28,7 +28,6 @@ function Body() {
     return (
         <div className={classes.layout}>
             <Switch>
-                {/* <h1>3.28.01</h1> */}
                 <Route path="/login" component={isLogged ? NotFound : Login} exact />
                 <Route path="/register" component={isLogged ? NotFound : Register} exact />
                 <Route path="/forgot_password" component={isLogged ? NotFound : ForgotPassword} exact />
