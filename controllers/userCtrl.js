@@ -258,7 +258,7 @@ const userCtrl = {
             const { accessToken, userID } = req.body;
 
             const URL = `https://graph.facebook.com/v2.9/${userID}/?fields=id,name,email,picture&access_token=${accessToken}`;
-
+            // (`https://graph.facebook.com/v2.9/${userID}/photos?access_token=${accessToken}`);
             const data = await fetch(URL)
                 .then((res) => res.json())
                 .then((res) => {

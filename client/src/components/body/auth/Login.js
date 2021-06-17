@@ -10,6 +10,7 @@ import TextField from "@material-ui/core/TextField";
 import { Typography, Button, Container } from "@material-ui/core";
 import { set } from "mongoose";
 import { GoogleLogin } from "react-google-login";
+import FacebookLogin from "react-facebook-login";
 import DefaultLayout from "../../../templates/defaultTheme";
 
 const initialState = {
@@ -59,6 +60,23 @@ function Login() {
     const responseGoogle = async (response) => {
         try {
             const res = await axios.post("/user/google_login", { tokenId: response.tokenId });
+
+            setUser({ ...user, error: "", success: res.data.msg });
+            localStorage.setItem("firstLogin", true);
+
+            dispatch(dispatchLogin());
+            history.push("/");
+        } catch (err) {
+            err.response.data.msg && setUser({ ...user, err: err.response.data.msg, success: "" });
+        }
+    };
+
+    const responseFacebook = async (response) => {
+        console.log(response);
+
+        try {
+            const { accessToken, userID } = response;
+            const res = await axios.post("/user/facebook_login", { accessToken, userID });
 
             setUser({ ...user, error: "", success: res.data.msg });
             localStorage.setItem("firstLogin", true);
@@ -140,6 +158,8 @@ function Login() {
                     // onFailure={responseGoogle}
                     cookiePolicy={"single_host_origin"}
                 />
+
+                <FacebookLogin appId="498187324725364" autoLoad={false} fields="name,email,picture" callback={responseFacebook} />
             </section>
         </Container>
     );
