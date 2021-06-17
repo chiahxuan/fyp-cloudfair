@@ -11,6 +11,9 @@ import { makeStyles } from "@material-ui/core/styles";
 import ForgotPassword from "./auth/ForgotPassword";
 import ResetPassword from "./auth/ResetPassword";
 
+import Profile from "../body/profile/Profile";
+import EditUser from "../body/profile/EditUser";
+
 const useStyles = makeStyles((theme) => ({
     //default layout for body
     layout: {
@@ -24,7 +27,7 @@ const useStyles = makeStyles((theme) => ({
 function Body() {
     const classes = useStyles();
     const auth = useSelector((state) => state.auth);
-    const { isLogged } = auth;
+    const { isLogged, isAdmin } = auth;
     return (
         <div className={classes.layout}>
             <Switch>
@@ -34,6 +37,9 @@ function Body() {
                 <Route path="/user/reset/:token" component={isLogged ? NotFound : ResetPassword} exact />
 
                 <Route path="/user/activate/:activation_token" component={ActivationEmail} exact />
+
+                <Route path="/profile" component={isLogged ? Profile : NotFound} exact />
+                <Route path="/edit_user/:id" component={isAdmin ? EditUser : NotFound} exact />
             </Switch>
         </div>
     );
