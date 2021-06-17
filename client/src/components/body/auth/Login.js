@@ -9,6 +9,7 @@ import { makeStyles } from "@material-ui/core/styles";
 import TextField from "@material-ui/core/TextField";
 import { Typography, Button, Container } from "@material-ui/core";
 import { set } from "mongoose";
+import { GoogleLogin } from "react-google-login";
 import DefaultLayout from "../../../templates/defaultTheme";
 
 const initialState = {
@@ -46,6 +47,20 @@ function Login() {
             const res = await axios.post("/user/login", { email, password });
             setUser({ ...user, err: "", success: res.data.msg });
 
+            localStorage.setItem("firstLogin", true);
+
+            dispatch(dispatchLogin());
+            history.push("/");
+        } catch (err) {
+            err.response.data.msg && setUser({ ...user, err: err.response.data.msg, success: "" });
+        }
+    };
+
+    const responseGoogle = async (response) => {
+        try {
+            const res = await axios.post("/user/google_login", { tokenId: response.tokenId });
+
+            setUser({ ...user, error: "", success: res.data.msg });
             localStorage.setItem("firstLogin", true);
 
             dispatch(dispatchLogin());
@@ -114,6 +129,18 @@ function Login() {
                     </Link>
                 </div>
             </form>
+
+            <Typography>Or Login With</Typography>
+
+            <section>
+                <GoogleLogin
+                    clientId="1070492734045-9skeg6djskrb3moo2ibgmg35j33ecsh6.apps.googleusercontent.com"
+                    buttonText="Login with google"
+                    onSuccess={responseGoogle}
+                    // onFailure={responseGoogle}
+                    cookiePolicy={"single_host_origin"}
+                />
+            </section>
         </Container>
     );
 }
