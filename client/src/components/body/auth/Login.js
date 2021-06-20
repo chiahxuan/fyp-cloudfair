@@ -7,7 +7,7 @@ import { useDispatch } from "react-redux";
 
 import { makeStyles } from "@material-ui/core/styles";
 import TextField from "@material-ui/core/TextField";
-import { Typography, Button, Container } from "@material-ui/core";
+import { Typography, Button, Container, Box } from "@material-ui/core";
 import { GoogleLogin } from "react-google-login";
 import FacebookLogin from "react-facebook-login";
 
@@ -24,6 +24,20 @@ const useStyles = makeStyles((theme) => ({
         margin: "auto",
         color: "#444",
         padding: "0 15px",
+    },
+    socialBtn: {
+        "& button": {
+            width: "50%",
+            alignItems: "center",
+            fontSize: 14,
+            height: 40,
+            padding: 0,
+        },
+        "& span": {
+            width: "100%",
+            height: 40,
+            alignItems: "center",
+        },
     },
 }));
 
@@ -87,14 +101,21 @@ function Login() {
     };
 
     return (
-        <Container className="login_page">
-            <Typography variant="h3">Welcome to CloudFair</Typography>
-            <Typography>Sign in to access your account. Not registered?</Typography>
-            <Link to="/register" className={classes.registerLink}>
-                Create an account
-            </Link>
+        <Container className="login_page" maxWidth="sm">
+            <br />
+            <Typography variant="h1" align="center">
+                Welcome to CloudFair
+            </Typography>
+            <Typography align="center">
+                Sign in to access your account. Not registered?{" "}
+                <Link to="/register" className={classes.registerLink}>
+                    Create an account
+                </Link>
+            </Typography>
+            <br />
             {err && showErrMsg(err)}
             {success && showSuccessMsg(success)}
+
             <form onSubmit={handleSubmit}>
                 <div>
                     {/* <TextField id="email" margin="dense" label="Email Address" id="email" name="email" defaultValue={email} onChange={handleChangeInput} />
@@ -134,30 +155,36 @@ function Login() {
                     />
                 </div>
 
-                <div>
-                    {/* <button type="submit">Login</button> */}
+                <Box align="center" component="section">
+                    {/* <button type="submit">Login</button> */}{" "}
+                    <Link to="/forgot_password" className={classes.forgotLink}>
+                        Forgot your password?
+                    </Link>
+                    <br />
                     <br />
                     <Button type="submit" variant="contained" color="secondary">
                         Login
                     </Button>
-                    <Link to="/forgot_password" className={classes.forgotLink}>
-                        Forgot your password?
-                    </Link>
-                </div>
+                </Box>
             </form>
+            <br />
+            <hr />
+            <br />
 
-            <Typography>Or Login With</Typography>
+            <Typography align="center">Or Login With</Typography>
+            <br />
 
-            <section>
+            <Box align="center" component="section" className={classes.socialBtn}>
+                <FacebookLogin appId="498187324725364" autoLoad={false} fields="name,email,picture" callback={responseFacebook} buttonSize="small" />
+                <br />
+                <br />
                 <GoogleLogin
                     clientId="1070492734045-9skeg6djskrb3moo2ibgmg35j33ecsh6.apps.googleusercontent.com"
                     buttonText="Login with google"
                     onSuccess={responseGoogle}
                     cookiePolicy={"single_host_origin"}
                 />
-
-                <FacebookLogin appId="498187324725364" autoLoad={false} fields="name,email,picture" callback={responseFacebook} />
-            </section>
+            </Box>
         </Container>
     );
 }

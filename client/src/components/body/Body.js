@@ -21,7 +21,7 @@ const useStyles = makeStyles((theme) => ({
         minHeight: "800px",
         // maxWidth: "1200px",
         margin: "4em auto",
-        backgroundColor: "#f6f6f6",
+        // backgroundColor: "#f6f6f6",
     },
 }));
 

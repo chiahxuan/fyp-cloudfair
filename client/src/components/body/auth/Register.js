@@ -4,7 +4,7 @@ import axios from "axios";
 
 import { makeStyles } from "@material-ui/core/styles";
 import TextField from "@material-ui/core/TextField";
-import { Button, Container } from "@material-ui/core";
+import { Button, Container, Typography } from "@material-ui/core";
 
 import { showSuccessMsg, showErrMsg } from "../../utils/notification/Notification";
 import { isEmpty, isEmail, isLength, isMatch } from "../../utils/validation/Validation";
@@ -75,8 +75,12 @@ function Register() {
     };
 
     return (
-        <Container className={classes.login_page}>
-            <h2>Register</h2>
+        <Container maxWidth="sm">
+            <br />
+            <Typography variant="h1" align="center">
+                Register
+            </Typography>
+            <br />
             {err && showErrMsg(err)}
             {success && showSuccessMsg(success)}
             <form onSubmit={handleSubmit}>
