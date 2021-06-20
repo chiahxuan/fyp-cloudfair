@@ -4,7 +4,7 @@
     "description": "",
     "main": "server.js",
     "scripts": {
-        "dev": "nodemon server.js"
+        "dev": "nodemon .js"
     },
     "keywords": [],
     "author": "",
@@ -13,6 +13,7 @@
         "@microsoft/rush-stack-compiler-3.3": "^0.9.47",
         "bcrypt": "^5.0.1",
         "cloudinary": "^1.26.0",
+        "clsx": "^1.1.1",
         "cookie-parser": "^1.4.5",
         "cors": "^2.8.5",
         "dotenv": "^10.0.0",

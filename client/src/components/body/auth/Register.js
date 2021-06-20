@@ -2,13 +2,9 @@ import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import axios from "axios";
 
-import { dispatchLogin } from "../../../redux/actions/authAction";
-import { useDispatch } from "react-redux";
-
 import { makeStyles } from "@material-ui/core/styles";
 import TextField from "@material-ui/core/TextField";
-import { Typography, Button, Container } from "@material-ui/core";
-import { set } from "mongoose";
+import { Button, Container } from "@material-ui/core";
 
 import { showSuccessMsg, showErrMsg } from "../../utils/notification/Notification";
 import { isEmpty, isEmail, isLength, isMatch } from "../../utils/validation/Validation";

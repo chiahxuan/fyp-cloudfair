@@ -8,10 +8,8 @@ import { useDispatch } from "react-redux";
 import { makeStyles } from "@material-ui/core/styles";
 import TextField from "@material-ui/core/TextField";
 import { Typography, Button, Container } from "@material-ui/core";
-import { set } from "mongoose";
 import { GoogleLogin } from "react-google-login";
 import FacebookLogin from "react-facebook-login";
-import DefaultLayout from "../../../templates/defaultTheme";
 
 const initialState = {
     email: "",
@@ -155,7 +153,6 @@ function Login() {
                     clientId="1070492734045-9skeg6djskrb3moo2ibgmg35j33ecsh6.apps.googleusercontent.com"
                     buttonText="Login with google"
                     onSuccess={responseGoogle}
-                    // onFailure={responseGoogle}
                     cookiePolicy={"single_host_origin"}
                 />
 

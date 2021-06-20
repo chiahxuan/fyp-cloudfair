@@ -42,9 +42,7 @@ function DefaultLayout() {
     return (
         <Router>
             <ThemeProvider theme={theme}>
-                <Header />
                 <Body />
-                <Footer />
             </ThemeProvider>
             {/* <div className="App"></div> */}
         </Router>

@@ -13,13 +13,14 @@ import ResetPassword from "./auth/ResetPassword";
 
 import Profile from "../body/profile/Profile";
 import EditUser from "../body/profile/EditUser";
+import Header from "../header/Header";
 
 const useStyles = makeStyles((theme) => ({
     //default layout for body
     layout: {
-        // minHeight: "800px",
+        minHeight: "800px",
         // maxWidth: "1200px",
-        // margin: "20px auto",
+        margin: "4em auto",
         backgroundColor: "#f6f6f6",
     },
 }));
@@ -30,6 +31,7 @@ function Body() {
     const { isLogged, isAdmin } = auth;
     return (
         <div className={classes.layout}>
+            <Header />
             <Switch>
                 <Route path="/login" component={isLogged ? NotFound : Login} exact />
                 <Route path="/register" component={isLogged ? NotFound : Register} exact />
