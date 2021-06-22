@@ -7,7 +7,7 @@ import { createMuiTheme } from "@material-ui/core/styles";
 
 export const theme = createMuiTheme({
     spacing,
-    // palette, //palette messed with with default UI, check LATER
+    palette, //palette messed with with default UI, check LATER
     props,
     typography,
     overrides,
