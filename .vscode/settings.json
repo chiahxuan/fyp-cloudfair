@@ -1,4 +1,10 @@
 {
-    "git.ignoreLimitWarning": true
+    "git.ignoreLimitWarning": true,
+    "cSpell.words": [
+        "Infor",
+        "cloudinary",
+        "fileupload",
+        "refreshtoken"
+    ]
     // "git.ignoreLimitWarning": true
 }

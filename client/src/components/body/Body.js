@@ -42,6 +42,10 @@ function Body() {
 
                 <Route path="/profile" component={isLogged ? Profile : NotFound} exact />
                 <Route path="/edit_user/:id" component={isAdmin ? EditUser : NotFound} exact />
+
+                {/* ORGANIZATION ROUTES */}
+                {/* <Route path="/organization/new"  component={isLogged ? Profile : NotFound} exact/> */}
+
             </Switch>
         </div>
     );
