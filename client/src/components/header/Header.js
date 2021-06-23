@@ -7,7 +7,7 @@ import "@fontsource/roboto";
 import { Link } from "react-router-dom";
 import { withRouter } from "react-router-dom";
 import { makeStyles, useTheme, withStyles } from "@material-ui/core/styles";
-import { AppBar, Toolbar, Typography, Button, Menu, MenuItem, List, ListItem, ListItemText, ListItemIcon, CssBaseline, Drawer, Divider } from "@material-ui/core";
+import { AppBar, Avatar, Toolbar, Typography, Button, Menu, MenuItem, List, ListItem, ListItemText, ListItemIcon, CssBaseline, Drawer, Divider } from "@material-ui/core";
 
 import IconButton from "@material-ui/core/IconButton";
 import MenuIcon from "@material-ui/icons/Menu";
@@ -127,6 +127,9 @@ const useStyles = makeStyles((theme) => ({
     profileName: {
         textDecoration: "none",
     },
+    userName: {
+        marginLeft: 8,
+    },
 }));
 
 const StyledMenu = withStyles({
@@ -200,7 +203,8 @@ function Header() {
         return (
             <div>
                 <Button aria-controls="userMenu" aria-haspopup="true" onClick={handleClick} className={classes.toolBarBtn}>
-                    {user.name}
+                    <Avatar alt="Remy Sharp" src={user.avatar} className={classes.large} />
+                    <Typography className={classes.userName}> {user.name}</Typography>
                 </Button>
                 <StyledMenu id="userMenu" anchorEl={anchorEl} keepMounted open={Boolean(anchorEl)} onClose={handleClose}>
                     <Link to="/" className={classes.menuItemLink}>
