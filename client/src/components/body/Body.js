@@ -37,15 +37,11 @@ function Body() {
                 <Route path="/register" component={isLogged ? NotFound : Register} exact />
                 <Route path="/forgot_password" component={isLogged ? NotFound : ForgotPassword} exact />
                 <Route path="/user/reset/:token" component={isLogged ? NotFound : ResetPassword} exact />
-
                 <Route path="/user/activate/:activation_token" component={ActivationEmail} exact />
-
                 <Route path="/profile" component={isLogged ? Profile : NotFound} exact />
                 <Route path="/edit_user/:id" component={isAdmin ? EditUser : NotFound} exact />
-
                 {/* ORGANIZATION ROUTES */}
-                {/* <Route path="/organization/new"  component={isLogged ? Profile : NotFound} exact/> */}
-
+                <Route path="/organization/new" component={isLogged ? Profile : NotFound} exact />s
             </Switch>
         </div>
     );

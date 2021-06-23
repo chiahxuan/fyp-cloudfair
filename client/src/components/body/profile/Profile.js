@@ -165,7 +165,6 @@ function Profile() {
                             shrink: true,
                         }}
                         variant="outlined"
-                        defaultValue={user.name}
                         onChange={handleChange}
                     />
 
