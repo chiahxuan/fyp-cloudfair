@@ -37,7 +37,7 @@ const organizationCtrl = {
         }
     },
 
-    editOrg: 
+    editOrg: {},
 };
 
 function validateEmail(email) {
