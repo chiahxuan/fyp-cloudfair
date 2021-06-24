@@ -3,7 +3,7 @@ const orgCtrl = require("../controllers/orgCtrl");
 const auth = require("../middleware/auth");
 const authAdmin = require("../middleware/authAdmin");
 
-router.get("/new", orgCtrl.createOrg);
+router.post("/new", orgCtrl.createOrg);
 
 // router.post("/organization/events/overview", organizationCtrl.create);
 // router.post("/organization/events/new", organizationCtrl.create);

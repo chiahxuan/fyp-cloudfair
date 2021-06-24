@@ -14,7 +14,7 @@ import ResetPassword from "./auth/ResetPassword";
 import Profile from "../body/profile/Profile";
 import EditUser from "../body/profile/EditUser";
 import Header from "../header/Header";
-
+import CreateOrg from "../body/organization/CreateOrg";
 const useStyles = makeStyles((theme) => ({
     //default layout for body
     layout: {
@@ -41,7 +41,7 @@ function Body() {
                 <Route path="/profile" component={isLogged ? Profile : NotFound} exact />
                 <Route path="/edit_user/:id" component={isAdmin ? EditUser : NotFound} exact />
                 {/* ORGANIZATION ROUTES */}
-                <Route path="/organization/new" component={isLogged ? Profile : NotFound} exact />s
+                <Route path="/organization/new" component={isLogged ? CreateOrg : NotFound} exact />s
             </Switch>
         </div>
     );

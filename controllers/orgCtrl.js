@@ -23,7 +23,7 @@ const organizationCtrl = {
                 organizationName: orgName,
                 organizationEmail: orgEmail,
                 organizationAbout: orgAbout,
-                organizationCreatorId: "userID",
+                organizationCreatorId: LoggedUserId,
             });
 
             //Save userId for creatorId
@@ -31,7 +31,7 @@ const organizationCtrl = {
             res.json;
 
             // console.log(req.body)
-            res.json({ msg: "Organization has been created " + user });
+            res.json({ msg: "Organization has been created " });
         } catch (err) {
             return res.status(500).json({ msg: err.message });
         }
