@@ -1,7 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 
-import Typography from "@material-ui/core/Typography";
+import { Typography, Container } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 
 const useStyles = makeStyles((theme) => ({
@@ -15,14 +15,19 @@ function NotFound() {
     const classes = useStyles();
 
     return (
-        <div>
-            <Typography variant="h2">404 || Not Found</Typography>
-            <Typography>Sorry, looks like the page can not be found. </Typography>
+        <Container>
+            <br />
+            <br />
 
+            <Typography variant="h1">404 || Not Found</Typography>
+            <br />
+            <br />
+
+            <Typography>Sorry, looks like the page can not be found. </Typography>
             <Link to="/" className={classes.menuItemLink}>
                 <Typography>Back to the homepage. </Typography>
             </Link>
-        </div>
+        </Container>
     );
 }
 

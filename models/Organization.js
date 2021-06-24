@@ -19,21 +19,21 @@ const organizationSchema = new mongoose.Schema(
             required: [true, "Please enter your organization description!"],
             trim: true,
         },
-        organizationCreatorId: { // need to consider this attribute
+        organizationCreatorId: {
+            // need to consider this attribute
             type: String,
             required: true,
             trim: true,
-            // default: 
+            unique: true,
+            // default:
         },
         organizationAvatar: {
             type: String,
-            default:
-                "https://res.cloudinary.com/cloudfair/image/upload/v1624369488/organization/orgAvatar/organization_default.png",
+            default: "https://res.cloudinary.com/cloudfair/image/upload/v1624369488/organization/orgAvatar/organization_default.png",
         },
         organizationBackground: {
             type: String,
-            default:
-                "https://res.cloudinary.com/cloudfair/image/upload/v1624370050/organization/orgBackground/default_background.jpg",
+            default: "https://res.cloudinary.com/cloudfair/image/upload/v1624370050/organization/orgBackground/default_background.jpg",
         },
     },
     {

@@ -37,6 +37,17 @@ const organizationCtrl = {
         }
     },
 
+    viewOrg: async (req, res) => {
+        try {
+            const user = await Users.findById(req.user.id).select("-password");
+            const organization = await Organizations.find({ organizationCreatorId: user._id });
+
+            // const user = await Users.findById(req.user.id).select("-password");
+            res.json(organization);
+        } catch (err) {
+            return res.status(500).json({ msg: err.message });
+        }
+    },
     editOrg: {},
 };
 

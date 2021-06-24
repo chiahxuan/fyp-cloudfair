@@ -4,8 +4,8 @@ const auth = require("../middleware/auth");
 const authAdmin = require("../middleware/authAdmin");
 
 router.post("/new", orgCtrl.createOrg);
+router.get("/overview", auth, orgCtrl.viewOrg);
 
-// router.post("/organization/events/overview", organizationCtrl.create);
 // router.post("/organization/events/new", organizationCtrl.create);
 // router.post("/organization/events/attendees", organizationCtrl.create);
 // router.post("/organization/events/profiles", organizationCtrl.create);
