@@ -33,6 +33,7 @@ function Profile() {
 
     const dispatch = useDispatch();
 
+    //retrieve logged in user information
     useEffect(() => {
         if (isAdmin) {
             fetchAllUsers(token).then((res) => {
