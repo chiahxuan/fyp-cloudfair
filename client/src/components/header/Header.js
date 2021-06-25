@@ -316,21 +316,21 @@ function Header() {
             link: "/",
         },
         {
-            text: "Account",
+            text: "Profile",
             icon: <AccountCircleIcon fontSize="small" />,
-            link: "/account",
+            link: "/profile",
         },
         {
-            text: "Profile",
+            text: "Event",
             icon: <ChevronRightIcon fontSize="small" />,
-            link: "/profile",
+            link: "/event",
         },
     ];
     const itemsList2 = [
         {
             text: "Organization",
             icon: <GroupIcon fontSize="small" />,
-            link: "/organization",
+            link: "/organization/overview",
         },
     ];
 

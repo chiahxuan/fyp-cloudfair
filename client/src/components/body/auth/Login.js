@@ -11,6 +11,7 @@ import { Typography, Button, Container, Box } from "@material-ui/core";
 import { GoogleLogin } from "react-google-login";
 import FacebookLogin from "react-facebook-login";
 
+// DECLARING INITIAL STATE
 const initialState = {
     email: "",
     password: "",
@@ -18,6 +19,7 @@ const initialState = {
     success: "",
 };
 
+// COMPONENT STYLING
 const useStyles = makeStyles((theme) => ({
     login_page: {
         maxWidth: "500px",
@@ -61,7 +63,6 @@ function Login() {
             setUser({ ...user, err: "", success: res.data.msg });
 
             localStorage.setItem("firstLogin", true);
-
             dispatch(dispatchLogin());
             history.push("/");
         } catch (err) {
@@ -118,9 +119,6 @@ function Login() {
 
             <form onSubmit={handleSubmit}>
                 <div>
-                    {/* <TextField id="email" margin="dense" label="Email Address" id="email" name="email" defaultValue={email} onChange={handleChangeInput} />
-                    <br />
-                    <TextField id="password" margin="dense" name="password" label="Password" type="password" defaultValue={password} onChange={handleChangeInput} /> */}
                     <TextField
                         id="email"
                         margin="dense"
@@ -154,9 +152,7 @@ function Login() {
                         variant="outlined"
                     />
                 </div>
-
                 <Box align="center" component="section">
-                    {/* <button type="submit">Login</button> */}{" "}
                     <Link to="/forgot_password" className={classes.forgotLink}>
                         Forgot your password?
                     </Link>
@@ -170,10 +166,8 @@ function Login() {
             <br />
             <hr />
             <br />
-
             <Typography align="center">Or Login With</Typography>
             <br />
-
             <Box align="center" component="section" className={classes.socialBtn}>
                 <FacebookLogin appId="498187324725364" autoLoad={false} fields="name,email,picture" callback={responseFacebook} buttonSize="small" />
                 <br />

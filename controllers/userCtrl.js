@@ -18,7 +18,7 @@ const userCtrl = {
 
             if (!name || !email || !password) return res.status(400).json({ msg: "Please fill in all fields." });
 
-            if (!validateEmail(email)) return res.status(400).json({ msg: "Invalid emails." });
+            if (!validateEmail(email)) return res.status(400).json({ msg: "Invalid email." });
 
             const user = await Users.findOne({ email });
             if (user) return res.status(400).json({ msg: "This email already exists." });

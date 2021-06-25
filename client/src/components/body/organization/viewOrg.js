@@ -1,8 +1,11 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
+import { Link } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { showSuccessMsg, showErrMsg } from "../../utils/notification/Notification";
 import { fetchAllUsers, dispatchGetAllUsers } from "../../../redux/actions/usersAction";
+import { dispatchGetOrganization, fetchOrganization } from "../../../redux/actions/organizationAction";
+import { dispatchLogin, fetchUser, dispatchGetUser } from "../../../redux/actions/authAction";
 
 import { Typography, Button, Container, TextField, Card, CardContent } from "@material-ui/core";
 import CFcard from "../../components/CFcard";
@@ -17,94 +20,87 @@ const initialState = {
 };
 
 function CreateOrg() {
-    const auth = useSelector((state) => state.auth);
-    const token = useSelector((state) => state.token);
-
-    const { user, isAdmin } = auth;
-    const [data, setData] = useState(initialState);
-    // const { name, password, cf_password, err, success } = data;
-    const { orgName, orgEmail, orgAbout, err, success, LoggedUserId } = data;
-
-    // const [avatar, setAvatar] = useState(false);
-    // const [loading, setLoading] = useState(false);
-    const [callback, setCallback] = useState(false);
-
     const dispatch = useDispatch();
+    const token = useSelector((state) => state.token);
+    const auth = useSelector((state) => state.auth);
+    const organization = useSelector((state) => state.organization);
+    const { id, organizationName } = organization;
+    const { user, isAdmin } = auth;
 
+    // ASSIGN ORGANIZATION DATA TO VARIABLE
+    const organizationData = organization.organization;
+    //check console.log for structure
+    // console.log(organizationData);
+
+    // DISPATCH DATA FROM res.data, update the state of organization
+    // organization contains all organization information.
     useEffect(() => {
-        if (isAdmin) {
-            fetchAllUsers(token).then((res) => {
-                dispatch(dispatchGetAllUsers(res));
-            });
+        if (token) {
+            const getOrganization = () => {
+                return fetchOrganization(token).then((res) => {
+                    dispatch(dispatchGetOrganization(res));
+                });
+            };
+            getOrganization();
         }
-    }, [token, isAdmin, dispatch, callback]);
+    }, [token, dispatch]);
 
-    const handleChange = (e) => {
-        const { name, value } = e.target;
-        setData({ ...data, [name]: value, err: "", success: "" });
-    };
+    // useEffect(() => {
+    //     if (token) {
+    //         const getUser = () => {
+    //             dispatch(dispatchLogin());
+
+    //             return fetchUser(token).then((res) => {
+    //                 dispatch(dispatchGetOrganization(res));
+    //             });
+    //         };
+    //         getUser();
+    //     }
+    // }, [token, dispatch]);
+
+    // const [data, setData] = useState(initialState);
+    // // const { name, password, cf_password, err, success } = data;
+    // const { orgName, orgEmail, orgAbout, err, success, LoggedUserId } = data;
+    // // const dispatchOrg = useDispatch();
+    // const [callback, setCallback] = useState(false);
+
+    // const dispatch = useDispatch();
+
+    // useEffect(() => {
+    //     if (isAdmin) {
+    //         fetchAllUsers(token).then((res) => {
+    //             dispatch(dispatchGetAllUsers(res));
+    //         });
+    //     }
+    // }, [token, isAdmin, dispatch, callback]);
+
+    // const handleChange = (e) => {
+    //     const { name, value } = e.target;
+    //     setData({ ...data, [name]: value, err: "", success: "" });
+    // };
 
     return (
         <Container maxWidth="md">
             <CFcard>
                 <br />
                 <Typography variant="h2">Organization Profile</Typography>
-                <br />
-                <TextField
-                    id="orgName"
-                    margin="dense"
-                    label="Organization Name"
-                    name="orgName"
-                    value={orgName}
-                    onChange={handleChange}
-                    placeholder="Organization Name"
-                    required
-                    fullWidth
-                    InputLabelProps={{
-                        shrink: true,
-                    }}
-                    variant="outlined"
-                />
-                <br />
+                <Typography variant="h2">Organization Name here: {organizationData.organizationName}</Typography>
                 <br />
 
-                <TextField
-                    id="orgEmail"
-                    name="orgEmail"
-                    value={orgEmail}
-                    margin="dense"
-                    label="Organization Email"
-                    onChange={handleChange}
-                    placeholder="Organization Email"
-                    required
-                    fullWidth
-                    InputLabelProps={{
-                        shrink: true,
-                    }}
-                    variant="outlined"
-                />
-                <br />
-                <br />
+                <Button component={Link} to="/organization/edit">
+                    Edit Organization
+                </Button>
 
-                <TextField
-                    id="orgAbout"
-                    name="orgAbout"
-                    value={orgAbout}
-                    margin="dense"
-                    label="Organization About"
-                    onChange={handleChange}
-                    placeholder="Organization About"
-                    required
-                    fullWidth
-                    InputLabelProps={{
-                        shrink: true,
-                    }}
-                    variant="outlined"
-                    multiline
-                    rows={3}
-                    rowsMax={4}
-                />
-                <br />
+                <div>
+                    Your upcoming events{" "}
+                    <Button component={Link} to="/addEvent">
+                        Add Event
+                    </Button>
+                </div>
+
+                <Button component={Link} to="/organization/team">
+                    Teams
+                </Button>
             </CFcard>
         </Container>
     );

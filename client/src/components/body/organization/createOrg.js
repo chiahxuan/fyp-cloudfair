@@ -60,6 +60,7 @@ function CreateOrg() {
                     headers: { Authorization: token },
                 }
             );
+            localStorage.setItem("orgCreated", true);
             // setData({ ...data, err: "", success: "Create Success!" });
             setData({ ...user, err: "", success: res.data.msg });
         } catch (err) {

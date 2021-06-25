@@ -15,6 +15,7 @@ function DefaultLayout() {
     const token = useSelector((state) => state.token);
     const auth = useSelector((state) => state.auth);
 
+    //change state to isLogged
     useEffect(() => {
         const firstLogin = localStorage.getItem("firstLogin");
         if (firstLogin) {
@@ -27,6 +28,7 @@ function DefaultLayout() {
         }
     }, [auth.isLogged, dispatch]);
 
+    //dispatch
     useEffect(() => {
         if (token) {
             const getUser = () => {
