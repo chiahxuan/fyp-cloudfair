@@ -1,22 +1,27 @@
 import React from "react";
 import { Switch, Route } from "react-router-dom";
-import Login from "./auth/Login";
-import Register from "./auth/Register";
-import ActivationEmail from "./auth/ActivationEmail";
+
 import NotFound from "../utils/NotFound/NotFound";
 
+//COMPONENTS IMPORT
+import Header from "../header/Header";
 import { useSelector } from "react-redux";
 import { makeStyles } from "@material-ui/core/styles";
 
-import ForgotPassword from "./auth/ForgotPassword";
-import ResetPassword from "./auth/ResetPassword";
-
+//USER IMPORTS
+import Login from "./auth/Login";
+import Register from "./auth/Register";
+import ActivationEmail from "./auth/ActivationEmail";
 import Profile from "../body/profile/Profile";
 import EditUser from "../body/profile/EditUser";
-import Header from "../header/Header";
-
+import ForgotPassword from "./auth/ForgotPassword";
+import ResetPassword from "./auth/ResetPassword";
+//ORGANIZATION IMPROTS
 import CreateOrg from "../body/organization/CreateOrg";
 import ViewOrg from "./organization/ViewOrg";
+
+//EVENT IMPORTS
+import AddEvent from "./event/AddEvent";
 
 const useStyles = makeStyles((theme) => ({
     //default layout for body
@@ -46,6 +51,9 @@ function Body() {
                 {/* ORGANIZATION ROUTES */}
                 <Route path="/organization/new" component={isLogged ? CreateOrg : NotFound} exact />
                 <Route path="/organization/overview" component={isLogged ? ViewOrg : NotFound} exact />
+
+                {/* EVENT ROUTES */}
+                <Route path="/event/add_event" component={isLogged ? AddEvent : NotFound} exact />
             </Switch>
         </div>
     );

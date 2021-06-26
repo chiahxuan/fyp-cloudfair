@@ -18,3 +18,18 @@ export const isMatch = (password, cf_password) => {
     if (password === cf_password) return true;
     return false;
 };
+
+export const isValidString = (string) => {
+    if (string.length < 3 || string.length > 50) return true;
+    return false;
+};
+
+export const isValidDescription = (string) => {
+    if (string.length < 3 || string.length > 2000) return true;
+    return false;
+};
+
+export const isValidDateTime = (startDateTime, endDateTime) => {
+    if (Date.parse(endDateTime) <= Date.parse(startDateTime)) return true;
+    return false;
+};

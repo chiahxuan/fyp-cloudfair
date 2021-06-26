@@ -128,7 +128,7 @@ function CreateOrg() {
                         />
                     </form>
                     <br />
-                    <Button type="submit" variant="contained" color="primary" onClick={createNewOrg}>
+                    <Button type="submit" variant="contained" onClick={createNewOrg}>
                         Create
                     </Button>
                 </CardContent>

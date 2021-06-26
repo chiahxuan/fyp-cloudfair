@@ -93,7 +93,7 @@ function CreateOrg() {
 
                 <div>
                     Your upcoming events{" "}
-                    <Button component={Link} to="/addEvent">
+                    <Button component={Link} to="/event/add_event">
                         Add Event
                     </Button>
                 </div>
