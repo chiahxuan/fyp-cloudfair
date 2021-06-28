@@ -7,17 +7,17 @@ import { isEmpty, isLength, isValidDescription, isValidString, isValidDateTime }
 import { fetchAllEventsByUserId, dispatchGetAllUserEvents } from "../../../redux/actions/eventAction";
 
 import { makeStyles } from "@material-ui/core/styles";
-import { Typography, Button, Container, TextField, Card, CardContent } from "@material-ui/core";
+import { Typography, Button, Container, TextField, Card, CardContent, Grid } from "@material-ui/core";
 import CFcard from "../../components/CFcard";
+import EventCard from "../../components/eventCard";
 
 function AllEvents() {
     const auth = useSelector((state) => state.auth);
     const token = useSelector((state) => state.token);
     const events = useSelector((state) => state.eventReducer.events);
 
-    const [avatar, setAvatar] = useState(false);
-    const [loading, setLoading] = useState(false);
-    const [callback, setCallback] = useState(false);
+    // const [avatar, setAvatar] = useState(false);
+    // const [loading, setLoading] = useState(false);
 
     const dispatch = useDispatch();
     events.map((i) => {
@@ -29,7 +29,7 @@ function AllEvents() {
         fetchAllEventsByUserId(token).then((res) => {
             dispatch(dispatchGetAllUserEvents(res));
         });
-    }, [token, dispatch, callback]);
+    });
 
     // console.log(events); // ABLE TO ACCESS TO ALL EVENTS DATA
     // console.log(events[0]);
@@ -37,12 +37,26 @@ function AllEvents() {
         <Container>
             <CFcard>
                 <Typography variant="h2" align="center">
-                    All User's Events
+                    Hi {auth.user.name}, here are your events
                 </Typography>
-                <Typography>Loop Evnets Here</Typography>
-                {events.map((event) => (
-                    <div>{event.ename}</div> // yes
-                ))}
+                <br />
+                <br />
+                <Grid container spacing={4} justify="space-between">
+                    {events.map((event) => (
+                        <Grid item>
+                            {/* <div>{event.ename}</div>
+                            <div>{event.description}</div>
+                            <div>{event.startDate}</div>
+                            <div>{event.endDate}</div>
+                            <div>{event.organization}</div>
+                            <br /> */}
+                            {/* <img src={event.eBackground}></img> */}
+
+                            {/** test event card here*/}
+                            <EventCard event={event} />
+                        </Grid>
+                    ))}
+                </Grid>
             </CFcard>
         </Container>
     );

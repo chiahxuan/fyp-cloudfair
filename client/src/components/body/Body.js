@@ -28,10 +28,13 @@ import AllEvents from "./event/AllEvents";
 const useStyles = makeStyles((theme) => ({
     //default layout for body
     layout: {
-        minHeight: "800px",
+        minHeight: "1200px",
         // maxWidth: "1200px",
-        margin: "4em auto",
-        // backgroundColor: "#f6f6f6",
+        margin: "4em auto 0 auto",
+        // backgroundColor: "linear-gradient(#1359da, #142e4e)",
+        // backgroundColor: "linear-gradient(to right, #1359da, #142e4e)",
+        // background: "linear-gradient(45deg, #FE6B8B 30%, #FF8E53 90%)",
+        background: "linear-gradient(45deg, #fff 30%, #a0d3f4 90%)",
     },
 }));
 
