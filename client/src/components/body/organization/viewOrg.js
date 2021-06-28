@@ -45,40 +45,6 @@ function CreateOrg() {
         }
     }, [token, dispatch]);
 
-    // useEffect(() => {
-    //     if (token) {
-    //         const getUser = () => {
-    //             dispatch(dispatchLogin());
-
-    //             return fetchUser(token).then((res) => {
-    //                 dispatch(dispatchGetOrganization(res));
-    //             });
-    //         };
-    //         getUser();
-    //     }
-    // }, [token, dispatch]);
-
-    // const [data, setData] = useState(initialState);
-    // // const { name, password, cf_password, err, success } = data;
-    // const { orgName, orgEmail, orgAbout, err, success, LoggedUserId } = data;
-    // // const dispatchOrg = useDispatch();
-    // const [callback, setCallback] = useState(false);
-
-    // const dispatch = useDispatch();
-
-    // useEffect(() => {
-    //     if (isAdmin) {
-    //         fetchAllUsers(token).then((res) => {
-    //             dispatch(dispatchGetAllUsers(res));
-    //         });
-    //     }
-    // }, [token, isAdmin, dispatch, callback]);
-
-    // const handleChange = (e) => {
-    //     const { name, value } = e.target;
-    //     setData({ ...data, [name]: value, err: "", success: "" });
-    // };
-
     return (
         <Container maxWidth="md">
             <CFcard>

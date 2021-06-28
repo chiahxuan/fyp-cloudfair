@@ -34,7 +34,37 @@ const eventCtrl = {
     //SHOW HOSTING EVENTS, EVENT ARCHIVE
     viewAllEvents: async (req, res) => {
         try {
-            res.json({ msg: "Returned Message" });
+            //EDIT LATER
+            const user = await Users.findById(req.user.id).select("-password");
+            const organization = await Organization.find({ organizationCreatorId: user._id });
+
+            //search events by organizationId
+            // const event = await Event.find({ organization: organization[0]._id});
+
+            //search events by userId
+            const event = await Event.find({ user: user._id });
+            res.json(event);
+
+            // res.json({ msg: "Returned Message" });
+        } catch (err) {
+            return res.status(500).json({ msg: err.message });
+        }
+    },
+
+    //SHOW HOSTING EVENTS, EVENT ARCHIVE
+    viewAllUserEvents: async (req, res) => {
+        try {
+            const user = await Users.findById(req.user.id).select("-password");
+            const organization = await Organization.find({ organizationCreatorId: user._id });
+
+            //search events by organizationId
+            // const event = await Event.find({ organization: organization[0]._id});
+
+            //search events by userId
+            const event = await Event.find({ user: user._id });
+            res.json(event);
+
+            // res.json({ msg: "Returned Message" });
         } catch (err) {
             return res.status(500).json({ msg: err.message });
         }

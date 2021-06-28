@@ -1,6 +1,38 @@
 import ACTIONS from "./index";
 import axios from "axios";
 
+//FETCH EVENTS BY USER_ID
+export const fetchAllEventsByUserId = async (token) => {
+    const res = await axios.get("/event/all_events", {
+        headers: { Authorization: token },
+    });
+    return res;
+};
+
+export const dispatchGetAllUserEvents = (res) => {
+    return {
+        type: ACTIONS.GET_ALL_USER_EVENTS,
+        payload: res.data,
+    };
+};
+
+
+/////////////////////////////////////////////////////////////////////////////////////////////
+//FETCH ALL HOSTED EVENTS
+export const fetchAllEvents = async (token) => {
+    const res = await axios.get("/event/all_events", {
+        headers: { Authorization: token },
+    });
+    return res;
+};
+
+export const dispatchGetAllEvents = (res) => {
+    return {
+        type: ACTIONS.GET_ALL_EVENTS,
+        payload: res.data,
+    };
+};
+
 export const addEvent = (formData, history) => async (dispatch, getState) => {
     // dispatch({
     //     type: ACTIONS.GET_USER,
