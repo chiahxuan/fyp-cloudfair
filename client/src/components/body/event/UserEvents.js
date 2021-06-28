@@ -20,10 +20,10 @@ function AllEvents() {
     // const [loading, setLoading] = useState(false);
 
     const dispatch = useDispatch();
-    events.map((i) => {
-        // console.log(events[i]);
-        console.log(i);
-    });
+    // events.map((i) => {
+    //     // console.log(events[i]);
+    //     console.log(i);
+    // });
     //retrieve logged in user information
     useEffect(() => {
         fetchAllEventsByUserId(token).then((res) => {
