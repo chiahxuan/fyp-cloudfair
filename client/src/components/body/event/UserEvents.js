@@ -41,7 +41,7 @@ function AllEvents() {
                 </Typography>
                 <br />
                 <br />
-                <Grid container spacing={4} justify="space-between">
+                <Grid container spacing={8}>
                     {events.map((event) => (
                         <Grid item>
                             {/* <div>{event.ename}</div>

@@ -71,8 +71,10 @@ const eventCtrl = {
     },
     // SHOW SINGLE EVENT
     viewSingleEvent: async (req, res) => {
+        console.log(req.params.eslug);
         try {
-            res.json({ msg: "Returned Message" });
+            const event = await Event.find({ eslug: req.params.eslug });
+            res.json(event);
         } catch (err) {
             return res.status(500).json({ msg: err.message });
         }
@@ -80,7 +82,7 @@ const eventCtrl = {
     //UPDATE EVENT
     updateEvent: async (req, res) => {
         try {
-            res.json({ msg: "Returned Message" });
+            res.json({ msg: "Returned updateEvent" });
         } catch (err) {
             return res.status(500).json({ msg: err.message });
         }
@@ -88,7 +90,7 @@ const eventCtrl = {
     // DELETE SINGLE EVENT
     deleteEvent: async (req, res) => {
         try {
-            res.json({ msg: "Returned Message" });
+            res.json({ msg: "Returned deleteEvent" });
         } catch (err) {
             return res.status(500).json({ msg: err.message });
         }

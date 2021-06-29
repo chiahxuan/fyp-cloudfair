@@ -12,14 +12,17 @@ const eventReducer = (state = initialState, action) => {
             return {
                 ...state,
                 events: action.payload,
-                // isCreated: true,
             };
-        case ACTIONS.GET_ALL_EVENTS:
+        case ACTIONS.SET_SINGLE_EVENT:
             return {
-                ...state,
-                organization: action.payload.organization, //define data
-                // isCreated: true,
+                event: action.payload,
             };
+        // case ACTIONS.GET_ALL_EVENTS:
+        //     return {
+        //         ...state,
+        //         organization: action.payload.organization, //define data
+        //         // isCreated: true,
+        //     };
         default:
             return state;
     }

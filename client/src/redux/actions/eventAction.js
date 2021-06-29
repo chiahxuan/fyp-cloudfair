@@ -6,6 +6,7 @@ export const fetchAllEventsByUserId = async (token) => {
     const res = await axios.get("/event/all_events", {
         headers: { Authorization: token },
     });
+
     return res;
 };
 
@@ -16,22 +17,31 @@ export const dispatchGetAllUserEvents = (res) => {
     };
 };
 
+// //SET SINGLE EVENT BY ESLUG
+export const setSingleEventParam = (param) => {
+    return {
+        type: ACTIONS.SET_SINGLE_EVENT,
+        payload: {
+            event: param,
+        },
+    };
+};
 
 /////////////////////////////////////////////////////////////////////////////////////////////
 //FETCH ALL HOSTED EVENTS
-export const fetchAllEvents = async (token) => {
-    const res = await axios.get("/event/all_events", {
-        headers: { Authorization: token },
-    });
-    return res;
-};
+// export const fetchAllEvents = async (token) => {
+//     const res = await axios.get("/event/all_events", {
+//         headers: { Authorization: token },
+//     });
+//     return res;
+// };
 
-export const dispatchGetAllEvents = (res) => {
-    return {
-        type: ACTIONS.GET_ALL_EVENTS,
-        payload: res.data,
-    };
-};
+// export const dispatchGetAllEvents = (res) => {
+//     return {
+//         type: ACTIONS.GET_ALL_EVENTS,
+//         payload: res.data,
+//     };
+// };
 
 export const addEvent = (formData, history) => async (dispatch, getState) => {
     // dispatch({

@@ -24,6 +24,7 @@ import ViewOrg from "./organization/ViewOrg";
 import AddEvent from "./event/AddEvent";
 import UserEvents from "./event/UserEvents";
 import AllEvents from "./event/AllEvents";
+import SingleEvent from "./event/SingleEvent";
 
 const useStyles = makeStyles((theme) => ({
     //default layout for body
@@ -61,6 +62,7 @@ function Body() {
                 <Route path="/event/add_event" component={isLogged ? AddEvent : NotFound} exact />
                 <Route path="/event/all_events" component={isLogged ? AllEvents : NotFound} exact />
                 <Route path="/event/user_events" component={isLogged ? UserEvents : NotFound} exact />
+                <Route path="/event/:eslug" component={isLogged ? SingleEvent : NotFound} exact />
             </Switch>
         </div>
     );

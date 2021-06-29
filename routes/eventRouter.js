@@ -12,8 +12,8 @@ router.get("/all_events", auth, eventCtrl.viewAllEvents);
 // //SHOW HOSTING EVENTS, EVENT ARCHIVE
 router.get("/user_events", auth, eventCtrl.viewAllUserEvents);
 
-// // SHOW SINGLE EVENT
-// router.get("/:id", auth, eventCtrl.viewSingleEvent);
+// SHOW SINGLE EVENT
+router.get("/:eslug", auth, eventCtrl.viewSingleEvent);
 
 // //UPDATE EVENT
 // router.patch("/update/:id", auth, eventCtrl.updateEvent);
