@@ -68,7 +68,7 @@ function Body() {
                 <Route path="/event/:eslug" component={isLogged ? SingleEvent : NotFound} exact />
 
                 {/* BOOTH ROUTES */}
-                <Route path="/event/:eslug/booth/add_booth" component={isLogged ? AddBooth : NotFound} exact component={OnboardingViewController} />
+                <Route path="/event/:eslug/booth/add_booth" component={isLogged ? AddBooth : NotFound} exact />
             </Switch>
         </div>
     );
