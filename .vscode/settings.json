@@ -2,6 +2,10 @@
     "git.ignoreLimitWarning": true,
     "cSpell.words": [
         "Infor",
+        "bimage",
+        "bname",
+        "bslug",
+        "bvideo",
         "c",
         "cloudinary",
         "datetime",

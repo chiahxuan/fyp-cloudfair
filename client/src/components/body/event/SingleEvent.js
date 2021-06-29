@@ -191,7 +191,7 @@ function SingleEvent() {
                             <Typography variant="h4">Add Booth </Typography>
                         </Grid>
                         <Grid item xs={12} sm={8}>
-                            <Button component={Link} to={`/event/${singleEvent.eslug}/add_booth`}>
+                            <Button component={Link} to={`/event/${singleEvent.eslug}/booth/add_booth`}>
                                 Add booth
                             </Button>
                         </Grid>

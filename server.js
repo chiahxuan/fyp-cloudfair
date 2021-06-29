@@ -20,8 +20,12 @@ app.use(
 app.use("/user", require("./routes/userRouter"));
 app.use("/api", require("./routes/upload"));
 
+//EVENTS
 app.use("/organization", require("./routes/orgRouter"));
 app.use("/event", require("./routes/eventRouter"));
+
+//BOOTH
+app.use(`/event/:eslug/booth`, require("./routes/boothRouter"));
 
 // Connect to mongodb
 const URI = process.env.MONGODB_URL;

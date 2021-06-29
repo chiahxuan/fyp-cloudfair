@@ -32,9 +32,11 @@ const eventSchema = new mongoose.Schema(
         user: {
             type: String,
             ref: "User",
+            required: true,
         },
         organization: {
             type: String,
+            ref: "Organization",
             required: true,
         },
         // booth: { type: mongoose.Schema.Types.ObjectId, ref: 'Booth' },
