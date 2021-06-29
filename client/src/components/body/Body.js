@@ -16,7 +16,7 @@ import Profile from "../body/profile/Profile";
 import EditUser from "../body/profile/EditUser";
 import ForgotPassword from "./auth/ForgotPassword";
 import ResetPassword from "./auth/ResetPassword";
-//ORGANIZATION IMPROTS
+//ORGANIZATION IMPORTS
 import CreateOrg from "../body/organization/CreateOrg";
 import ViewOrg from "./organization/ViewOrg";
 
@@ -25,6 +25,9 @@ import AddEvent from "./event/AddEvent";
 import UserEvents from "./event/UserEvents";
 import AllEvents from "./event/AllEvents";
 import SingleEvent from "./event/SingleEvent";
+
+//BOOTH IMPORTS
+import AddBooth from "./booth/AddBooth";
 
 const useStyles = makeStyles((theme) => ({
     //default layout for body
@@ -63,6 +66,9 @@ function Body() {
                 <Route path="/event/all_events" component={isLogged ? AllEvents : NotFound} exact />
                 <Route path="/event/user_events" component={isLogged ? UserEvents : NotFound} exact />
                 <Route path="/event/:eslug" component={isLogged ? SingleEvent : NotFound} exact />
+
+                {/* BOOTH ROUTES */}
+                <Route path="/event/:eslug/booth/add_booth" component={isLogged ? AddBooth : NotFound} exact component={OnboardingViewController} />
             </Switch>
         </div>
     );
