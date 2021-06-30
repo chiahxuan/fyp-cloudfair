@@ -8,7 +8,7 @@ const boothCtrl = {
     addBooth: async (req, res) => {
         // console.log(req.body);
         try {
-            const { bname, bslug, description, bimage, bvideo, user, organization, event } = req.body;
+            const { bname, bslug, description, bvideo, user, organization, event } = req.body;
             // console.log(req.headers);
             //VALIDATE ALL FIELD INSERTED
             if (!bname || !bslug || !description || !bvideo || !user || !organization || !event) return res.status(400).json({ msg: "Please fill in all fields." });
@@ -35,9 +35,20 @@ const boothCtrl = {
         }
     },
     //SHOW HOSTING EVENTS, EVENT ARCHIVE
-    viewAllBooth: async (req, res) => {
+    viewBooth: async (req, res) => {
+        // console.log(req.body);
+
         try {
-            res.json({ msg: "Returned viewAllUserBooth" });
+            // const user = await Users.findById(req.user.id).select("-password");
+            // const organization = await Organization.find({ organizationCreatorId: user._id });
+
+            //search events by organizationId
+            const event = await Event.find({ eslug: req.params.eslug });
+
+            // //search booth by eventID
+            const booth = await Booth.find({ event: event[0]._id });
+
+            res.json(booth);
         } catch (err) {
             return res.status(500).json({ msg: err.message });
         }

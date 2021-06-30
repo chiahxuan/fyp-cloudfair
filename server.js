@@ -25,7 +25,7 @@ app.use("/organization", require("./routes/orgRouter"));
 app.use("/event", require("./routes/eventRouter"));
 
 //BOOTH
-app.use(`/event/:eslug/booth`, require("./routes/boothRouter"));
+app.use(`/event`, require("./routes/boothRouter"));
 
 // Connect to mongodb
 const URI = process.env.MONGODB_URL;

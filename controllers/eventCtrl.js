@@ -71,7 +71,8 @@ const eventCtrl = {
     },
     // SHOW SINGLE EVENT
     viewSingleEvent: async (req, res) => {
-        console.log(req.params.eslug);
+        console.log(req);
+        // console.log(req.params.eslug);
         try {
             const event = await Event.find({ eslug: req.params.eslug });
             res.json(event);
