@@ -147,10 +147,9 @@ function AddBooth() {
             );
             console.log(res);
 
-            setBooth({ ...booth, err: "", success: "pass val" });
-            // setBooth({ ...booth, err: "", success: res.data.msg });
+            // setBooth({ ...booth, err: "", success: "pass val" });
+            setBooth({ ...booth, err: "", success: res.data.msg });
             // history.push("/event"); // change location
-            console.log("success");
         } catch (err) {
             err.response.data.msg && setBooth({ ...booth, err: err.response.data.msg, success: "" });
         }
