@@ -9,4 +9,6 @@ router.post("/:eslug/booth/add_booth", auth, boothCtrl.addBooth);
 //ADD BOOTH
 router.get("/:eslug/booth/all", auth, boothCtrl.viewBooth);
 
+router.get("/:eslug/booth/:bslug", auth, boothCtrl.viewSingleBooth);
+
 module.exports = router;

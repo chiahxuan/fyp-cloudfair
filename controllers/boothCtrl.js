@@ -37,24 +37,29 @@ const boothCtrl = {
     //SHOW HOSTING EVENTS, EVENT ARCHIVE
     viewBooth: async (req, res) => {
         // console.log(req.body);
-
         try {
-            // const user = await Users.findById(req.user.id).select("-password");
-            // const organization = await Organization.find({ organizationCreatorId: user._id });
-
             //search events by organizationId
             const event = await Event.find({ eslug: req.params.eslug });
-
             // //search booth by eventID
             const booth = await Booth.find({ event: event[0]._id });
-
             res.json(booth);
         } catch (err) {
             return res.status(500).json({ msg: err.message });
         }
     },
 
-    //SHOW HOSTING EVENTS, EVENT ARCHIVE
+    // SHOW SINGLE BOOTH
+    viewSingleBooth: async (req, res) => {
+        console.log(req.params.bslug);
+        try {
+            const booth = await Booth.findOne({ bslug: req.params.bslug });
+            res.json(booth);
+        } catch (err) {
+            return res.status(500).json({ msg: err.message });
+        }
+    },
+
+    //SHOW HOSTING BOOTH, EVENT ARCHIVE
     viewAllUserBooth: async (req, res) => {
         try {
             res.json({ msg: "Returned viewAllUserBooth" });
@@ -62,15 +67,7 @@ const boothCtrl = {
             return res.status(500).json({ msg: err.message });
         }
     },
-    // SHOW SINGLE EVENT
-    viewSingleBooth: async (req, res) => {
-        try {
-            res.json({ msg: "Returned updateBooth" });
-        } catch (err) {
-            return res.status(500).json({ msg: err.message });
-        }
-    },
-    //UPDATE EVENT
+    //UPDATE BOOTH
     updateBooth: async (req, res) => {
         try {
             res.json({ msg: "Returned updateBooth" });
@@ -78,7 +75,8 @@ const boothCtrl = {
             return res.status(500).json({ msg: err.message });
         }
     },
-    // DELETE SINGLE EVENT
+
+    // DELETE SINGLE BOOTH
     deleteBooth: async (req, res) => {
         try {
             res.json({ msg: "Returned deleteBooth" });
