@@ -6,7 +6,6 @@ export const fetchAllEventsByUserId = async (token) => {
     const res = await axios.get("/event/all_events", {
         headers: { Authorization: token },
     });
-
     return res;
 };
 
@@ -16,6 +15,13 @@ export const dispatchGetAllUserEvents = (res) => {
         payload: res.data,
     };
 };
+
+// export const fetchSingleEvent = async (token) => {
+//     const res = await axios.get(`event/:eslug`, {
+//         type: ACTIONS.GET_SINGLE_EVENT,
+//         payload: res.data,
+//     });
+// };
 
 // //SET SINGLE EVENT BY ESLUG
 export const setSingleEventParam = (param) => {

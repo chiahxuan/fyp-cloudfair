@@ -28,6 +28,7 @@ import SingleEvent from "./event/SingleEvent";
 
 //BOOTH IMPORTS
 import AddBooth from "./booth/AddBooth";
+import AllBooth from "./booth/AllBooth";
 
 const useStyles = makeStyles((theme) => ({
     //default layout for body
@@ -69,6 +70,7 @@ function Body() {
 
                 {/* BOOTH ROUTES */}
                 <Route path="/event/:eslug/booth/add_booth" component={isLogged ? AddBooth : NotFound} exact />
+                <Route path="/event/:eslug/booth/all" component={isLogged ? AllBooth : NotFound} exact />
             </Switch>
         </div>
     );
