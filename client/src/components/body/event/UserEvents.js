@@ -15,6 +15,7 @@ function AllEvents() {
     const auth = useSelector((state) => state.auth);
     const token = useSelector((state) => state.token);
     const events = useSelector((state) => state.eventReducer.events);
+    const [callback, setCallback] = useState(false);
 
     // const [avatar, setAvatar] = useState(false);
     // const [loading, setLoading] = useState(false);
@@ -29,7 +30,7 @@ function AllEvents() {
         fetchAllEventsByUserId(token).then((res) => {
             dispatch(dispatchGetAllUserEvents(res));
         });
-    });
+    }, [token, dispatch, callback]);
 
     // console.log(events); // ABLE TO ACCESS TO ALL EVENTS DATA
     // console.log(events[0]);
