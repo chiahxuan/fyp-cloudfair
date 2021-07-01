@@ -14,7 +14,6 @@ const orgReducer = (state = initialState, action) => {
                 hasOrganization: true,
             };
         case ACTIONS.GET_ORGANIZATION:
-            console.log(action.payload.organization);
             return {
                 ...state,
                 organization: action.payload.organization, //define data

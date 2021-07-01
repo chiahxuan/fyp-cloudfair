@@ -31,21 +31,11 @@ const eventCtrl = {
             return res.status(500).json({ msg: err.message });
         }
     },
-    //SHOW HOSTING EVENTS, EVENT ARCHIVE
+    //SHOW ALL EVENTS
     viewAllEvents: async (req, res) => {
         try {
-            //EDIT LATER
-            const user = await Users.findById(req.user.id).select("-password");
-            const organization = await Organization.find({ organizationCreatorId: user._id });
-
-            //search events by organizationId
-            // const event = await Event.find({ organization: organization[0]._id});
-
-            //search events by userId
-            const event = await Event.find({ user: user._id });
+            const event = await Event.find();
             res.json(event);
-
-            // res.json({ msg: "Returned Message" });
         } catch (err) {
             return res.status(500).json({ msg: err.message });
         }

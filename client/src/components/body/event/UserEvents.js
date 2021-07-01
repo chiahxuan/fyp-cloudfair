@@ -11,7 +11,7 @@ import { Typography, Button, Container, TextField, Card, CardContent, Grid } fro
 import CFcard from "../../components/CFcard";
 import EventCard from "../../components/eventCard";
 
-function AllEvents() {
+function UserEvents() {
     const auth = useSelector((state) => state.auth);
     const token = useSelector((state) => state.token);
     const events = useSelector((state) => state.eventReducer.events);
@@ -63,4 +63,4 @@ function AllEvents() {
     );
 }
 
-export default AllEvents;
+export default UserEvents;

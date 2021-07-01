@@ -3,7 +3,7 @@ import axios from "axios";
 
 //FETCH EVENTS BY USER_ID
 export const fetchAllEventsByUserId = async (token) => {
-    const res = await axios.get("/event/all_events", {
+    const res = await axios.get("/event/user_events", {
         headers: { Authorization: token },
     });
     return res;
@@ -16,12 +16,20 @@ export const dispatchGetAllUserEvents = (res) => {
     };
 };
 
-// export const fetchSingleEvent = async (token) => {
-//     const res = await axios.get(`event/:eslug`, {
-//         type: ACTIONS.GET_SINGLE_EVENT,
-//         payload: res.data,
-//     });
-// };
+//FETCH ALL EVENTS
+export const fetchAllEvents = async (token) => {
+    const res = await axios.get("/event/all_events", {
+        headers: { Authorization: token },
+    });
+    return res;
+};
+
+export const dispatchGetAllEvents = (res) => {
+    return {
+        type: ACTIONS.GET_ALL_EVENTS,
+        payload: res.data,
+    };
+};
 
 // //SET SINGLE EVENT BY ESLUG
 export const setSingleEventParam = (param) => {
@@ -33,41 +41,34 @@ export const setSingleEventParam = (param) => {
     };
 };
 
-/////////////////////////////////////////////////////////////////////////////////////////////
-//FETCH ALL HOSTED EVENTS
-// export const fetchAllEvents = async (token) => {
-//     const res = await axios.get("/event/all_events", {
-//         headers: { Authorization: token },
-//     });
-//     return res;
-// };
+//GET EVENT INFORMATION
+export const fetchSingleEvent = async (eslug, token) => {
+    const res = await axios.get(`${eslug}`, {
+        headers: { Authorization: token },
+    });
+    return res;
+};
 
-// export const dispatchGetAllEvents = (res) => {
-//     return {
-//         type: ACTIONS.GET_ALL_EVENTS,
-//         payload: res.data,
-//     };
-// };
+export const dispatchGetSingleEvent = (res) => {
+    // console.log(res.data);
 
-export const addEvent = (formData, history) => async (dispatch, getState) => {
-    // dispatch({
-    //     type: ACTIONS.GET_USER,
-    //     payload: { me: { ...getState().auth.me } },
-    // });
-    // try {
-    //     const options = attachTokenToHeaders(getState);
-    //     const response = await axios.post("/api/events", formData, options);
-    //     console.log(response);
-    //     dispatch({
-    //         type: ACTIONS.ADD_EVENT_SUCCESS,
-    //         payload: { event: response.data.event },
-    //     });
-    //     history.push("/");
-    // } catch (err) {
-    //     console.log(err.response);
-    //     dispatch({
-    //         type: ACTIONS.ADD_EVENT_FAIL,
-    //         payload: { error: err?.response?.data.event || err.event },
-    //     });
-    // }
+    return {
+        type: ACTIONS.GET_SINGLE_EVENT,
+        payload: res.data[0],
+    };
+};
+
+// CHECK USER ROLE WITH EVENT
+export const fetchEventHostStatus = async (eslug, token, userId, organizationId) => {
+    const res = await axios.get(`${eslug}/checkEventHost`, {
+        headers: { Authorization: token },
+    });
+    return res;
+};
+
+export const dispatchEventHostStatus = (res) => {
+    return {
+        type: ACTIONS.GET_IS_EVENT_HOST,
+        payload: res.data[0],
+    };
 };

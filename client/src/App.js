@@ -3,6 +3,7 @@ import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { dispatchLogin, fetchUser, dispatchGetUser } from "./redux/actions/authAction";
 import { dispatchGetOrganization, fetchOrganization } from "./redux/actions/organizationAction";
+import { dispatchGetAllUserEvents, fetchAllEventsByUserId } from "./redux/actions/eventAction";
 
 import Body from "./components/body/Body";
 import axios from "axios";
@@ -50,6 +51,18 @@ function DefaultLayout() {
                 });
             };
             getOrganization();
+        }
+    }, [token, dispatch, callback]);
+
+    //DISPATCH USER EVENTS
+    useEffect(() => {
+        if (token) {
+            const getUserEvents = () => {
+                return fetchAllEventsByUserId(token).then((res) => {
+                    dispatch(dispatchGetAllUserEvents(res));
+                });
+            };
+            getUserEvents();
         }
     }, [token, dispatch, callback]);
 

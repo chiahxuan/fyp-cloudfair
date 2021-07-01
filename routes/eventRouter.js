@@ -6,10 +6,10 @@ const auth = require("../middleware/auth");
 //ADD EVENT
 router.post("/add_event", eventCtrl.addEvent);
 
-// //SHOW HOSTING EVENTS, EVENT ARCHIVE
+// //SHOW ALL EVENTS, EVENT ARCHIVE
 router.get("/all_events", auth, eventCtrl.viewAllEvents);
 
-// //SHOW HOSTING EVENTS, EVENT ARCHIVE
+// //SHOW USER EVENTS, EVENT ARCHIVE
 router.get("/user_events", auth, eventCtrl.viewAllUserEvents);
 
 // SHOW SINGLE EVENT

@@ -25,6 +25,7 @@ import AddEvent from "./event/AddEvent";
 import UserEvents from "./event/UserEvents";
 import AllEvents from "./event/AllEvents";
 import SingleEvent from "./event/SingleEvent";
+import EditEvent from "./event/EditEvent";
 
 //BOOTH IMPORTS
 import AddBooth from "./booth/AddBooth";
@@ -65,6 +66,7 @@ function Body() {
 
                 {/* EVENT ROUTES */}
                 <Route path="/event/add_event" component={isLogged ? AddEvent : NotFound} exact />
+                <Route path="/event/:eslug/edit_event" component={isLogged ? EditEvent : NotFound} exact />
                 <Route path="/event/all_events" component={isLogged ? AllEvents : NotFound} exact />
                 <Route path="/event/user_events" component={isLogged ? UserEvents : NotFound} exact />
                 <Route path="/event/:eslug" component={isLogged ? SingleEvent : NotFound} exact />
