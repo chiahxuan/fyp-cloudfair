@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import clsx from "clsx";
 import { useSelector } from "react-redux";
 import axios from "axios";
@@ -11,7 +11,6 @@ import { AppBar, Avatar, Toolbar, Typography, Button, Menu, MenuItem, List, List
 
 import IconButton from "@material-ui/core/IconButton";
 import MenuIcon from "@material-ui/icons/Menu";
-import AccountBoxIcon from "@material-ui/icons/AccountBox";
 import EventIcon from "@material-ui/icons/Event";
 import ExitToAppIcon from "@material-ui/icons/ExitToApp";
 import HomeIcon from "@material-ui/icons/Home";
@@ -232,7 +231,7 @@ function Header() {
                     <Link to="/profile" className={classes.menuItemLink}>
                         <StyledMenuItem>
                             <ListItemIcon>
-                                <AccountBoxIcon fontSize="medium" />
+                                <AccountCircleIcon fontSize="medium" />
                             </ListItemIcon>
                             <ListItemText primary="Profile"></ListItemText>{" "}
                         </StyledMenuItem>
@@ -319,17 +318,18 @@ function Header() {
         {
             text: "Home",
             icon: <HomeIcon fontSize="small" />,
-            link: "/",
+            link: "/event/all_events",
+        },
+        {
+            text: "Event",
+            icon: <EventIcon fontSize="small" />,
+            link: hasEvent ? "event/user_events" : "event/add_event",
+            // ******settle routing problem
         },
         {
             text: "Profile",
             icon: <AccountCircleIcon fontSize="small" />,
             link: "/profile",
-        },
-        {
-            text: "Event",
-            icon: <EventIcon fontSize="small" />,
-            link: "/event",
         },
     ];
     const itemsList2 = [

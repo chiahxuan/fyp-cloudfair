@@ -5,11 +5,15 @@ import { useParams } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { showSuccessMsg, showErrMsg } from "../../utils/notification/Notification";
 import { isEmpty, isLength, isValidDescription, isValidString, isValidDateTime } from "../../utils/validation/Validation";
-import { setSingleEventParam } from "../../../redux/actions/eventAction";
+import { setCheckEventHost, fetchSingleEvent, dispatchGetSingleEvent, fetchEventHostStatus, dispatchEventHostStatus } from "../../../redux/actions/eventAction";
+// import { getSingleEventParam, dispatchSetEventParam } from "../../../redux/actions/eventAction";
 import dayjs from "dayjs";
 
 import { makeStyles } from "@material-ui/core/styles";
-import { Typography, Button, Container, TextField, Card, CardContent, Grid } from "@material-ui/core";
+import { Typography, Button, Container, TextField, Card, CardContent, Grid, Tabs, Tab, Paper, Box } from "@material-ui/core";
+import PersonPinIcon from "@material-ui/icons/PersonPin";
+import StorefrontIcon from "@material-ui/icons/Storefront";
+import EditIcon from "@material-ui/icons/Edit";
 import CFcard from "../../components/CFcard";
 var slugify = require("slug");
 
@@ -29,6 +33,10 @@ const useStyles = makeStyles((theme) => ({
         height: 400,
         marginLeft: "auto",
         marginRight: "auto",
+    },
+    tab: {
+        flexGrow: 1,
+        maxWidth: 500,
     },
 }));
 
@@ -50,37 +58,53 @@ function SingleEvent() {
     const classes = useStyles();
     const auth = useSelector((state) => state.auth);
     const token = useSelector((state) => state.token);
-    const events = useSelector((state) => state.eventReducer.events);
+    const event = useSelector((state) => state.eventReducer.event);
+    const organization = useSelector((state) => state.organization.organization);
     const dispatch = useDispatch();
 
     const [data, setData] = useState(initialState);
-    const [singleEvent, setSingleEvent] = useState([]);
+    // const [singleEvent, setSingleEvent] = useState([]);
     const [checkEventHost, setCheckEventHost] = useState(false);
     const [loading, setLoading] = useState(false);
     const [bgImage, setBgImage] = useState(false);
     const [wantEdit, setWantEdit] = useState(false);
+    const [callback, setCallback] = useState(false);
 
     const { eslug } = useParams();
     // console.log(eslug);
 
     const history = useHistory();
-
-    // GET EVENT DATA FROM SLUG
-    useEffect(() => {
-        if (events.length !== 0) {
-            events.forEach((event) => {
-                if (event.eslug === eslug) {
-                    setSingleEvent(event);
-                    setCheckEventHost(event.user === auth.user._id ? true : false);
-                    setSingleEventParam(event);
-                }
-            });
-        } else {
-            history.push("/event/user_events");
-        }
-    }, [events, eslug, history]);
-
     // console.log(singleEvent);
+    useEffect(() => {
+        fetchSingleEvent(eslug, token).then((res) => {
+            dispatch(dispatchGetSingleEvent(res));
+            setCheckEventHost(event.user === auth.user._id ? true : false); // update isEventHost to true
+            // console.log(checkEventHost);
+        });
+    }, [token, dispatch, callback, checkEventHost]);
+    // useEffect(() => {
+    //     fetchEventHostStatus(eslug, token, auth.user._id, organization._id).then((res) => {
+    //         dispatch(dispatchEventHostStatus(res));
+    //     });
+    // }, [token, dispatch, callback]);
+
+    // if(event.user === auth.user._id )
+    // console.log(organization._id);
+    // console.log(auth.user._id);
+    // GET EVENT DATA FROM SLUG
+    // useEffect(() => {
+    //     if (events.length !== 0) {
+    //         events.forEach((event) => {
+    //             if (event.eslug === eslug) {
+    //                 setSingleEvent(event);
+    //                 setCheckEventHost(event.user === auth.user._id ? true : false);
+    //             }
+    //         });
+    //     } else {
+    //         history.push(`/event/${eslug}`);
+    //         // history.push("/event/user_events");
+    //     }
+    // }, [events, eslug, history, callback]);
 
     //refer profile.js
     const changeBgImage = async (e) => {
@@ -107,7 +131,7 @@ function SingleEvent() {
     const updateEventInfo = () => {
         try {
             axios.patch(
-                `/event/${singleEvent.eslug}/edit`,
+                `/${event.eslug}/edit`,
                 {
                     // name: name ? name : user.name,
                     // avatar: avatar ? avatar : user.avatar,
@@ -151,47 +175,56 @@ function SingleEvent() {
         setData({ ...data, [name]: value, err: "", success: "" });
     };
 
+    const [value, setValue] = React.useState(0);
+
+    const handleTabsChange = (event, newValue) => {
+        setValue(newValue);
+    };
+
     return (
-        <Container maxWidth="md">
+        <Container>
             <CFcard>
                 <br />
                 {/** VIEW EVENT  */}
                 <section>
+                    <Grid container></Grid>
+
+                    {/**create Event Container here*/}
                     <Grid container spacing={8}>
                         <Grid item xs={12} align="center">
                             <img
                                 className={classes.bgImage}
-                                src={bgImage ? bgImage : singleEvent.eBackground || "https://material-ui.com/static/images/cards/contemplative-reptile.jpg"}
+                                src={bgImage ? bgImage : event.eBackground || "https://material-ui.com/static/images/cards/contemplative-reptile.jpg"}
                             />
                         </Grid>
                         <Grid item xs={12} align="center">
                             <Typography align="center" variant="h1">
-                                {singleEvent.ename}
+                                {event.ename}
                             </Typography>
                         </Grid>
                         <Grid item xs={12} sm={4}>
                             <Typography variant="h4">Event Description: </Typography>
                         </Grid>
                         <Grid item xs={12} sm={8}>
-                            <Typography> {singleEvent.description}</Typography>
+                            <Typography> {event.description}</Typography>
                         </Grid>
                         <Grid item xs={12} sm={4}>
                             <Typography variant="h4">Start Date: </Typography>
                         </Grid>
                         <Grid item xs={12} sm={8}>
-                            <Typography>{dayjs(singleEvent.startDate).format("YYYY MMMM DD, hh:mm A")} </Typography>
+                            <Typography>{dayjs(event.startDate).format("YYYY MMMM DD, hh:mm A")} </Typography>
                         </Grid>
                         <Grid item xs={12} sm={4}>
                             <Typography variant="h4">End Date: </Typography>
                         </Grid>
                         <Grid item xs={12} sm={8}>
-                            <Typography>{dayjs(singleEvent.endDate).format("YYYY MMMM DD, hh:mm A")} </Typography>
+                            <Typography>{dayjs(event.endDate).format("YYYY MMMM DD, hh:mm A")} </Typography>
                         </Grid>
                         <Grid item xs={12} sm={4}>
                             <Typography variant="h4">Add Booth </Typography>
                         </Grid>
                         <Grid item xs={12} sm={8}>
-                            <Button component={Link} to={`/event/${singleEvent.eslug}/booth/add_booth`}>
+                            <Button component={Link} to={`/event/${event.eslug}/booth/add_booth`}>
                                 Add booth
                             </Button>
                         </Grid>
@@ -207,6 +240,17 @@ function SingleEvent() {
                 </section>
                 <br />
                 <br />
+                <Box align="center">
+                    <Paper square className={classes.tab}>
+                        <Tabs value={value} onChange={handleTabsChange} variant="fullWidth" indicatorColor="secondary" textColor="secondary" aria-label="icon label tabs example">
+                            <Tab icon={<PersonPinIcon />} label="Reception" />
+                            <Tab icon={<StorefrontIcon />} label="Expo" component={Link} to={`${eslug}/booth/all`} />
+
+                            {checkEventHost == true ? <Tab icon={<EditIcon />} label="Edit Event" component={Link} to={`${eslug}/edit_event`} /> : ""}
+                        </Tabs>
+                    </Paper>
+                </Box>
+
                 {/** EDIT EVENT  */}
                 {/* <section>
                     <Grid container spacing={8}>
