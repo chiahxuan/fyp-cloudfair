@@ -12,6 +12,12 @@ const boothReducer = (state = initialState, action) => {
                 ...state,
                 booths: action.payload,
             };
+        case ACTIONS.GET_SINGLE_BOOTH:
+            return {
+                ...state,
+                booth: action.payload,
+            };
+
         // case ACTIONS.GET_SINGLE_booth:
         //     return {
         //         booth: action.payload,
