@@ -1,6 +1,7 @@
 import ACTIONS from "../actions";
 
 const initialState = {
+    isVendor: false,
     booth: "",
     booths: [],
 };

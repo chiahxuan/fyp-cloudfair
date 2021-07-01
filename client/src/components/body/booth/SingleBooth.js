@@ -52,10 +52,12 @@ function SingleBooth() {
     const [callback, setCallback] = useState(false);
     const dispatch = useDispatch();
     const { eslug, bslug } = useParams();
+    const [checkVendor, setCheckVendor] = useState(false);
 
     useEffect(() => {
         fetchSingleBooth(token, eslug, bslug).then((res) => {
             dispatch(dispatchSingleBooth(res));
+            setCheckVendor(booth.user === auth.user._id ? true : false);
         });
     }, [token, dispatch, callback]);
 
@@ -67,7 +69,7 @@ function SingleBooth() {
                     <Grid item xs={6}>
                         <Grid container spacing={8}>
                             <Grid item xs={12} align="center">
-                                <img className={classes.bgImage} src={"https://material-ui.com/static/images/cards/contemplative-reptile.jpg"} />
+                                <img className={classes.bgImage} src={booth.bimage ? booth.bimage : "https://material-ui.com/static/images/cards/contemplative-reptile.jpg"} />
                             </Grid>
                             <Grid item xs={12} align="center">
                                 <Typography align="center" variant="h1">
@@ -99,6 +101,13 @@ function SingleBooth() {
                                 <Typography> {booth.bvideo}</Typography>
                             </Grid>
                         </Grid>
+                        {checkVendor == true ? (
+                            <>
+                                <Button>Edit Booth</Button>
+                            </>
+                        ) : (
+                            <></>
+                        )}
                     </Grid>
                     <Grid item xs={6} align="center"></Grid>
                 </Grid>

@@ -60,6 +60,7 @@ function SingleEvent() {
     const token = useSelector((state) => state.token);
     const event = useSelector((state) => state.eventReducer.event);
     const organization = useSelector((state) => state.organization.organization);
+    const hasOrganization = useSelector((state) => state.organization.hasOrganization);
     const dispatch = useDispatch();
 
     const [data, setData] = useState(initialState);
@@ -82,6 +83,7 @@ function SingleEvent() {
             // console.log(checkEventHost);
         });
     }, [token, dispatch, callback, checkEventHost]);
+
     // useEffect(() => {
     //     fetchEventHostStatus(eslug, token, auth.user._id, organization._id).then((res) => {
     //         dispatch(dispatchEventHostStatus(res));
@@ -220,22 +222,20 @@ function SingleEvent() {
                         <Grid item xs={12} sm={8}>
                             <Typography>{dayjs(event.endDate).format("YYYY MMMM DD, hh:mm A")} </Typography>
                         </Grid>
-                        <Grid item xs={12} sm={4}>
-                            <Typography variant="h4">Add Booth </Typography>
-                        </Grid>
-                        <Grid item xs={12} sm={8}>
-                            <Button component={Link} to={`/event/${event.eslug}/booth/add_booth`}>
-                                Add booth
-                            </Button>
-                        </Grid>
-                        <Grid item xs={12} sm={4}>
-                            <Typography variant="h4">Edit Event </Typography>
-                        </Grid>
-                        <Grid item xs={12} sm={8}>
-                            <Button component={Link} to="/">
-                                Edit Event
-                            </Button>
-                        </Grid>
+                        {hasOrganization == true ? (
+                            <>
+                                <Grid item xs={12} sm={4}>
+                                    <Typography variant="h4">Add Booth </Typography>
+                                </Grid>
+                                <Grid item xs={12} sm={8}>
+                                    <Button component={Link} to={`/event/${event.eslug}/booth/add_booth`}>
+                                        Add booth
+                                    </Button>
+                                </Grid>
+                            </>
+                        ) : (
+                            <></>
+                        )}
                     </Grid>
                 </section>
                 <br />
@@ -245,7 +245,6 @@ function SingleEvent() {
                         <Tabs value={value} onChange={handleTabsChange} variant="fullWidth" indicatorColor="secondary" textColor="secondary" aria-label="icon label tabs example">
                             <Tab icon={<PersonPinIcon />} label="Reception" />
                             <Tab icon={<StorefrontIcon />} label="Expo" component={Link} to={`${eslug}/booth/all`} />
-
                             {checkEventHost == true ? <Tab icon={<EditIcon />} label="Edit Event" component={Link} to={`${eslug}/edit_event`} /> : ""}
                         </Tabs>
                     </Paper>
