@@ -26,6 +26,7 @@ function CreateOrg() {
     const organization = useSelector((state) => state.organization);
     const { id, organizationName } = organization;
     const { user, isAdmin } = auth;
+    const [callback, setCallback] = useState(false);
 
     // ASSIGN ORGANIZATION DATA TO VARIABLE
     const organizationData = organization.organization;
@@ -43,7 +44,7 @@ function CreateOrg() {
             };
             getOrganization();
         }
-    }, [token, dispatch]);
+    }, [token, dispatch, callback]);
 
     return (
         <Container maxWidth="md">

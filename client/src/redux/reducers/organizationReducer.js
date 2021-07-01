@@ -2,7 +2,7 @@ import ACTIONS from "../actions/";
 
 const initialState = {
     organization: "",
-    isCreated: false,
+    hasOrganization: false,
 };
 
 const orgReducer = (state = initialState, action) => {
@@ -10,13 +10,15 @@ const orgReducer = (state = initialState, action) => {
         case ACTIONS.CREATE_ORGANIZATION:
             return {
                 ...state,
-                isCreated: true,
+                organization: action.payload.organization, //define data
+                hasOrganization: true,
             };
         case ACTIONS.GET_ORGANIZATION:
+            console.log(action.payload.organization);
             return {
                 ...state,
                 organization: action.payload.organization, //define data
-                isCreated: true,
+                hasOrganization: !action.payload.organization ? false : true,
             };
         default:
             return state;

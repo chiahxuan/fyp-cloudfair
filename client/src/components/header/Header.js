@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import clsx from "clsx";
 import { useSelector } from "react-redux";
 import axios from "axios";
@@ -15,9 +15,6 @@ import AccountBoxIcon from "@material-ui/icons/AccountBox";
 import EventIcon from "@material-ui/icons/Event";
 import ExitToAppIcon from "@material-ui/icons/ExitToApp";
 import HomeIcon from "@material-ui/icons/Home";
-import InboxIcon from "@material-ui/icons/MoveToInbox";
-import DraftsIcon from "@material-ui/icons/Drafts";
-import SendIcon from "@material-ui/icons/Send";
 import ChevronLeftIcon from "@material-ui/icons/ChevronLeft";
 import ChevronRightIcon from "@material-ui/icons/ChevronRight";
 import AccountCircleIcon from "@material-ui/icons/AccountCircle";
@@ -172,6 +169,15 @@ function Header() {
     const { user, isLogged } = auth;
     const [open, setOpen] = React.useState(false);
 
+    //VALIDATION
+    // DETERMINE USER HAS ORGANIZATION
+    const hasOrganization = useSelector((state) => state.organization.hasOrganization);
+
+    //DETERMINE USER HAS EVENT
+    const hasEvent = useSelector((state) => state.eventReducer.hasEvent);
+
+    // console.log(hasOrganization);
+
     //HANDLE DRAWER
     const handleDrawerOpen = () => {
         setOpen(true);
@@ -322,7 +328,7 @@ function Header() {
         },
         {
             text: "Event",
-            icon: <ChevronRightIcon fontSize="small" />,
+            icon: <EventIcon fontSize="small" />,
             link: "/event",
         },
     ];
@@ -330,7 +336,9 @@ function Header() {
         {
             text: "Organization",
             icon: <GroupIcon fontSize="small" />,
-            link: "/organization/overview",
+            link: hasOrganization ? "/organization/overview" : "/organization/new",
+
+            //hasOrganization
         },
     ];
 
