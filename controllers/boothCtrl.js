@@ -67,10 +67,33 @@ const boothCtrl = {
             return res.status(500).json({ msg: err.message });
         }
     },
-    //UPDATE BOOTH
-    updateBooth: async (req, res) => {
+    //edit  BOOTH
+    editBooth: async (req, res) => {
+        // console.log(req.params);
+        const { bslug, eslug } = req.params;
+        // console.log(req.body);
+        // console.log(eslug);
         try {
-            res.json({ msg: "Returned updateBooth" });
+            const event = await Event.findOne({ eslug: eslug });
+            const booth = await Booth.findOne({ bslug: bslug });
+            // console.log(event);
+            // console.log(booth);
+            const { bname, bUpdatedslug, description, bvideo, user, organizationId } = req.body;
+
+            await Booth.findOneAndUpdate(
+                { _id: booth._id },
+                {
+                    bname: bname,
+                    bslug: bslug,
+                    description: description,
+                    bvideo: bvideo,
+                    user: user,
+                    organization: organizationId,
+                    event: event._id,
+                }
+            );
+
+            res.json({ msg: "Update booth success" });
         } catch (err) {
             return res.status(500).json({ msg: err.message });
         }
