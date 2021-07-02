@@ -7,6 +7,7 @@ import { useDispatch } from "react-redux";
 
 import { makeStyles } from "@material-ui/core/styles";
 import TextField from "@material-ui/core/TextField";
+import CFcard from "../../components/CFcard";
 import { Typography, Button, Container, Box } from "@material-ui/core";
 import { GoogleLogin } from "react-google-login";
 import FacebookLogin from "react-facebook-login";
@@ -64,7 +65,7 @@ function Login() {
 
             localStorage.setItem("firstLogin", true);
             dispatch(dispatchLogin());
-            history.push("/");
+            history.push("/event/all_events");
         } catch (err) {
             err.response.data.msg && setUser({ ...user, err: err.response.data.msg, success: "" });
         }
@@ -78,7 +79,7 @@ function Login() {
             localStorage.setItem("firstLogin", true);
 
             dispatch(dispatchLogin());
-            history.push("/");
+            history.push("/event/all_events");
         } catch (err) {
             err.response.data.msg && setUser({ ...user, err: err.response.data.msg, success: "" });
         }
@@ -95,7 +96,7 @@ function Login() {
             localStorage.setItem("firstLogin", true);
 
             dispatch(dispatchLogin());
-            history.push("/");
+            history.push("/event/all_events");
         } catch (err) {
             err.response.data.msg && setUser({ ...user, err: err.response.data.msg, success: "" });
         }
@@ -103,82 +104,89 @@ function Login() {
 
     return (
         <Container className="login_page" maxWidth="sm">
-            <br />
-            <Typography variant="h1" align="center">
-                Welcome to CloudFair
-            </Typography>
-            <Typography align="center">
-                Sign in to access your account. Not registered?{" "}
-                <Link to="/register" className={classes.registerLink}>
-                    Create an account
-                </Link>
-            </Typography>
-            <br />
-            {err && showErrMsg(err)}
-            {success && showSuccessMsg(success)}
+            <CFcard>
+                <br />
+                <Typography variant="h1" align="center">
+                    Welcome to CloudFair
+                </Typography>
+                <br />
 
-            <form onSubmit={handleSubmit}>
-                <div>
-                    <TextField
-                        id="email"
-                        margin="dense"
-                        label="Email Address"
-                        id="email"
-                        name="email"
-                        defaultValue={email}
-                        onChange={handleChangeInput}
-                        placeholder="Email Address"
-                        required
-                        fullWidth
-                        InputLabelProps={{
-                            shrink: true,
-                        }}
-                        variant="outlined"
-                    />
-                    <TextField
-                        id="password"
-                        margin="dense"
-                        name="password"
-                        label="Password"
-                        placeholder="Password"
-                        type="password"
-                        defaultValue={password}
-                        onChange={handleChangeInput}
-                        required
-                        fullWidth
-                        InputLabelProps={{
-                            shrink: true,
-                        }}
-                        variant="outlined"
-                    />
-                </div>
-                <Box align="center" component="section">
-                    <Link to="/forgot_password" className={classes.forgotLink}>
-                        Forgot your password?
+                <Typography align="center">
+                    Sign in to access your account. Not registered?{" "}
+                    <Link to="/register" className={classes.registerLink}>
+                        Create an account
                     </Link>
+                </Typography>
+                <br />
+                {err && showErrMsg(err)}
+                {success && showSuccessMsg(success)}
+
+                <form onSubmit={handleSubmit}>
+                    <div>
+                        <TextField
+                            id="email"
+                            margin="dense"
+                            label="Email Address"
+                            id="email"
+                            name="email"
+                            defaultValue={email}
+                            onChange={handleChangeInput}
+                            placeholder="Email Address"
+                            required
+                            fullWidth
+                            InputLabelProps={{
+                                shrink: true,
+                            }}
+                            variant="outlined"
+                        />
+                        <br />
+                        <br />
+
+                        <TextField
+                            id="password"
+                            margin="dense"
+                            name="password"
+                            label="Password"
+                            placeholder="Password"
+                            type="password"
+                            defaultValue={password}
+                            onChange={handleChangeInput}
+                            required
+                            fullWidth
+                            InputLabelProps={{
+                                shrink: true,
+                            }}
+                            variant="outlined"
+                        />
+                    </div>
+                    <Box align="center" component="section">
+                        <Link to="/forgot_password" className={classes.forgotLink}>
+                            Forgot your password?
+                        </Link>
+                        <br />
+                        <br />
+                        <Button type="submit" variant="contained" color="secondary">
+                            Login
+                        </Button>
+                    </Box>
+                </form>
+                <br />
+                <hr />
+                <br />
+                <Typography align="center">Or Login With</Typography>
+                <br />
+                <Box align="center" component="section" className={classes.socialBtn}>
+                    <FacebookLogin appId="498187324725364" autoLoad={false} fields="name,email,picture" callback={responseFacebook} buttonSize="small" />
                     <br />
                     <br />
-                    <Button type="submit" variant="contained" color="secondary">
-                        Login
-                    </Button>
+                    <GoogleLogin
+                        clientId="1070492734045-9skeg6djskrb3moo2ibgmg35j33ecsh6.apps.googleusercontent.com"
+                        buttonText="Login with google"
+                        onSuccess={responseGoogle}
+                        cookiePolicy={"single_host_origin"}
+                    />
                 </Box>
-            </form>
-            <br />
-            <hr />
-            <br />
-            <Typography align="center">Or Login With</Typography>
-            <br />
-            <Box align="center" component="section" className={classes.socialBtn}>
-                <FacebookLogin appId="498187324725364" autoLoad={false} fields="name,email,picture" callback={responseFacebook} buttonSize="small" />
-                <br />
-                <br />
-                <GoogleLogin
-                    clientId="1070492734045-9skeg6djskrb3moo2ibgmg35j33ecsh6.apps.googleusercontent.com"
-                    buttonText="Login with google"
-                    onSuccess={responseGoogle}
-                    cookiePolicy={"single_host_origin"}
-                />
-            </Box>
+            </CFcard>
         </Container>
     );
 }

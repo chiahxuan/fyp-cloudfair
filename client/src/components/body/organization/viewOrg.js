@@ -7,7 +7,8 @@ import { fetchAllUsers, dispatchGetAllUsers } from "../../../redux/actions/users
 import { dispatchGetOrganization, fetchOrganization } from "../../../redux/actions/organizationAction";
 import { dispatchLogin, fetchUser, dispatchGetUser } from "../../../redux/actions/authAction";
 
-import { Typography, Button, Container, TextField, Card, CardContent } from "@material-ui/core";
+import { makeStyles } from "@material-ui/core/styles";
+import { Typography, Button, Container, TextField, Card, CardContent, Grid } from "@material-ui/core";
 import CFcard from "../../components/CFcard";
 
 const initialState = {
@@ -18,8 +19,29 @@ const initialState = {
     success: "",
     createId: "",
 };
+// import { makeStyles } from "@material-ui/core/styles";
+const useStyles = makeStyles((theme) => ({
+    container: {
+        display: "flex",
+        flexWrap: "wrap",
+    },
+    textField: {
+        marginLeft: theme.spacing(1),
+        marginRight: theme.spacing(1),
+        width: 250,
+    },
+    bgImage: {
+        align: "center",
+        // width: "100%",
+        height: 300,
+        marginLeft: "auto",
+        marginRight: "auto",
+    },
+}));
 
 function CreateOrg() {
+    const classes = useStyles();
+
     const dispatch = useDispatch();
     const token = useSelector((state) => state.token);
     const auth = useSelector((state) => state.auth);
@@ -49,25 +71,63 @@ function CreateOrg() {
     return (
         <Container maxWidth="md">
             <CFcard>
-                <br />
-                <Typography variant="h2">Organization Profile</Typography>
-                <Typography variant="h2">Organization Name here: {organizationData.organizationName}</Typography>
-                <br />
+                <Grid container spacing={8}>
+                    <Grid item xs={12} align="center">
+                        <img
+                            className={classes.bgImage}
+                            src={
+                                organizationData.organizationBackground
+                                    ? organizationData.organizationBackground
+                                    : organizationData.organizationBackground || "https://material-ui.com/static/images/cards/contemplative-reptile.jpg"
+                            }
+                        />
+                    </Grid>
+                    <Grid item xs={12} align="center">
+                        <Typography align="center" variant="h1">
+                            {organizationData.organizationName}
+                        </Typography>
+                    </Grid>
+                    <Grid item xs={12} sm={4}>
+                        <Typography variant="h4">Organization Description: </Typography>
+                    </Grid>
+                    <Grid item xs={12} sm={8}>
+                        <Typography> {organizationData.organizationAbout}</Typography>
+                    </Grid>
+                    <Grid item xs={12} sm={4}>
+                        <Typography variant="h4">Organization Email: </Typography>
+                    </Grid>
+                    <Grid item xs={12} sm={8}>
+                        <Typography> {organizationData.organizationEmail}</Typography>
+                    </Grid>
+                    <Grid item xs={12} sm={4}>
+                        <Typography variant="h4">Edit Organization: </Typography>
+                    </Grid>
+                    <Grid item xs={12} sm={8}>
+                        <Button component={Link} to="/organization/edit">
+                            Edit Organization
+                        </Button>
+                    </Grid>
+                    <Grid item xs={12} sm={4}>
+                        <Typography variant="h4">Add Event: </Typography>
+                    </Grid>
+                    <Grid item xs={12} sm={8}>
+                        <Button component={Link} to="/event/add_event">
+                            Add Event
+                        </Button>
+                    </Grid>
+                    <Grid item xs={12} sm={4}>
+                        <Typography variant="h4">Teams: </Typography>
+                    </Grid>
+                    <Grid item xs={12} sm={8}>
+                        <Typography>
+                            <Button component={Link} to="/organization/team">
+                                Teams
+                            </Button>
+                        </Typography>
+                    </Grid>
+                </Grid>
 
-                <Button component={Link} to="/organization/edit">
-                    Edit Organization
-                </Button>
-
-                <div>
-                    Your upcoming events{" "}
-                    <Button component={Link} to="/event/add_event">
-                        Add Event
-                    </Button>
-                </div>
-
-                <Button component={Link} to="/organization/team">
-                    Teams
-                </Button>
+                <div>Your upcoming events </div>
             </CFcard>
         </Container>
     );

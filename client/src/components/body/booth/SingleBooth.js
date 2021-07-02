@@ -1,5 +1,9 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
+import ReactPlayer from "react-player/lazy";
+
+// import VideoPlayer from "react-video-js-player";
+
 import { Link, useHistory } from "react-router-dom";
 import { useParams } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
@@ -65,6 +69,8 @@ function SingleBooth() {
     return (
         <Container>
             <CFcard>
+                {/* <ReactPlayer controls url="https://www.youtube.com/watch?v=zg9ih6SVACc" width="100%" />  */}
+
                 <Grid container spacing={8}>
                     <Grid item xs={6}>
                         <Grid container spacing={8}>
@@ -109,7 +115,13 @@ function SingleBooth() {
                             <></>
                         )}
                     </Grid>
-                    <Grid item xs={6} align="center"></Grid>
+                    <Grid item xs={6} align="center">
+                        {/* cannot display video player */}
+                        {/* <ReactPlayer controls url="https://www.youtube.com/watch?v=zg9ih6SVACc" width="100%" />  */}
+                        <ReactPlayer playIcon url={booth.bvideo ? booth.bvideo : "https://www.youtube.com/watch?v=DGvP3uIo7IE"} width="100%" />
+
+                        {/* <VideoPlayer src={booth.bvideo} poster={booth.bimage} width="720" height="420"></VideoPlayer> */}
+                    </Grid>
                 </Grid>
             </CFcard>
         </Container>

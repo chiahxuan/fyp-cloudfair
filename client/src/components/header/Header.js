@@ -4,7 +4,7 @@ import { useSelector } from "react-redux";
 import axios from "axios";
 
 import "@fontsource/roboto";
-import { Link } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 import { withRouter } from "react-router-dom";
 import { makeStyles, useTheme, withStyles } from "@material-ui/core/styles";
 import { AppBar, Avatar, Toolbar, Typography, Button, Menu, MenuItem, List, ListItem, ListItemText, ListItemIcon, CssBaseline, Drawer, Divider } from "@material-ui/core";
@@ -212,38 +212,38 @@ function Header() {
                     <Typography className={classes.userName}> {user.name}</Typography>
                 </Button>
                 <StyledMenu id="userMenu" anchorEl={anchorEl} keepMounted open={Boolean(anchorEl)} onClose={handleClose}>
-                    <Link to="/" className={classes.menuItemLink}>
+                    <NavLink to="/" className={classes.menuItemLink}>
                         <StyledMenuItem>
                             <ListItemIcon>
                                 <HomeIcon fontSize="medium" />
                             </ListItemIcon>
                             <ListItemText primary="Home"></ListItemText>
                         </StyledMenuItem>
-                    </Link>
-                    <Link to="/" className={classes.menuItemLink}>
+                    </NavLink>
+                    <NavLink to="/" className={classes.menuItemLink}>
                         <StyledMenuItem>
                             <ListItemIcon>
                                 <EventIcon fontSize="medium" />
                             </ListItemIcon>
                             <ListItemText primary="Events"></ListItemText>
                         </StyledMenuItem>
-                    </Link>
-                    <Link to="/profile" className={classes.menuItemLink}>
+                    </NavLink>
+                    <NavLink to="/profile" className={classes.menuItemLink}>
                         <StyledMenuItem>
                             <ListItemIcon>
                                 <AccountCircleIcon fontSize="medium" />
                             </ListItemIcon>
                             <ListItemText primary="Profile"></ListItemText>{" "}
                         </StyledMenuItem>
-                    </Link>
-                    <Link to="/logout" className={classes.menuItemLink} onClick={handleLogout}>
+                    </NavLink>
+                    <NavLink to="/logout" className={classes.menuItemLink} onClick={handleLogout}>
                         <StyledMenuItem>
                             <ListItemIcon>
                                 <ExitToAppIcon fontSize="medium" />
                             </ListItemIcon>
                             <ListItemText primary="Logout"></ListItemText>
                         </StyledMenuItem>
-                    </Link>
+                    </NavLink>
                 </StyledMenu>
             </div>
         );
@@ -296,7 +296,7 @@ function Header() {
     };
 
     function ListItemLink(props) {
-        return <ListItem button component={Link} {...props} />;
+        return <ListItem button component={NavLink} {...props} />;
     }
     const menuIcon = () => {
         return (
@@ -365,7 +365,7 @@ function Header() {
                     {isLogged ? (
                         userLink()
                     ) : (
-                        <Button color="secondary" className={classes.toolBarBtn} component={Link} to="/login">
+                        <Button color="secondary" className={classes.toolBarBtn} component={NavLink} to="/login">
                             <AccountCircleIcon fontSize="small" />
                             <Typography align="left">Log In</Typography>
                         </Button>
