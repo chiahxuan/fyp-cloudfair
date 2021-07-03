@@ -100,8 +100,12 @@ const boothCtrl = {
 
     // DELETE SINGLE BOOTH
     deleteBooth: async (req, res) => {
+        const { bslug } = req.params;
         try {
-            res.json({ msg: "Returned deleteBooth" });
+            const booth = await Booth.findOne({ bslug: bslug });
+            await Booth.findByIdAndDelete(booth._id);
+
+            res.json({ msg: "Delete booth success" });
         } catch (err) {
             return res.status(500).json({ msg: err.message });
         }
