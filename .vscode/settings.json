@@ -17,6 +17,8 @@
         "fcard",
         "fileupload",
         "refreshtoken",
+        "showcurrentdate",
+        "showdate",
         "value"
     ]
     // "git.ignoreLimitWarning": true

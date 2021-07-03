@@ -20,6 +20,7 @@ const boothCtrl = {
 
             let addBooth = new Booth({
                 bname: bname,
+                bslug: bslug,
                 description: description,
                 bvideo: bvideo,
                 user: user,

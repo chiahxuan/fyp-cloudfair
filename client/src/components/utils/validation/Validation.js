@@ -14,7 +14,7 @@ export const isLength = (password) => {
     return false;
 };
 
-export const isMatch = (password, cf_password) => {
+export const isMatch = (password, cf_password) => {-
     if (password === cf_password) return true;
     return false;
 };
@@ -32,4 +32,10 @@ export const isValidDescription = (string) => {
 export const isValidDateTime = (startDateTime, endDateTime) => {
     if (Date.parse(endDateTime) <= Date.parse(startDateTime)) return true;
     return false;
+};
+
+export const -isInValidDate = (startDateTime, endDateTime) => {
+    var showdate = new Date();
+    var showcurrentdate = showdate.getDate() + "/" + showdate.getMonth() + "/" + showdate.getFullYear();
+    if (Date.parse(endDateTime) < Date.parse(showcurrentdate)  || Date.parse(startDateTime) < Date.parse(showcurrentdate)    ) return true;
 };

@@ -69,7 +69,8 @@ function AddEvent() {
     const handleChangeInput = (e) => {
         const { name, value } = e.target;
         setEvent({ ...event, [name]: value, err: "", success });
-        setDate({ endDate: startDate });
+        setDate({ startDate: startDate, endDate: endDate });
+        // setDate({ endDate: startDate });
         // console.log("description " + description);
         // console.log(event);
     };

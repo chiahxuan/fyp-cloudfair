@@ -36,7 +36,7 @@ function AllEvents() {
                 <Grid container spacing={8}>
                     <Grid item xs={10}></Grid>
                     <Grid item xs={2}>
-                        <Button component={Link} to="event/add_event">
+                        <Button component={Link} to="/event/add_event">
                             Add Event
                         </Button>
                     </Grid>

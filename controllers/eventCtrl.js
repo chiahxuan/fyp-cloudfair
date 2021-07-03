@@ -61,7 +61,6 @@ const eventCtrl = {
     },
     // SHOW SINGLE EVENT
     viewSingleEvent: async (req, res) => {
-        console.log(req);
         // console.log(req.params.eslug);
         try {
             const event = await Event.find({ eslug: req.params.eslug });
@@ -83,9 +82,9 @@ const eventCtrl = {
                 {
                     ename: ename,
                     eBackground: eBackground,
+                    description: description,
                     startDate: startDate,
                     endDate: endDate,
-                    description: description,
                 }
             );
             res.json({ msg: "Returned updateEvent" });

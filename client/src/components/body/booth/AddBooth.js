@@ -106,7 +106,7 @@ function AddBooth() {
         const { name, value } = e.target;
         setBooth({ ...booth, [name]: value, err: "", success });
         // setDate({ endDate: startDate });
-        console.log("description " + description);
+        // console.log("description " + description);
         // console.log(event);
     };
 
@@ -116,12 +116,7 @@ function AddBooth() {
         // console.log(singleEvent._id);
         // console.log(organization._id);
         // console.log(token);
-        e.preventDefault();
-        if (isEmpty(bname) || isEmpty(description) || isEmpty(bslug) || isEmpty(bvideo)) return setBooth({ ...booth, err: "Please fill in all fields.", success: "" });
-
-        //isValidDescription, isValidString
-        if (isValidString(bname) || isValidString(bslug)) return setBooth({ ...booth, err: "String input must be at least 3 to 50 characters.", success: "" });
-        if (isValidDescription(description)) return setBooth({ ...booth, err: "String input must be at least 3 to 2000 characters.", success: "" });
+        // console.log(slugify(bslug + "-" + Math.random().toString(36).substring(7)));
 
         try {
             //CHECK DATA STATE CHANGES
@@ -129,7 +124,7 @@ function AddBooth() {
             // console.log("bslug " + slugify(bslug + "-" + Math.random().toString(36).substring(7)));
             // console.log("description " + description);
             // console.log("bvideo " + bvideo);
-            console.log("bvideo " + auth.user._id);
+            // console.log("bvideo " + auth.user._id);
             const res = await axios.post(
                 `/event/${eslug}/booth/add_booth`,
                 {
