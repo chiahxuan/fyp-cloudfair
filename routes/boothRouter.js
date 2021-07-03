@@ -13,6 +13,6 @@ router.get("/:eslug/booth/all", auth, boothCtrl.viewBooth);
 router.get("/:eslug/booth/:bslug", auth, boothCtrl.viewSingleBooth);
 
 //EDIT BOOTH
-router.patch("/:eslug/booth/:bslug/edit", auth, boothCtrl.editBooth);
+router.patch("/:eslug/booth/:bslug/edit_booth", auth, boothCtrl.editBooth);
 
 module.exports = router;

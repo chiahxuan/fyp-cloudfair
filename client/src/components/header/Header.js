@@ -323,7 +323,7 @@ function Header() {
         {
             text: "Event",
             icon: <EventIcon fontSize="small" />,
-            link: hasEvent ? "event/user_events" : "event/add_event",
+            link: hasEvent ? "/event/user_events" : "/event/add_event",
             // ******settle routing problem
         },
         {

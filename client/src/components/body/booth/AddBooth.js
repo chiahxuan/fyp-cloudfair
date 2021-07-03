@@ -106,7 +106,7 @@ function AddBooth() {
         const { name, value } = e.target;
         setBooth({ ...booth, [name]: value, err: "", success });
         // setDate({ endDate: startDate });
-        // console.log("description " + description);
+        console.log("description " + description);
         // console.log(event);
     };
 
@@ -147,6 +147,7 @@ function AddBooth() {
             );
             console.log(res);
 
+            setData({ ...data, err: "", success: "Updated Success!" });
             // setBooth({ ...booth, err: "", success: "pass val" });
             setBooth({ ...booth, err: "", success: res.data.msg });
             // history.push("/event"); // change location
@@ -168,6 +169,7 @@ function AddBooth() {
                 <br />
                 {err && showErrMsg(err)}
                 {success && showSuccessMsg(success)}
+                {loading && <h3>Loading.....</h3>}
                 <br />
                 <br />
                 <form onSubmit={handleSubmit}>

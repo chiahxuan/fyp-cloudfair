@@ -6,7 +6,6 @@ const Booth = require("../models/Booth");
 const boothCtrl = {
     //ADD BOOTH
     addBooth: async (req, res) => {
-        // console.log(req.body);
         try {
             const { bname, bslug, description, bvideo, user, organization, event } = req.body;
             // console.log(req.headers);
@@ -21,7 +20,6 @@ const boothCtrl = {
 
             let addBooth = new Booth({
                 bname: bname,
-                bslug: bslug,
                 description: description,
                 bvideo: bvideo,
                 user: user,
@@ -50,7 +48,7 @@ const boothCtrl = {
 
     // SHOW SINGLE BOOTH
     viewSingleBooth: async (req, res) => {
-        console.log(req.params.bslug);
+        // console.log(req.params.bslug);
         try {
             const booth = await Booth.findOne({ bslug: req.params.bslug });
             res.json(booth);
@@ -72,24 +70,25 @@ const boothCtrl = {
         // console.log(req.params);
         const { bslug, eslug } = req.params;
         // console.log(req.body);
-        // console.log(eslug);
+        // console.log("success to controller");
+        // console.log(req.body.bimage);
+
         try {
             const event = await Event.findOne({ eslug: eslug });
             const booth = await Booth.findOne({ bslug: bslug });
             // console.log(event);
             // console.log(booth);
-            const { bname, bUpdatedslug, description, bvideo, user, organizationId } = req.body;
+            const { bname, bUpdatedslug, description, bimage, bvideo, user, organizationId } = req.body;
 
             await Booth.findOneAndUpdate(
                 { _id: booth._id },
                 {
                     bname: bname,
                     bslug: bslug,
+                    bimage: bimage,
+                    description: description,
                     description: description,
                     bvideo: bvideo,
-                    user: user,
-                    organization: organizationId,
-                    event: event._id,
                 }
             );
 

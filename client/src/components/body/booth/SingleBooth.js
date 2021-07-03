@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import ReactPlayer from "react-player/lazy";
+import ReactPlayer from "react-player";
 
 // import VideoPlayer from "react-video-js-player";
 
@@ -47,6 +47,10 @@ const initialState = {
     success: "",
 };
 
+function refreshPage() {
+    window.location.reload();
+}
+
 function SingleBooth() {
     const classes = useStyles();
     const auth = useSelector((state) => state.auth);
@@ -65,60 +69,55 @@ function SingleBooth() {
         });
     }, [token, dispatch, callback]);
 
-    console.log(booth);
+    // console.log(booth);
     return (
         <Container>
             <CFcard>
                 {/* <ReactPlayer controls url="https://www.youtube.com/watch?v=zg9ih6SVACc" width="100%" />  */}
-
                 <Grid container spacing={8}>
-                    <Grid item xs={6}>
+                    <Grid item xs={12}>
+                        <ReactPlayer
+                            playIcon
+                            // url="https://fb.watch/6vVorE9gqT/"
+                            url={booth.bvideo}
+                            width="auto"
+                            height="600px"
+                            // url={booth.bvideo ? booth.bvideo : "https://www.youtube.com/watch?v=DGvP3uIo7IE"}
+                            playing="true"
+                        />
+                    </Grid>
+                    <Grid item xs={4}>
                         <Grid container spacing={8}>
                             <Grid item xs={12} align="center">
-                                <img className={classes.bgImage} src={booth.bimage ? booth.bimage : "https://material-ui.com/static/images/cards/contemplative-reptile.jpg"} />
-                            </Grid>
-                            <Grid item xs={12} align="center">
-                                <Typography align="center" variant="h1">
-                                    {booth.bname}
-                                </Typography>
-                            </Grid>
-                            <Grid item xs={12} sm={4}>
-                                <Typography variant="h4">Booth Description: </Typography>
-                            </Grid>
-                            <Grid item xs={12} sm={8}>
-                                <Typography> {booth.description}</Typography>
-                            </Grid>
-                            <Grid item xs={12} sm={4}>
-                                <Typography variant="h4">Booth Slug: </Typography>
-                            </Grid>
-                            <Grid item xs={12} sm={8}>
-                                <Typography> {booth.bslug}</Typography>
-                            </Grid>
-                            <Grid item xs={12} sm={4}>
-                                <Typography variant="h4">Booth Background Image:</Typography>
-                            </Grid>
-                            <Grid item xs={12} sm={8}>
-                                <input type="file" name="file" id="file_up" />
-                            </Grid>
-                            <Grid item xs={12} sm={4}>
-                                <Typography variant="h4">Booth Video URL:</Typography>
-                            </Grid>
-                            <Grid item xs={12} sm={8}>
-                                <Typography> {booth.bvideo}</Typography>
+                                <img
+                                    className={classes.bgImage}
+                                    src={booth.bimage}
+                                    // src={booth.bimage ? booth.bimage : "https://res.cloudinary.com/cloudfair/image/upload/v1624965698/Booth/modern-exhibition.jpg"}
+                                />
                             </Grid>
                         </Grid>
+                    </Grid>
+                    <Grid item xs={8}>
+                        <Typography variant="h4">Booth Description: </Typography>
+                        <br />
+                        <Typography> {booth.description}</Typography>
+                        <br />
+
                         {checkVendor == true ? (
                             <>
-                                <Button>Edit Booth</Button>
+                                <Button component={Link} to={`/event/${eslug}/booth/${bslug}/edit_booth`}>
+                                    Edit Booth
+                                </Button>
                             </>
                         ) : (
                             <></>
                         )}
-                    </Grid>
-                    <Grid item xs={6} align="center">
+                        <Grid container>
+                            <Grid item xs={12} sm={4}></Grid>
+                            <Grid item xs={12} sm={8}></Grid>
+                        </Grid>
                         {/* cannot display video player */}
                         {/* <ReactPlayer controls url="https://www.youtube.com/watch?v=zg9ih6SVACc" width="100%" />  */}
-                        <ReactPlayer playIcon url={booth.bvideo ? booth.bvideo : "https://www.youtube.com/watch?v=DGvP3uIo7IE"} width="100%" />
 
                         {/* <VideoPlayer src={booth.bvideo} poster={booth.bimage} width="720" height="420"></VideoPlayer> */}
                     </Grid>

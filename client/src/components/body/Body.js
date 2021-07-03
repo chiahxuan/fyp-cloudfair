@@ -31,11 +31,11 @@ import EditEvent from "./event/EditEvent";
 import AddBooth from "./booth/AddBooth";
 import AllBooth from "./booth/AllBooth";
 import SingleBooth from "./booth/SingleBooth";
+import EditBooth from "./booth/EditBooth";
 
 const useStyles = makeStyles((theme) => ({
     //default layout for body
     layout: {
-        minHeight: "1200px",
         // maxWidth: "1200px",
         margin: "4em auto 0 auto",
         // backgroundColor: "linear-gradient(#1359da, #142e4e)",
@@ -75,6 +75,7 @@ function Body() {
                 <Route path="/event/:eslug/booth/add_booth" component={isLogged ? AddBooth : NotFound} exact />
                 <Route path="/event/:eslug/booth/all" component={isLogged ? AllBooth : NotFound} exact />
                 <Route path="/event/:eslug/booth/:bslug" component={isLogged ? SingleBooth : NotFound} exact />
+                <Route path="/event/:eslug/booth/:bslug/edit_booth" component={isLogged ? EditBooth : NotFound} exact />
             </Switch>
         </div>
     );
