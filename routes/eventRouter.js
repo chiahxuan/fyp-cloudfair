@@ -15,8 +15,8 @@ router.get("/user_events", auth, eventCtrl.viewAllUserEvents);
 // SHOW SINGLE EVENT
 router.get("/:eslug", auth, eventCtrl.viewSingleEvent);
 
-// //UPDATE EVENT
-// router.patch("/update/:id", auth, eventCtrl.updateEvent);
+//Edit EVENT
+router.patch("/:eslug/edit_event", auth, eventCtrl.editEvent);
 
 // // DELETE SINGLE EVENT
 // router.delete("/:id", auth, eventCtrl.deleteEvent);

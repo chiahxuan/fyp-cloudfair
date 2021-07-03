@@ -70,9 +70,24 @@ const eventCtrl = {
             return res.status(500).json({ msg: err.message });
         }
     },
-    //UPDATE EVENT
-    updateEvent: async (req, res) => {
+    //Edit EVENT
+    editEvent: async (req, res) => {
+        const { eslug } = req.params;
         try {
+            const event = await Event.findOne({ eslug: eslug });
+            // console.log(event);
+            const { ename, eBackground, startDate, endDate, description } = req.body;
+
+            await Event.findOneAndUpdate(
+                { _id: event._id },
+                {
+                    ename: ename,
+                    eBackground: eBackground,
+                    startDate: startDate,
+                    endDate: endDate,
+                    description: description,
+                }
+            );
             res.json({ msg: "Returned updateEvent" });
         } catch (err) {
             return res.status(500).json({ msg: err.message });

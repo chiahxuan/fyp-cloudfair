@@ -81,7 +81,7 @@ function SingleBooth() {
                             // url="https://fb.watch/6vVorE9gqT/"
                             url={booth.bvideo}
                             width="auto"
-                            height="600px"
+                            height="800px"
                             // url={booth.bvideo ? booth.bvideo : "https://www.youtube.com/watch?v=DGvP3uIo7IE"}
                             playing="true"
                         />

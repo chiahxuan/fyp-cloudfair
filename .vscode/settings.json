@@ -11,6 +11,7 @@
         "cloudinary",
         "datetime",
         "default",
+        "eimage",
         "ename",
         "eslug",
         "fcard",
