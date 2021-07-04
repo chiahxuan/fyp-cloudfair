@@ -10,6 +10,7 @@ import { makeStyles } from "@material-ui/core/styles";
 import { Typography, Button, Container, TextField, Card, CardContent, Grid } from "@material-ui/core";
 import CFcard from "../../components/CFcard";
 import EventCard from "../../components/eventCard";
+import SearchField from "react-search-field";
 
 function AllEvents() {
     const auth = useSelector((state) => state.auth);
@@ -17,13 +18,28 @@ function AllEvents() {
     const events = useSelector((state) => state.eventReducer.events);
     const [callback, setCallback] = useState(false);
     const dispatch = useDispatch();
+    const [Events, setEvents] = React.useState([]);
 
+    useEffect(() => {
+        setEvents(events);
+    }, [events]);
     //fetchAllEvents dispatchGetAllEvents
     useEffect(() => {
         fetchAllEvents(token).then((res) => {
             dispatch(dispatchGetAllEvents(res));
         });
     }, [token, dispatch, callback]);
+
+    const onChange = (search) => {
+        setEvents(
+            events.filter((event) => {
+                var validate = event.ename.toLowerCase().includes(search.toLowerCase());
+                if (validate == true) {
+                    return <EventCard event={event} />;
+                }
+            })
+        );
+    };
 
     return (
         <Container>
@@ -34,7 +50,9 @@ function AllEvents() {
                 <br />
                 <br />
                 <Grid container spacing={8}>
-                    <Grid item xs={10}></Grid>
+                    <Grid item xs={10}>
+                        <SearchField placeholder="Search..." onChange={onChange} searchText="" />
+                    </Grid>
                     <Grid item xs={2}>
                         <Button component={Link} to="/event/add_event">
                             Add Event
@@ -42,17 +60,13 @@ function AllEvents() {
                     </Grid>
                 </Grid>
                 <Grid container spacing={8}>
-                    {events.map((event) => (
-                        <Grid item>
-                            {/* <div>{event.ename}</div>
-                            <div>{event.description}</div>
-                            <div>{event.startDate}</div>
-                            <div>{event.endDate}</div>
-                            <div>{event.organization}</div>
-                            <br /> */}
-                            {/* <img src={event.eBackground}></img> */}
-
-                            {/** test event card here*/}
+                    {/* {events.map((event) => (
+                        <Grid item key={event.id}>
+                            <EventCard event={event} />
+                        </Grid>
+                    ))} */}
+                    {Events.map((event) => (
+                        <Grid item key={event._id}>
                             <EventCard event={event} />
                         </Grid>
                     ))}

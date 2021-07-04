@@ -17,6 +17,7 @@ import EditIcon from "@material-ui/icons/Edit";
 import CFcard from "../../components/CFcard";
 import EventCard from "../../components/eventCard";
 import BoothListCard from "../../components/boothListCard";
+import SearchField from "react-search-field";
 
 const useStyles = makeStyles((theme) => ({
     container: {
@@ -46,12 +47,29 @@ function AllBooth() {
     const [callback, setCallback] = useState(false);
     const dispatch = useDispatch();
 
+    const [Booths, setBooths] = React.useState([]);
+
+    useEffect(() => {
+        setBooths(booths);
+    }, [booths]);
+
     useEffect(() => {
         fetchBooth(token, eslug).then((res) => {
             dispatch(dispatchEventBooths(res));
         });
     }, [token, dispatch, callback]);
-    // console.log(booths);
+
+    //SEARCH BOOTHS
+    const onChange = (search) => {
+        setBooths(
+            booths.filter((booth) => {
+                var validate = booth.bname.toLowerCase().includes(search.toLowerCase());
+                if (validate == true) {
+                    return <BoothListCard booth={booth} />;
+                }
+            })
+        );
+    };
 
     //HANDLE TAB CHANGES
     const [value, setValue] = React.useState(1);
@@ -85,9 +103,11 @@ function AllBooth() {
                     Hi {auth.user.name}, here are the booths
                 </Typography>
                 <br />
+                <SearchField placeholder="Search..." onChange={onChange} searchText="" />
+                <br />
                 <br />
                 <Grid container spacing={8}>
-                    {booths.map((booth) => (
+                    {Booths.map((booth) => (
                         <Grid item>
                             <BoothListCard booth={booth} eslug={eslug} />
                         </Grid>
