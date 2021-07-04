@@ -1,6 +1,7 @@
 const Users = require("../models/userModel");
 const Organization = require("../models/Organization");
 const Event = require("../models/Event");
+const Booth = require("../models/Booth");
 
 const eventCtrl = {
     //ADD EVENT
@@ -94,7 +95,17 @@ const eventCtrl = {
     },
     // DELETE SINGLE EVENT
     deleteEvent: async (req, res) => {
+        const { eslug } = req.params;
+        // console.log(eslug);
         try {
+            const event = await Event.findOne({ eslug: eslug });
+
+            //remove all booths that matches the event
+            await Booth.deleteMany({ event: event._id });
+
+            //remove the event
+            await Event.findByIdAndDelete(event._id);
+
             res.json({ msg: "Returned deleteEvent" });
         } catch (err) {
             return res.status(500).json({ msg: err.message });

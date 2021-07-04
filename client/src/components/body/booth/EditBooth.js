@@ -9,6 +9,7 @@ import { useParams } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { showSuccessMsg, showErrMsg } from "../../utils/notification/Notification";
 import { isEmpty, isLength, isValidDescription, isValidString, isValidDateTime } from "../../utils/validation/Validation";
+import { setCheckEventHost, fetchSingleEvent, dispatchGetSingleEvent, fetchEventHostStatus, dispatchEventHostStatus } from "../../../redux/actions/eventAction";
 import { fetchSingleBooth, dispatchSingleBooth } from "../../../redux/actions/boothAction";
 import dayjs from "dayjs";
 
@@ -34,11 +35,13 @@ const useStyles = makeStyles((theme) => ({
         // width: "auto",
         // height: 300,
     },
+    button: {
+        marginLeft: 32,
+    },
 }));
 
 const initialState = {
     bnameData: "",
-    bslugData: "",
     descriptionData: "",
     bimageData: "",
     bvideoData: "",
@@ -55,19 +58,21 @@ function EditBooth() {
     const auth = useSelector((state) => state.auth);
     const token = useSelector((state) => state.token);
     const booth = useSelector((state) => state.boothReducer.booth);
+    const event = useSelector((state) => state.eventReducer.event);
+    const isVendorOwner = useSelector((state) => state.boothReducer.isVendorOwner);
 
     // HANDLE LOADING FUNCTION
     const [loading, setLoading] = useState(false);
     const [data, setData] = useState(initialState);
-    const { bnameData, bslugData, descriptionData, bvideoData, err, success } = data;
+    const { bnameData, descriptionData, bvideoData, err, success } = data;
     const [callback, setCallback] = useState(false);
     const [checkVendor, setCheckVendor] = useState(false);
     const [backgroundImage, setBackgroundImage] = useState(false);
+    const [checkEventHost, setCheckEventHost] = useState(false);
 
     useEffect(() => {
         fetchSingleBooth(token, eslug, bslug).then((res) => {
-            dispatch(dispatchSingleBooth(res));
-            setCheckVendor(booth.user === auth.user._id ? true : false);
+            dispatch(dispatchSingleBooth(res, auth.user._id));
         });
     }, [token, dispatch, callback]);
 
@@ -98,7 +103,6 @@ function EditBooth() {
     };
 
     const updateInfo = () => {
-        // console.log("update info");
         // console.log(bnameData, bslugData, descriptionData, bimageData, bvideoData, err, success);
         // console.log("backgroundImage  " + backgroundImage);
         // console.log("bvideoData  " + bvideoData);
@@ -125,6 +129,28 @@ function EditBooth() {
         }
     };
 
+    const handleDelete = async () => {
+        try {
+            // ADD VALIDATE EVENT HOST
+            if (window.confirm("Are you sure you want to delete this booth?")) {
+                setLoading(true);
+                await axios.delete(`/event/${eslug}/booth/${bslug}/delete_booth`, {
+                    headers: { Authorization: token },
+                });
+                setLoading(false);
+                setCallback(!callback);
+                // history.push(`/event/${eslug}/booth/all`);
+                window.location.href = `http://localhost:3000/event/${eslug}/booth/all`;
+            }
+        } catch (err) {
+            setData({ ...data, err: err.response.data.msg, success: "" });
+        }
+    };
+    // const handleDelete = () => {
+    //     console.log("del");
+
+    // };
+
     return (
         <Container>
             <CFcard>
@@ -137,7 +163,11 @@ function EditBooth() {
                         <form onSubmit={updateInfo}>
                             <Grid container spacing={8}>
                                 <Grid item xs={12} align="center">
-                                    <img onChange={changeImage} className={classes.bgImage} src={backgroundImage ? backgroundImage : booth.bimage} />
+                                    <img
+                                        onChange={changeImage}
+                                        className={classes.bgImage}
+                                        src={backgroundImage ? backgroundImage : booth.bimage || "https://material-ui.com/static/images/cards/contemplative-reptile.jpg"}
+                                    />
                                 </Grid>
                                 <Grid item xs={12} align="center">
                                     <Typography align="center" variant="h1">
@@ -191,7 +221,7 @@ function EditBooth() {
                                 </Grid>
 
                                 <Grid item xs={12} sm={4}>
-                                    <Typography variant="h4">Booth Background Image:</Typography>
+                                    <Typography variant="h4">Booth Image:</Typography>
                                 </Grid>
                                 <Grid item xs={12} sm={8}>
                                     <input type="file" name="file" id="file_up" onChange={changeImage} />
@@ -219,13 +249,22 @@ function EditBooth() {
                                 </Grid>
                             </Grid>{" "}
                         </form>
-
-                        <Button disabled={loading} onClick={updateInfo}>
-                            Update Booth
-                        </Button>
+                        <br />
+                        {isVendorOwner == true ? (
+                            <>
+                                <Button disabled={loading} onClick={updateInfo}>
+                                    Update Booth
+                                </Button>
+                                <Button disabled={loading} onClick={handleDelete} className={classes.button}>
+                                    Delete Booth
+                                </Button>
+                            </>
+                        ) : (
+                            <></>
+                        )}
                     </Grid>
                     <Grid item xs={6} align="center">
-                        {/* cannot display video player */}
+                        {/* cannot display video- player */}
                         {/* <ReactPlayer controls url="https://www.youtube.com/watch?v=zg9ih6SVACc" width="100%" /> */}
                         {/* <ReactPlayer playIcon url={booth.bvideo ? booth.bvideo : "https://www.youtube.com/watch?v=DGvP3uIo7IE"} width="100%" /> */}
 

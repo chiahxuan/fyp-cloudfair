@@ -12,7 +12,6 @@ export const fetchBooth = async (token, eslug) => {
 
 // DISPATCH ALL BOOTHS FOR EVENTS
 export const dispatchEventBooths = (res) => {
-    // console.log(res);
     return {
         type: ACTIONS.GET_ALL_EVENT_BOOTHS,
         payload: res.data,
@@ -28,11 +27,14 @@ export const fetchSingleBooth = async (token, eslug, bslug) => {
 };
 
 //DISPATCH SINGLE BOOTH
-export const dispatchSingleBooth = (res) => {
-    // console.log(res);
+export const dispatchSingleBooth = (res, userId) => {
+    console.log(res);
+    console.log(res.data);
+    console.log(userId);
     return {
         type: ACTIONS.GET_SINGLE_BOOTH,
         payload: res.data,
+        isVendorOwner: res.data.user == userId ? true : false,
     };
 };
 

@@ -49,12 +49,13 @@ export const fetchSingleEvent = async (eslug, token) => {
     return res;
 };
 
-export const dispatchGetSingleEvent = (res) => {
-    // console.log(res.data);
-
+export const dispatchGetSingleEvent = (res, userId) => {
     return {
         type: ACTIONS.GET_SINGLE_EVENT,
         payload: res.data[0],
+        isEventHost: res.data[0].user == userId ? true : false,
+        // !res.data[0] ? false : true,
+        // isAdmin: res.data.role === 1 ? true : false,
     };
 };
 

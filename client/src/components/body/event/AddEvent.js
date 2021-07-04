@@ -109,6 +109,7 @@ function AddEvent() {
             setEvent({ ...event, err: "", success: res.data.msg });
             // history.push("/event");
             // console.log("success");
+            window.location.href = `http://localhost:3000/event/all_events`;
         } catch (err) {
             err.response.data.msg && setEvent({ ...user, err: err.response.data.msg, success: "" });
         }

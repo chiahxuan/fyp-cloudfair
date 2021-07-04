@@ -86,7 +86,6 @@ const boothCtrl = {
                 {
                     bname: bname,
                     bslug: bslug,
-                    bimage: bimage,
                     description: description,
                     bvideo: bvideo,
                 }

@@ -78,7 +78,7 @@ function CreateOrg() {
                             src={
                                 organizationData.organizationBackground
                                     ? organizationData.organizationBackground
-                                    : organizationData.organizationBackground || "https://material-ui.com/static/images/cards/contemplative-reptile.jpg"
+                                    : organizationData.organizationBackground || "https://res.cloudinary.com/cloudfair/image/upload/v1624353682/avatar/organization.png"
                             }
                         />
                     </Grid>

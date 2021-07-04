@@ -13,7 +13,13 @@ import dayjs from "dayjs";
 
 import { makeStyles } from "@material-ui/core/styles";
 import { Typography, Button, Container, TextField, Card, CardContent, Grid, Tabs, Tab, Paper, Box } from "@material-ui/core";
+
+//ICONS IMPORT
 import PersonPinIcon from "@material-ui/icons/PersonPin";
+import AddBoxIcon from "@material-ui/icons/AddBox";
+import StorefrontIcon from "@material-ui/icons/Storefront";
+import EditIcon from "@material-ui/icons/Edit";
+
 import CFcard from "../../components/CFcard";
 var slugify = require("slug");
 
@@ -65,13 +71,14 @@ function EditEvent() {
     const token = useSelector((state) => state.token);
     const event = useSelector((state) => state.eventReducer.event);
     const organization = useSelector((state) => state.organization.organization);
+    const checkEventHost = useSelector((state) => state.eventReducer.isEventHost);
 
     const [data, setData] = useState(initialState);
     const { eventName, description, startDate, endDate, eBgImage, err, success } = data;
     const [date, setDate] = useState(initialState);
 
     // const [singleEvent, setSingleEvent] = useState([]);
-    const [checkEventHost, setCheckEventHost] = useState(false);
+    // const [checkEventHost, setCheckEventHost] = useState(false);
     const [loading, setLoading] = useState(false);
     const [bgImage, setBgImage] = useState(false); // background Image
     const [wantEdit, setWantEdit] = useState(false);
@@ -80,7 +87,7 @@ function EditEvent() {
     //GET CURRENT DATE TIME
 
     //HANDLE TAB CHANGES
-    const [value, setValue] = React.useState(2);
+    const [value, setValue] = React.useState(3);
     const handleTabsChange = (event, newValue) => {
         setValue(newValue);
     };
@@ -142,34 +149,41 @@ function EditEvent() {
         }
     };
 
-    const handleDelete = async (id) => {
+    const handleDelete = async () => {
         try {
-            // if (user._id !== id) {
-            //     if (window.confirm("Are you sure you want to delete this account?")) {
-            //         setLoading(true);
-            //         await axios.delete(`/user/delete/${id}`, {
-            //             headers: { Authorization: token },
-            //         });
-            //         setLoading(false);
-            //         setCallback(!callback);
-            //     }
-            // }
+            // ADD VALIDATE EVENT HOST
+            if (window.confirm("Are you sure you want to delete this event?")) {
+                setLoading(true);
+                await axios.delete(`/event/${eslug}/delete_event`, {
+                    headers: { Authorization: token },
+                });
+                setLoading(false);
+                setCallback(!callback);
+                // history.push(`/event/${eslug}/booth/all`);
+                window.location.href = `http://localhost:3000/event/all_events`;
+            }
         } catch (err) {
             setData({ ...data, err: err.response.data.msg, success: "" });
         }
     };
 
     return (
-        <Container maxWidth="md">
+        <Container>
             <CFcard>
+                <Box align="center" mb={8}>
+                    <Tabs value={value} onChange={handleTabsChange} variant="fullWidth" indicatorColor="secondary" textColor="secondary" aria-label="icon label tabs example">
+                        <Tab icon={<PersonPinIcon />} label="Reception" component={Link} to={`/event/${eslug}`} />
+                        <Tab icon={<StorefrontIcon />} label="Expo" component={Link} to={`/event/${eslug}/booth/all`} />
+                        {checkEventHost == true ? <Tab icon={<AddBoxIcon />} label="Add Booth" component={Link} to={`/event/${event.eslug}/booth/add_booth`} /> : ""}
+                        {checkEventHost == true ? <Tab icon={<EditIcon />} label="Edit Event" /> : ""}
+                    </Tabs>
+                </Box>
                 <Typography variant="h2" align="center">
                     Edit Event
                 </Typography>
                 <br />
-                <br />
                 {err && showErrMsg(err)}
                 {success && showSuccessMsg(success)}
-                <br />
                 <br />
                 <form onSubmit={updateEventInfo}>
                     <Grid container spacing={8}>
@@ -280,15 +294,6 @@ function EditEvent() {
                 </Grid>
                 <br />
                 <br />
-                <Box align="center">
-                    <Paper square className={classes.tab}>
-                        <Tabs value={value} onChange={handleTabsChange} indicatorColor="secondary" textColor="secondary" aria-label="icon label tabs example">
-                            <Tab icon={<PersonPinIcon />} label="Reception" component={Link} to={`/event/${eslug}`} />
-                            <Tab icon={<PersonPinIcon />} label="Expo" component={Link} to={`/event/${eslug}/booth/all`} />
-                            <Tab icon={<PersonPinIcon />} label="Edit Event" />
-                        </Tabs>
-                    </Paper>
-                </Box>
 
                 <br />
                 <br />

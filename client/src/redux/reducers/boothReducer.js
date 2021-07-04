@@ -1,9 +1,10 @@
 import ACTIONS from "../actions";
 
 const initialState = {
-    isVendor: false,
     booth: "",
     booths: [],
+    isVendorOwner: false,
+    hasOwnedBooth: false,
 };
 
 const boothReducer = (state = initialState, action) => {
@@ -17,6 +18,15 @@ const boothReducer = (state = initialState, action) => {
             return {
                 ...state,
                 booth: action.payload,
+                isVendorOwner: action.isVendorOwner,
+                hasOwnedBooth: true,
+            };
+        case ACTIONS.ADD_BOOTH:
+            return {
+                ...state,
+                booth: action.payload,
+                isVendorOwner: action.isVendorOwner,
+                hasOwnedBooth: true,
             };
 
         // case ACTIONS.GET_SINGLE_booth:

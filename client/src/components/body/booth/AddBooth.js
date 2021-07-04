@@ -11,8 +11,15 @@ import { dispatchGetOrganization, fetchOrganization } from "../../../redux/actio
 import { setSingleEventParam } from "../../../redux/actions/eventAction";
 
 import { makeStyles } from "@material-ui/core/styles";
-import { Typography, Button, Container, TextField, Card, CardContent } from "@material-ui/core";
+import { Typography, Button, Container, TextField, Tab, Tabs, Box, Card, CardContent } from "@material-ui/core";
 import CFcard from "../../components/CFcard";
+
+//ICONS IMPORT
+import PersonPinIcon from "@material-ui/icons/PersonPin";
+import AddBoxIcon from "@material-ui/icons/AddBox";
+import StorefrontIcon from "@material-ui/icons/Storefront";
+import EditIcon from "@material-ui/icons/Edit";
+
 var slugify = require("slug");
 
 const useStyles = makeStyles((theme) => ({
@@ -51,6 +58,7 @@ function AddBooth() {
     const auth = useSelector((state) => state.auth);
     const token = useSelector((state) => state.token);
     const { user } = auth; // to get user ID
+    const event = useSelector((state) => state.eventReducer.event);
 
     //access to event
     const events = useSelector((state) => state.eventReducer.events);
@@ -140,32 +148,44 @@ function AddBooth() {
                     headers: { Authorization: token },
                 }
             );
-            console.log(res);
 
-            setData({ ...data, err: "", success: "Updated Success!" });
+            //update isVendorOwner status and update already owned booth
+
             // setBooth({ ...booth, err: "", success: "pass val" });
             setBooth({ ...booth, err: "", success: res.data.msg });
-            // history.push("/event"); // change location
+            // history.push(`/event/${eslug}`); // change location
         } catch (err) {
             err.response.data.msg && setBooth({ ...booth, err: err.response.data.msg, success: "" });
         }
     };
 
+    //HANDLE TAB CHANGES
+    const [value, setValue] = React.useState(2);
+    const handleTabsChange = (event, newValue) => {
+        setValue(newValue);
+    };
+
     return (
         <Container>
             <CFcard>
+                <Box align="center" mb={8}>
+                    <Tabs value={value} onChange={handleTabsChange} variant="fullWidth" indicatorColor="secondary" textColor="secondary" aria-label="icon label tabs example">
+                        <Tab icon={<PersonPinIcon />} label="Reception" component={Link} to={`/event/${eslug}`} />
+                        <Tab icon={<StorefrontIcon />} label="Expo" component={Link} to={`/event/${eslug}/booth/all`} />
+                        {checkEventHost == true ? <Tab icon={<AddBoxIcon />} label="Add Booth" /> : ""}
+                        {checkEventHost == true ? <Tab icon={<EditIcon />} label="Edit Event" component={Link} to={`/event/${eslug}/edit_event`} /> : ""}
+                    </Tabs>
+                </Box>
                 <Typography align="center" variant="h1">
-                    Add Event Booth
+                    Add Event Booth for: {event.ename}
                 </Typography>
                 <Typography align="center">
                     or back to <Link to="/event/user_events">Events</Link>
                 </Typography>
                 <br />
-                <br />
                 {err && showErrMsg(err)}
                 {success && showSuccessMsg(success)}
                 {loading && <h3>Loading.....</h3>}
-                <br />
                 <br />
                 <form onSubmit={handleSubmit}>
                     <TextField

@@ -2,7 +2,7 @@ import ACTIONS from "../actions";
 
 const initialState = {
     event: "",
-    eventHosting: false, // single event page only validate
+    // eventHosting: false, // single event page only validate
     events: [],
     hasEvent: false,
     isEventHost: false,
@@ -31,12 +31,15 @@ const eventReducer = (state = initialState, action) => {
                 ...state,
                 event: action.payload,
                 hasEvent: true,
+                isEventHost: action.isEventHost,
             };
         case ACTIONS.GET_SINGLE_EVENT:
+            console.log(action.isEventHost);
             return {
                 ...state,
                 event: action.payload,
                 hasEvent: true,
+                isEventHost: action.isEventHost,
             };
         case ACTIONS.GET_IS_EVENT_HOST:
             return {

@@ -62,10 +62,14 @@ function SingleBooth() {
     const { eslug, bslug } = useParams();
     const [checkVendor, setCheckVendor] = useState(false);
 
+    //CHECK AUTHORITY TO ACCESS TO EDIT
+    const checkEventHost = useSelector((state) => state.eventReducer.isEventHost); // EVENT HOST
+    const checkVendorOwner = useSelector((state) => state.eventReducer.isEventHost); // EVENT HOST
+    const isVendorOwner = useSelector((state) => state.boothReducer.isVendorOwner);
+
     useEffect(() => {
         fetchSingleBooth(token, eslug, bslug).then((res) => {
-            dispatch(dispatchSingleBooth(res));
-            setCheckVendor(booth.user === auth.user._id ? true : false);
+            dispatch(dispatchSingleBooth(res, auth.user._id));
         });
     }, [token, dispatch, callback]);
 
@@ -103,7 +107,7 @@ function SingleBooth() {
                         <Typography> {booth.description}</Typography>
                         <br />
 
-                        {checkVendor == true ? (
+                        {isVendorOwner == true ? (
                             <>
                                 <Button component={Link} to={`/event/${eslug}/booth/${bslug}/edit_booth`}>
                                     Edit Booth

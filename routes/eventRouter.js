@@ -18,7 +18,7 @@ router.get("/:eslug", auth, eventCtrl.viewSingleEvent);
 //Edit EVENT
 router.patch("/:eslug/edit_event", auth, eventCtrl.editEvent);
 
-// // DELETE SINGLE EVENT
-// router.delete("/:id", auth, eventCtrl.deleteEvent);
+// DELETE SINGLE EVENT
+router.delete("/:eslug/delete_event", auth, eventCtrl.deleteEvent);
 
 module.exports = router;

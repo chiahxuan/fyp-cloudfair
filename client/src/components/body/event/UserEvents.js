@@ -43,6 +43,14 @@ function UserEvents() {
                 <br />
                 <br />
                 <Grid container spacing={8}>
+                    <Grid item xs={10}></Grid>
+                    <Grid item xs={2}>
+                        <Button component={Link} to="/event/add_event">
+                            Add Event
+                        </Button>
+                    </Grid>
+                </Grid>
+                <Grid container spacing={8}>
                     {events.map((event) => (
                         <Grid item>
                             {/* <div>{event.ename}</div>
