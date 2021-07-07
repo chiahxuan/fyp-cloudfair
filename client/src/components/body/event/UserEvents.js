@@ -31,6 +31,7 @@ function UserEvents() {
         });
     }, [token, dispatch, callback]);
 
+    //SEARCH EVENTS
     const onChange = (search) => {
         setEvents(
             events.filter((event) => {
