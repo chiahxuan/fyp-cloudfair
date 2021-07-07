@@ -28,9 +28,9 @@ export const fetchSingleBooth = async (token, eslug, bslug) => {
 
 //DISPATCH SINGLE BOOTH
 export const dispatchSingleBooth = (res, userId) => {
-    console.log(res);
-    console.log(res.data);
-    console.log(userId);
+    // console.log(res);
+    // console.log(res.data);
+    // console.log(userId);
     return {
         type: ACTIONS.GET_SINGLE_BOOTH,
         payload: res.data,

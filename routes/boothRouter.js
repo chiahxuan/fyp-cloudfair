@@ -18,4 +18,8 @@ router.patch("/:eslug/booth/:bslug/edit_booth", auth, boothCtrl.editBooth);
 //DELETE BOOTH
 router.delete("/:eslug/booth/:bslug/delete_booth", auth, boothCtrl.deleteBooth);
 
+//STREAMING
+router.get("/:eslug/booth/:bslug/createRoom", auth, boothCtrl.createRoom);
+router.get("/:eslug/booth/:bslug/streaming_room/:room", auth, boothCtrl.streamingRoom);
+
 module.exports = router;

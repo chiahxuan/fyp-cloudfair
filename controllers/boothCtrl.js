@@ -2,6 +2,7 @@ const Users = require("../models/userModel");
 const Organization = require("../models/Organization");
 const Event = require("../models/Event");
 const Booth = require("../models/Booth");
+const { v4: uuidV4 } = require("uuid");
 
 const boothCtrl = {
     //ADD BOOTH
@@ -77,10 +78,9 @@ const boothCtrl = {
         try {
             const event = await Event.findOne({ eslug: eslug });
             const booth = await Booth.findOne({ bslug: bslug });
-            // console.log(event);
-            // console.log(booth);
-            const { bname, bUpdatedslug, description, bimage, bvideo, user, organizationId } = req.body;
 
+            //FIX ENSURE THE INPUTS, REMOVE UNUSED VARIABLES, AND REMOVE BSLUG FOR CHANGES.
+            const { bname, bUpdatedslug, description, bimage, bvideo, user, organizationId } = req.body;
             await Booth.findOneAndUpdate(
                 { _id: booth._id },
                 {
@@ -105,6 +105,28 @@ const boothCtrl = {
             await Booth.findByIdAndDelete(booth._id);
 
             res.json({ msg: "Delete booth success" });
+        } catch (err) {
+            return res.status(500).json({ msg: err.message });
+        }
+    },
+
+    //CREATE STREAMING ROOM
+    createRoom: async (req, res) => {
+        //CREATE ROOM, AND REDIRECT USER TO THAT UNIQUE ROOM
+        // res.redirect(`/event/${eslug}/booth/${bslug}/stream/${uuidV4()}`);
+        // window.location.href = `/event/${eslug}/booth/${bslug}/stream/${uuidV4()}`;
+        // res.redirect(`/stream/${uuidV4()}`);
+    },
+    //STREAMING ROOM
+    streamingRoom: async (req, res) => {
+        // const { bslug } = req.params;
+        const { room } = req.params.room;
+        console.log(room);
+        // res.render("room", { roomId: req.params.room });
+
+        // res.Render("room", { roomId: req.params.room });
+        try {
+            res.json({ msg: "Streaming Room" });
         } catch (err) {
             return res.status(500).json({ msg: err.message });
         }

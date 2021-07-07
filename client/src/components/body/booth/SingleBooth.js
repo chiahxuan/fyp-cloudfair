@@ -15,7 +15,7 @@ import dayjs from "dayjs";
 import { makeStyles } from "@material-ui/core/styles";
 import { Typography, Button, Container, TextField, Card, CardContent, Grid } from "@material-ui/core";
 import CFcard from "../../components/CFcard";
-var slugify = require("slug");
+const { v4: uuidV4 } = require("uuid");
 
 // import { makeStyles } from "@material-ui/core/styles";
 const useStyles = makeStyles((theme) => ({
@@ -34,6 +34,9 @@ const useStyles = makeStyles((theme) => ({
         marginLeft: "auto",
         marginRight: "auto",
     },
+    button: {
+        width: 200,
+    },
 }));
 
 const initialState = {
@@ -46,10 +49,6 @@ const initialState = {
     err: "",
     success: "",
 };
-
-function refreshPage() {
-    window.location.reload();
-}
 
 function SingleBooth() {
     const classes = useStyles();
@@ -73,7 +72,27 @@ function SingleBooth() {
         });
     }, [token, dispatch, callback]);
 
-    // console.log(booth);
+    const loadLiveVideo = () => {
+        // navigator.mediaDevices
+        //     .getUserMedia({
+        //         video: {
+        //             width: {
+        //                 min: 640,
+        //                 ideal: 1280,
+        //                 max: 1280,
+        //             },
+        //             height: {
+        //                 min: 640,
+        //                 ideal: 1280,
+        //                 max: 1280,
+        //             },
+        //         },
+        //     })
+        //     .then((stream) => {
+        //         document.getElementById("vid"), (srcObject = stream);
+        //     });
+    };
+
     return (
         <Container>
             <CFcard>
@@ -89,6 +108,10 @@ function SingleBooth() {
                             // url={booth.bvideo ? booth.bvideo : "https://www.youtube.com/watch?v=DGvP3uIo7IE"}
                             playing="true"
                         />
+                    </Grid>
+                    <Grid item xs={12}>
+                        video here:
+                        <video id="vid" autoplay onClick={loadLiveVideo}></video>
                     </Grid>
                     <Grid item xs={4}>
                         <Grid container spacing={8}>
@@ -109,8 +132,13 @@ function SingleBooth() {
 
                         {isVendorOwner == true ? (
                             <>
-                                <Button component={Link} to={`/event/${eslug}/booth/${bslug}/edit_booth`}>
+                                <Button className={classes.button} component={Link} to={`/event/${eslug}/booth/${bslug}/edit_booth`}>
                                     Edit Booth
+                                </Button>
+                                <br />
+                                <br />
+                                <Button className={classes.button} component={Link} to={`/event/${eslug}/booth/${bslug}/streaming_room/${uuidV4()}`}>
+                                    Visit Stream
                                 </Button>
                             </>
                         ) : (
