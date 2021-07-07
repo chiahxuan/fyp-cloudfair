@@ -34,7 +34,7 @@ export const dispatchSingleBooth = (res, userId) => {
     return {
         type: ACTIONS.GET_SINGLE_BOOTH,
         payload: res.data,
-        isVendorOwner: res.data.user == userId ? true : false,
+        isVendorOwner: res.data.user === userId ? true : false,
     };
 };
 

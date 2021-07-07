@@ -1,5 +1,6 @@
 import React from "react";
 import { Switch, Route } from "react-router-dom";
+import { Container } from "@material-ui/core";
 
 import NotFound from "../utils/NotFound/NotFound";
 
@@ -17,7 +18,7 @@ import EditUser from "../body/profile/EditUser";
 import ForgotPassword from "./auth/ForgotPassword";
 import ResetPassword from "./auth/ResetPassword";
 //ORGANIZATION IMPORTS
-import CreateOrg from "../body/organization/CreateOrg";
+import CreateOrg from "./organization/CreateOrg";
 import ViewOrg from "./organization/ViewOrg";
 
 //EVENT IMPORTS
@@ -39,6 +40,7 @@ const useStyles = makeStyles((theme) => ({
     layout: {
         // maxWidth: "1200px",
         margin: "4em auto 0 auto",
+        height: 1500,
         // backgroundColor: "linear-gradient(#1359da, #142e4e)",
         // backgroundColor: "linear-gradient(to right, #1359da, #142e4e)",
         // background: "linear-gradient(45deg, #FE6B8B 30%, #FF8E53 90%)",
