@@ -56,6 +56,7 @@ function Body() {
         <div className={classes.layout}>
             <Header />
             <Switch>
+                <Route path="/" component={isLogged ? AllEvents : Login} exact />
                 <Route path="/login" component={isLogged ? NotFound : Login} exact />
                 <Route path="/register" component={isLogged ? NotFound : Register} exact />
                 <Route path="/forgot_password" component={isLogged ? NotFound : ForgotPassword} exact />

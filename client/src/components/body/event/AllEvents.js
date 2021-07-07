@@ -16,9 +16,9 @@ function AllEvents() {
     const dispatch = useDispatch();
     const [Events, setEvents] = React.useState([]);
 
-    useEffect(() => {
-        setEvents(events);
-    }, [events]);
+    // useEffect(() => {
+    //     setEvents(events);
+    // }, [events]);
     //fetchAllEvents dispatchGetAllEvents
     useEffect(() => {
         fetchAllEvents(token).then((res) => {
@@ -26,6 +26,7 @@ function AllEvents() {
         });
     }, [token, dispatch, callback]);
 
+    //SEARCH EVENTS
     const onChange = (search) => {
         setEvents(
             events.filter((event) => {
@@ -61,7 +62,7 @@ function AllEvents() {
                             <EventCard event={event} />
                         </Grid>
                     ))} */}
-                    {Events.map((event) => (
+                    {events.map((event) => (
                         <Grid item key={event._id}>
                             <EventCard event={event} />
                         </Grid>
