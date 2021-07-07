@@ -88,7 +88,7 @@ const eventCtrl = {
                     endDate: endDate,
                 }
             );
-            res.json({ msg: "Returned updateEvent" });
+            res.json({ msg: "Update Event Success" });
         } catch (err) {
             return res.status(500).json({ msg: err.message });
         }
@@ -106,7 +106,7 @@ const eventCtrl = {
             //remove the event
             await Event.findByIdAndDelete(event._id);
 
-            res.json({ msg: "Returned deleteEvent" });
+            res.json({ msg: "Delete Event Success" });
         } catch (err) {
             return res.status(500).json({ msg: err.message });
         }

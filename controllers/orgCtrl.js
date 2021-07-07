@@ -48,7 +48,24 @@ const organizationCtrl = {
             return res.status(500).json({ msg: err.message });
         }
     },
-    editOrg: {},
+    editOrg: async (req, res) => {
+        const user = await Users.findById(req.user.id).select("-password");
+        const organization = await Organizations.findOne({ organizationCreatorId: user._id });
+        const { organizationName, organizationAbout, organizationBackground, organizationEmail } = req.body;
+
+        // console.log(organizationName, organizationAbout, organizationBackground, organizationEmail);
+        console.log(organization._id);
+        await Organizations.findOneAndUpdate(
+            { _id: organization._id },
+            {
+                organizationName: organizationName,
+                organizationAbout: organizationAbout,
+                organizationBackground: organizationBackground,
+                organizationEmail: organizationEmail,
+            }
+        );
+        res.json({ msg: "Update Organization Success" });
+    },
 };
 
 function validateEmail(email) {

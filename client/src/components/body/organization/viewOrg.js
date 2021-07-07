@@ -37,6 +37,9 @@ const useStyles = makeStyles((theme) => ({
         marginLeft: "auto",
         marginRight: "auto",
     },
+    button: {
+        width: 200,
+    },
 }));
 
 function CreateOrg() {
@@ -103,7 +106,7 @@ function CreateOrg() {
                         <Typography variant="h4">Edit Organization: </Typography>
                     </Grid>
                     <Grid item xs={12} sm={8}>
-                        <Button component={Link} to="/organization/edit">
+                        <Button component={Link} to="/organization/edit_organization" className={classes.button}>
                             Edit Organization
                         </Button>
                     </Grid>
@@ -111,7 +114,7 @@ function CreateOrg() {
                         <Typography variant="h4">Add Event: </Typography>
                     </Grid>
                     <Grid item xs={12} sm={8}>
-                        <Button component={Link} to="/event/add_event">
+                        <Button component={Link} to="/event/add_event" className={classes.button}>
                             Add Event
                         </Button>
                     </Grid>
@@ -120,14 +123,12 @@ function CreateOrg() {
                     </Grid>
                     <Grid item xs={12} sm={8}>
                         <Typography>
-                            <Button component={Link} to="/organization/team">
+                            <Button component={Link} to="/organization/team" className={classes.button}>
                                 Teams
                             </Button>
                         </Typography>
                     </Grid>
                 </Grid>
-
-                <div>Your upcoming events </div>
             </CFcard>
         </Container>
     );

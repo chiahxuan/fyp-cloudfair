@@ -20,6 +20,7 @@ import ResetPassword from "./auth/ResetPassword";
 //ORGANIZATION IMPORTS
 import CreateOrg from "./organization/CreateOrg";
 import ViewOrg from "./organization/ViewOrg";
+import EditOrg from "./organization/EditOrg";
 
 //EVENT IMPORTS
 import AddEvent from "./event/AddEvent";
@@ -67,6 +68,7 @@ function Body() {
                 {/* ORGANIZATION ROUTES */}
                 <Route path="/organization/new" component={isLogged ? CreateOrg : NotFound} exact />
                 <Route path="/organization/overview" component={isLogged ? ViewOrg : NotFound} exact />
+                <Route path="/organization/edit_organization" component={isLogged ? EditOrg : NotFound} exact />
 
                 {/* EVENT ROUTES */}
                 <Route path="/event/add_event" component={isLogged ? AddEvent : NotFound} exact />
