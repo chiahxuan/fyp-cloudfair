@@ -4,11 +4,12 @@ import { Link } from "react-router-dom";
 import { useParams } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { fetchSingleEvent, dispatchGetSingleEvent } from "../../../redux/actions/eventAction";
+import { fetchBooth, dispatchEventBooths } from "../../../redux/actions/boothAction";
 // import { getSingleEventParam, dispatchSetEventParam } from "../../../redux/actions/eventAction";
 import dayjs from "dayjs";
 
 import { makeStyles } from "@material-ui/core/styles";
-import { Typography, Button, Container, Grid, Tabs, Tab, Paper, Box } from "@material-ui/core";
+import { Typography, Button, Container, Grid, Tabs, Tab, Box } from "@material-ui/core";
 import PersonPinIcon from "@material-ui/icons/PersonPin";
 import AddBoxIcon from "@material-ui/icons/AddBox";
 import StorefrontIcon from "@material-ui/icons/Storefront";
@@ -61,7 +62,12 @@ function SingleEvent() {
     const checkEventHost = useSelector((state) => state.eventReducer.isEventHost);
     const organization = useSelector((state) => state.organization.organization);
     const hasOrganization = useSelector((state) => state.organization.hasOrganization);
+
+    const [Booths, setBooths] = React.useState([]);
     const hasOwnedBooth = useSelector((state) => state.boothReducer.hasOwnedBooth);
+    const booths = useSelector((state) => state.boothReducer.booths);
+    const booth = useSelector((state) => state.boothReducer.booth);
+
     const dispatch = useDispatch();
 
     const [data, setData] = useState(initialState);
@@ -83,7 +89,11 @@ function SingleEvent() {
     }, [token, dispatch, callback]);
 
     //RECOGNIZE USER STATUS FOR BOOTHS
-    useEffect(() => {});
+    useEffect(() => {
+        fetchBooth(token, eslug).then((res) => {
+            dispatch(dispatchEventBooths(res, auth.user._id));
+        });
+    }, [token, dispatch, callback]);
 
     //HANDLE TAB CHANGES
     const [value, setValue] = React.useState(0);
@@ -98,13 +108,17 @@ function SingleEvent() {
                     <Tabs value={value} onChange={handleTabsChange} variant="fullWidth" indicatorColor="secondary" textColor="secondary" aria-label="icon label tabs example">
                         <Tab icon={<PersonPinIcon />} label="Reception" />
                         <Tab icon={<StorefrontIcon />} label="Expo" component={Link} to={`/event/${eslug}/booth/all`} />
-                        {checkEventHost == true ? <Tab icon={<EditIcon />} label="Edit Event" component={Link} to={`${eslug}/edit_event`} /> : ""}
+                        {checkEventHost == true ? <Tab icon={<EditIcon />} label="Edit Event" component={Link} to={`/event/${eslug}/edit_event`} /> : ""}
                         {(hasOrganization == true && hasOwnedBooth == false) || checkEventHost == true ? (
                             <Tab icon={<AddBoxIcon />} label="Add Booth" component={Link} to={`/event/${event.eslug}/booth/add_booth`} />
                         ) : (
                             ""
                         )}
-                        {/* {hasOrganization == true && hasOwnedBooth == true ? <Tab icon={<EditIcon />} label="Edit Booth" component={Link} to={`${eslug}/edit_event`} /> : ""} */}
+                        {hasOrganization == true && hasOwnedBooth == true && checkEventHost == false ? (
+                            <Tab icon={<EditIcon />} label="Edit Booth" component={Link} to={`/event/${eslug}/booth/${booth.bslug}/edit_booth`} />
+                        ) : (
+                            ""
+                        )}
                     </Tabs>
                 </Box>
                 {/** VIEW EVENT  */}

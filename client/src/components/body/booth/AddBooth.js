@@ -74,10 +74,15 @@ function AddBooth() {
 
     const [data, setData] = useState(initialState); // handle inputs
     const [singleEvent, setSingleEvent] = useState([]); //get singleEventObject
-    const [checkEventHost, setCheckEventHost] = useState(false); //boolean to check even organizerId
     const [loading, setLoading] = useState(false); //i dunno
     const [bgImage, setBgImage] = useState(false); //image update
     const [wantEdit, setWantEdit] = useState(false);
+
+    // const booths = useSelector((state) => state.boothReducer.booths);
+    // const booth = useSelector((state) => state.boothReducer.booth);
+    const checkEventHost = useSelector((state) => state.eventReducer.isEventHost);
+    const hasOrganization = useSelector((state) => state.organization.hasOrganization);
+    const hasOwnedBooth = useSelector((state) => state.boothReducer.hasOwnedBooth);
 
     //Dispatch organization
     useEffect(() => {
@@ -97,7 +102,6 @@ function AddBooth() {
             events.forEach((event) => {
                 if (event.eslug === eslug) {
                     setSingleEvent(event);
-                    setCheckEventHost(event.user === auth.user._id ? true : false);
                     setSingleEventParam(event);
                 }
             });
@@ -154,13 +158,21 @@ function AddBooth() {
             // setBooth({ ...booth, err: "", success: "pass val" });
             setBooth({ ...booth, err: "", success: res.data.msg });
             // history.push(`/event/${eslug}`); // change location
+            window.location.href = `http://localhost:3000/event/${eslug}/booth/all`;
         } catch (err) {
             err.response.data.msg && setBooth({ ...booth, err: err.response.data.msg, success: "" });
         }
     };
 
     //HANDLE TAB CHANGES
-    const [value, setValue] = React.useState(2);
+    const tabNumber = () => {
+        if (checkEventHost == true) {
+            return 3;
+        } else {
+            return 2;
+        }
+    };
+    const [value, setValue] = React.useState(tabNumber);
     const handleTabsChange = (event, newValue) => {
         setValue(newValue);
     };
@@ -172,8 +184,15 @@ function AddBooth() {
                     <Tabs value={value} onChange={handleTabsChange} variant="fullWidth" indicatorColor="secondary" textColor="secondary" aria-label="icon label tabs example">
                         <Tab icon={<PersonPinIcon />} label="Reception" component={Link} to={`/event/${eslug}`} />
                         <Tab icon={<StorefrontIcon />} label="Expo" component={Link} to={`/event/${eslug}/booth/all`} />
-                        {checkEventHost == true ? <Tab icon={<AddBoxIcon />} label="Add Booth" /> : ""}
+                        {/* {checkEventHost == true ? <Tab icon={<AddBoxIcon />} label="Add Booth" /> : ""} */}
+
                         {checkEventHost == true ? <Tab icon={<EditIcon />} label="Edit Event" component={Link} to={`/event/${eslug}/edit_event`} /> : ""}
+                        {(hasOrganization == true && hasOwnedBooth == false) || checkEventHost == true ? <Tab icon={<AddBoxIcon />} label="Add Booth" /> : ""}
+                        {hasOrganization == true && hasOwnedBooth == true && checkEventHost == false ? (
+                            <Tab icon={<EditIcon />} label="Edit Booth" component={Link} to={`/event/${eslug}/booth/${booth.bslug}/edit_booth`} />
+                        ) : (
+                            ""
+                        )}
                     </Tabs>
                 </Box>
                 <Typography align="center" variant="h1">

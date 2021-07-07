@@ -2,7 +2,7 @@ import ACTIONS from "./index";
 import axios from "axios";
 
 //FETCH ALL BOOTH BASED ON SLUG
-export const fetchBooth = async (token, eslug) => {
+export const fetchBooth = async (token, eslug, user) => {
     const res = await axios.get(`/event/${eslug}/booth/all`, {
         headers: { Authorization: token },
     });
@@ -11,10 +11,25 @@ export const fetchBooth = async (token, eslug) => {
 };
 
 // DISPATCH ALL BOOTHS FOR EVENTS
-export const dispatchEventBooths = (res) => {
+export const dispatchEventBooths = (res, userId) => {
+    const events = res.data;
+    var hasOwnedBooth = false;
+    var ownedBooth = "";
+
+    for (let i = 0; i < events.length; i++) {
+        if (events[i].user === userId) {
+            hasOwnedBooth = true;
+            console.log(events[i]);
+            ownedBooth = events[i];
+            break;
+        }
+    }
+
     return {
         type: ACTIONS.GET_ALL_EVENT_BOOTHS,
         payload: res.data,
+        hasOwnedBooth: hasOwnedBooth,
+        booth: ownedBooth,
     };
 };
 

@@ -40,6 +40,7 @@ function AllBooth() {
     const event = useSelector((state) => state.eventReducer.event);
 
     const booths = useSelector((state) => state.boothReducer.booths);
+    const booth = useSelector((state) => state.boothReducer.booth);
     const checkEventHost = useSelector((state) => state.eventReducer.isEventHost);
     const hasOrganization = useSelector((state) => state.organization.hasOrganization);
     const hasOwnedBooth = useSelector((state) => state.boothReducer.hasOwnedBooth);
@@ -55,7 +56,7 @@ function AllBooth() {
 
     useEffect(() => {
         fetchBooth(token, eslug).then((res) => {
-            dispatch(dispatchEventBooths(res));
+            dispatch(dispatchEventBooths(res, auth.user._id));
         });
     }, [token, dispatch, callback]);
 
@@ -85,16 +86,16 @@ function AllBooth() {
                         <Tab icon={<PersonPinIcon />} label="Reception" component={Link} to={`/event/${eslug}`} />
                         <Tab icon={<StorefrontIcon />} label="Expo" />
                         {checkEventHost == true ? <Tab icon={<EditIcon />} label="Edit Event" component={Link} to={`/event/${eslug}/edit_event`} /> : ""}
-                        {hasOrganization == true && hasOwnedBooth == false ? (
+                        {(hasOrganization == true && hasOwnedBooth == false) || checkEventHost == true ? (
                             <Tab icon={<AddBoxIcon />} label="Add Booth" component={Link} to={`/event/${event.eslug}/booth/add_booth`} />
                         ) : (
                             ""
                         )}
-                        {/* {hasOrganization == true && hasOwnedBooth == true ? (
-                            <Tab icon={<EditIcon />} label="Edit Booth" component={Link} to={`/event/${eslug}/booth/${bslug}/edit_event`} />
+                        {hasOrganization == true && hasOwnedBooth == true && checkEventHost == false ? (
+                            <Tab icon={<EditIcon />} label="Edit Booth" component={Link} to={`/event/${eslug}/booth/${booth.bslug}/edit_booth`} />
                         ) : (
                             ""
-                        )} */}
+                        )}
                     </Tabs>
                 </Box>
                 <br />

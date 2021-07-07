@@ -13,6 +13,8 @@ const boothReducer = (state = initialState, action) => {
             return {
                 ...state,
                 booths: action.payload,
+                hasOwnedBooth: action.hasOwnedBooth,
+                booth: action.booth,
             };
         case ACTIONS.GET_SINGLE_BOOTH:
             return {

@@ -14,7 +14,11 @@ import { fetchSingleBooth, dispatchSingleBooth } from "../../../redux/actions/bo
 import dayjs from "dayjs";
 
 import { makeStyles } from "@material-ui/core/styles";
-import { Typography, Button, Container, TextField, Card, CardContent, Grid } from "@material-ui/core";
+import { Typography, Button, Container, TextField, Grid, Tabs, Tab, Box } from "@material-ui/core";
+import PersonPinIcon from "@material-ui/icons/PersonPin";
+import AddBoxIcon from "@material-ui/icons/AddBox";
+import StorefrontIcon from "@material-ui/icons/Storefront";
+import EditIcon from "@material-ui/icons/Edit";
 import CFcard from "../../components/CFcard";
 var slugify = require("slug");
 
@@ -57,9 +61,14 @@ function EditBooth() {
 
     const auth = useSelector((state) => state.auth);
     const token = useSelector((state) => state.token);
-    const booth = useSelector((state) => state.boothReducer.booth);
     const event = useSelector((state) => state.eventReducer.event);
     const isVendorOwner = useSelector((state) => state.boothReducer.isVendorOwner);
+
+    const booths = useSelector((state) => state.boothReducer.booths);
+    const booth = useSelector((state) => state.boothReducer.booth);
+    const checkEventHost = useSelector((state) => state.eventReducer.isEventHost);
+    const hasOrganization = useSelector((state) => state.organization.hasOrganization);
+    const hasOwnedBooth = useSelector((state) => state.boothReducer.hasOwnedBooth);
 
     // HANDLE LOADING FUNCTION
     const [loading, setLoading] = useState(false);
@@ -68,7 +77,6 @@ function EditBooth() {
     const [callback, setCallback] = useState(false);
     const [checkVendor, setCheckVendor] = useState(false);
     const [backgroundImage, setBackgroundImage] = useState(false);
-    const [checkEventHost, setCheckEventHost] = useState(false);
 
     useEffect(() => {
         fetchSingleBooth(token, eslug, bslug).then((res) => {
@@ -146,18 +154,36 @@ function EditBooth() {
             setData({ ...data, err: err.response.data.msg, success: "" });
         }
     };
-    // const handleDelete = () => {
-    //     console.log("del");
 
-    // };
+    //HANDLE TAB CHANGES
+    const [value, setValue] = React.useState(2);
+    const handleTabsChange = (event, newValue) => {
+        setValue(newValue);
+    };
 
     return (
         <Container>
             <CFcard>
+                <Box align="center" mb={8}>
+                    <Tabs value={value} onChange={handleTabsChange} variant="fullWidth" indicatorColor="secondary" textColor="secondary" aria-label="icon label tabs example">
+                        <Tab icon={<PersonPinIcon />} label="Reception" component={Link} to={`/event/${eslug}`} />
+                        <Tab icon={<StorefrontIcon />} label="Expo" component={Link} to={`/event/${eslug}/booth/all`} />
+                        {/* {checkEventHost == true ? <Tab icon={<AddBoxIcon />} label="Add Booth" /> : ""} */}
+
+                        {checkEventHost == true ? <Tab icon={<EditIcon />} label="Edit Event" component={Link} to={`/event/${eslug}/edit_event`} /> : ""}
+                        {(hasOrganization == true && hasOwnedBooth == false) || checkEventHost == true ? <Tab icon={<AddBoxIcon />} label="Add Booth" /> : ""}
+                        {hasOrganization == true && hasOwnedBooth == true && checkEventHost == false ? (
+                            <Tab icon={<EditIcon />} label="Edit Booth" component={Link} to={`/event/${eslug}/booth/${booth.bslug}/edit_booth`} />
+                        ) : (
+                            ""
+                        )}
+                    </Tabs>
+                </Box>
                 {err && showErrMsg(err)}
                 {success && showSuccessMsg(success)}
                 {loading && <h3>Loading.....</h3>}
                 {/* <ReactPlayer controls url="https://www.youtube.com/watch?v=zg9ih6SVACc" width="100%" />  */}
+
                 <Grid container spacing={8}>
                     <Grid item xs={6}>
                         <form onSubmit={updateInfo}>
