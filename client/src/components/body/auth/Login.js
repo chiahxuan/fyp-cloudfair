@@ -42,6 +42,9 @@ const useStyles = makeStyles((theme) => ({
             alignItems: "center",
         },
     },
+    button: {
+        width: "50%",
+    },
 }));
 
 function Login() {
@@ -165,7 +168,7 @@ function Login() {
                         </Link>
                         <br />
                         <br />
-                        <Button type="submit" variant="contained" color="secondary">
+                        <Button type="submit" variant="contained" color="secondary" className={classes.button}>
                             Login
                         </Button>
                     </Box>

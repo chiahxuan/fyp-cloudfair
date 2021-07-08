@@ -118,16 +118,6 @@ function CreateOrg() {
                             Add Event
                         </Button>
                     </Grid>
-                    <Grid item xs={12} sm={4}>
-                        <Typography variant="h4">Teams: </Typography>
-                    </Grid>
-                    <Grid item xs={12} sm={8}>
-                        <Typography>
-                            <Button component={Link} to="/organization/team" className={classes.button}>
-                                Teams
-                            </Button>
-                        </Typography>
-                    </Grid>
                 </Grid>
             </CFcard>
         </Container>

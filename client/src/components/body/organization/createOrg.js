@@ -62,6 +62,7 @@ function CreateOrg() {
                 }
             );
             localStorage.setItem("orgCreated", true);
+            window.location.href = `http://localhost:3000/organization/overview`;
             // setData({ ...data, err: "", success: "Create Success!" });
             setData({ ...user, err: "", success: res.data.msg });
         } catch (err) {

@@ -48,6 +48,7 @@ function AddEvent() {
     const { user } = auth; // to get user ID
     const organizationData = useSelector((state) => state.organization.organization); // to get user ID
     const dispatch = useDispatch();
+    const hasOrganization = useSelector((state) => state.organization.hasOrganization);
 
     //Dispatch organization
     useEffect(() => {
@@ -131,96 +132,109 @@ function AddEvent() {
                 {success && showSuccessMsg(success)}
                 <br />
                 <br />
-                <form onSubmit={handleSubmit}>
-                    <TextField
-                        name="eventName"
-                        id="eventName"
-                        margin="dense"
-                        label="Event Name"
-                        placeholder="Event Name"
-                        defaultValue={eventName}
-                        onChange={handleChangeInput}
-                        required
-                        fullWidth
-                        InputLabelProps={{
-                            shrink: true,
-                        }}
-                        variant="outlined"
-                    />
-                    <br />
-                    <br />
-                    <TextField
-                        id="eventSlug"
-                        name="eventSlug"
-                        margin="dense"
-                        label="Event Url Slug"
-                        placeholder="Event Url Slug"
-                        defaultValue={eventSlug}
-                        onChange={handleChangeInput}
-                        required
-                        fullWidth
-                        InputLabelProps={{
-                            shrink: true,
-                        }}
-                        variant="outlined"
-                    />
-                    <br />
-                    <br />
-                    <TextField
-                        id="description"
-                        name="description"
-                        margin="dense"
-                        label="Event Description"
-                        placeholder="Event Description"
-                        defaultValue={description}
-                        onChange={handleChangeInput}
-                        required
-                        fullWidth
-                        InputLabelProps={{
-                            shrink: true,
-                        }}
-                        variant="outlined"
-                        multiline
-                        rows={3}
-                        rowsMax={4}
-                    />
-                    <br />
-                    <br />
-                    <TextField
-                        id="startDate"
-                        name="startDate"
-                        label="Start Date"
-                        type="datetime-local"
-                        defaultValue={startDate}
-                        onChange={handleChangeInput}
-                        className={classes.textField}
-                        InputLabelProps={{
-                            shrink: true,
-                        }}
-                        required
-                        fullWidth
-                    />
-                    <br />
-                    <br />
-                    <TextField
-                        id="endDate"
-                        name="endDate"
-                        label="End Date"
-                        type="datetime-local"
-                        defaultValue={endDate}
-                        onChange={handleChangeInput}
-                        className={classes.textField}
-                        InputLabelProps={{
-                            shrink: true,
-                        }}
-                        required
-                        fullWidth
-                    />
-                </form>
-                <br />
-                <Button type="submit" variant="contained" onClick={handleSubmit}>
-                    Create
-                </Button>
+                {hasOrganization == true ? (
+                    <section>
+                        <form onSubmit={handleSubmit}>
+                            <TextField
+                                name="eventName"
+                                id="eventName"
+                                margin="dense"
+                                label="Event Name"
+                                placeholder="Event Name"
+                                defaultValue={eventName}
+                                onChange={handleChangeInput}
+                                required
+                                fullWidth
+                                InputLabelProps={{
+                                    shrink: true,
+                                }}
+                                variant="outlined"
+                            />
+                            <br />
+                            <br />
+                            <TextField
+                                id="eventSlug"
+                                name="eventSlug"
+                                margin="dense"
+                                label="Event Url Slug"
+                                placeholder="Event Url Slug"
+                                defaultValue={eventSlug}
+                                onChange={handleChangeInput}
+                                required
+                                fullWidth
+                                InputLabelProps={{
+                                    shrink: true,
+                                }}
+                                variant="outlined"
+                            />
+                            <br />
+                            <br />
+                            <TextField
+                                id="description"
+                                name="description"
+                                margin="dense"
+                                label="Event Description"
+                                placeholder="Event Description"
+                                defaultValue={description}
+                                onChange={handleChangeInput}
+                                required
+                                fullWidth
+                                InputLabelProps={{
+                                    shrink: true,
+                                }}
+                                variant="outlined"
+                                multiline
+                                rows={3}
+                                rowsMax={4}
+                            />
+                            <br />
+                            <br />
+                            <TextField
+                                id="startDate"
+                                name="startDate"
+                                label="Start Date"
+                                type="datetime-local"
+                                defaultValue={startDate}
+                                onChange={handleChangeInput}
+                                className={classes.textField}
+                                InputLabelProps={{
+                                    shrink: true,
+                                }}
+                                required
+                                fullWidth
+                            />
+                            <br />
+                            <br />
+                            <TextField
+                                id="endDate"
+                                name="endDate"
+                                label="End Date"
+                                type="datetime-local"
+                                defaultValue={endDate}
+                                onChange={handleChangeInput}
+                                className={classes.textField}
+                                InputLabelProps={{
+                                    shrink: true,
+                                }}
+                                required
+                                fullWidth
+                            />
+                        </form>
+                        <br />
+                        <Button type="submit" variant="contained" onClick={handleSubmit}>
+                            Create
+                        </Button>
+                    </section>
+                ) : (
+                    <>
+                        <Typography>Hi {auth.user.name}, you are only one step away from being an event host! First create your organization!</Typography>
+                        <br />
+                        <br />
+                        <Button component={Link} to="/organization/new">
+                            Create Organization
+                        </Button>
+                    </>
+                )}
             </CFcard>
         </Container>
     );

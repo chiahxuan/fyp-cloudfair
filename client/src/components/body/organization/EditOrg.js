@@ -11,7 +11,7 @@ import { dispatchGetOrganization, fetchOrganization } from "../../../redux/actio
 import { dispatchLogin, fetchUser, dispatchGetUser } from "../../../redux/actions/authAction";
 
 import { makeStyles } from "@material-ui/core/styles";
-import { Typography, Button, Container, TextField, Card, CardContent, Grid } from "@material-ui/core";
+import { Typography, Button, Container, TextField, Grid } from "@material-ui/core";
 import CFcard from "../../components/CFcard";
 
 const initialState = {
@@ -66,6 +66,8 @@ function EditOrg() {
     //HANDLE CHANGE OF IMAGE
     const [loading, setLoading] = useState(false);
     const [bgImage, setBgImage] = useState(false); // background Image
+    const [callback, setCallback] = useState(false);
+
     const changeBgImage = async (e) => {
         e.preventDefault();
         try {
@@ -103,6 +105,24 @@ function EditOrg() {
                 }
             );
             setData({ ...data, err: "", success: "Updated Success!" });
+        } catch (err) {
+            setData({ ...data, err: err.response.data.msg, success: "" });
+        }
+    };
+
+    const deleteOrganization = async () => {
+        try {
+            // ADD VALIDATE EVENT HOST
+            if (window.confirm("Are you sure you want to delete this organization? All Events and booths will be deleted")) {
+                setLoading(true);
+                await axios.delete(`/organization/delete_organization`, {
+                    headers: { Authorization: token },
+                });
+                setLoading(false);
+                setCallback(!callback);
+                // history.push(`/event/${eslug}/booth/all`);
+                window.location.href = `http://localhost:3000/organization/new`;
+            }
         } catch (err) {
             setData({ ...data, err: err.response.data.msg, success: "" });
         }
@@ -198,9 +218,14 @@ function EditOrg() {
                             Back to Overview
                         </Button>
                     </Grid>
-                    <Grid item xs={12} sm={8}>
+                    <Grid item xs={12} sm={4}>
                         <Button disabled={loading} className={classes.button} onClick={updateOrganization}>
                             Update
+                        </Button>
+                    </Grid>
+                    <Grid item xs={12} sm={4}>
+                        <Button disabled={loading} className={classes.button} onClick={deleteOrganization}>
+                            Delete
                         </Button>
                     </Grid>
                 </Grid>

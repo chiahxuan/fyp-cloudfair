@@ -1,5 +1,7 @@
 const Organizations = require("../models/Organization");
 const Users = require("../models/userModel");
+const Booth = require("../models/Booth");
+const Event = require("../models/Event");
 
 const organizationCtrl = {
     createOrg: async (req, res) => {
@@ -65,6 +67,24 @@ const organizationCtrl = {
             }
         );
         res.json({ msg: "Update Organization Success" });
+    },
+    deleteOrg: async (req, res) => {
+        try {
+            const user = await Users.findById(req.user.id).select("-password");
+            const organization = await Organizations.findOne({ organizationCreatorId: user._id });
+
+            console.log(organization);
+            //REMOVE ALL EVENTS AND BOOTH THAT RELATED WITH THE ORGANIZATION
+            await Booth.deleteMany({ organization: organization._id });
+            await Event.deleteMany({ organization: organization._id });
+
+            // //remove the event
+            await Organizations.findByIdAndDelete(organization._id);
+
+            res.json({ msg: "Delete Event Success" });
+        } catch (err) {
+            return res.status(500).json({ msg: err.message });
+        }
     },
 };
 

@@ -157,7 +157,7 @@ function EditEvent() {
     const handleDelete = async () => {
         try {
             // ADD VALIDATE EVENT HOST
-            if (window.confirm("Are you sure you want to delete this event?")) {
+            if (window.confirm("Are you sure you want to delete this event? All booths in this event")) {
                 setLoading(true);
                 await axios.delete(`/event/${eslug}/delete_event`, {
                     headers: { Authorization: token },

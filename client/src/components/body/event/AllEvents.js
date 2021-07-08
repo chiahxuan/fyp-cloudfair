@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { fetchAllEvents, dispatchGetAllEvents } from "../../../redux/actions/eventAction";
 
-import { Typography, Button, Container, Grid } from "@material-ui/core";
+import { Typography, Button, Container, Grid, Box } from "@material-ui/core";
 import CFcard from "../../components/CFcard";
 import EventCard from "../../components/eventCard";
 import SearchField from "react-search-field";
@@ -16,9 +16,10 @@ function AllEvents() {
     const dispatch = useDispatch();
     const [Events, setEvents] = React.useState([]);
 
-    // useEffect(() => {
-    //     setEvents(events);
-    // }, [events]);
+    useEffect(() => {
+        setEvents(events);
+    }, [events]);
+
     //fetchAllEvents dispatchGetAllEvents
     useEffect(() => {
         fetchAllEvents(token).then((res) => {
@@ -37,18 +38,36 @@ function AllEvents() {
             })
         );
     };
+    // const imgLink = "https://material-ui.com/static/images/cards/contemplative-reptile.jpg";
+    // ("https://res.cloudinary.com/cloudfair/image/upload/v1625756739/avatar/colleagues-preparing-corporate-party-time-management-deadline-brand-event-event-brand-management-sponsored-event-organization-concept_335657-120_j56m8s.jpg");
+    // const imgLink = "/images/event.jpg";
 
     return (
         <Container>
             <CFcard>
-                <Typography variant="h2" align="center">
-                    Hi {auth.user.name}, here are all events from CloudFair
-                </Typography>
-                <br />
-                <br />
-                <Grid container spacing={8}>
+                <Grid container spacing={10} style={{ padding: "0 50px" /*backgroundColor: "#f1f2f5"*/ }}>
+                    <Grid item xs={12}>
+                        <Typography variant="h1" align="center">
+                            All Events
+                        </Typography>
+                        <br />
+                    </Grid>
+
+                    <Grid item xs={6}>
+                        <Box>
+                            <Typography variant="h2">Welcome to CloudFair {auth.user.name}!</Typography>
+                            <br />
+                            <Typography variant="h2">Go ahead and explore out events:</Typography>
+                        </Box>
+                    </Grid>
+                    <Grid item xs={6}>
+                        <img
+                            scr="https://res.cloudinary.com/cloudfair/image/upload/v1625756739/avatar/colleagues-preparing-corporate-party-time-management-deadline-brand-event-event-brand-management-sponsored-event-organization-concept_335657-120_j56m8s.jpg"
+                            style={{ width: "100%" }}
+                        />
+                    </Grid>
                     <Grid item xs={10}>
-                        <SearchField placeholder="Search..." onChange={onChange} searchText="" />
+                        <SearchField placeholder="Search..." onChange={onChange} searchText="" style={{ height: 400, marginLeft: "auto", marginRight: "auto" }} />
                     </Grid>
                     <Grid item xs={2}>
                         <Button component={Link} to="/event/add_event">
@@ -56,13 +75,17 @@ function AllEvents() {
                         </Button>
                     </Grid>
                 </Grid>
+                <br />
+                <hr />
+                <br />
+                <Grid container spacing={8}></Grid>
                 <Grid container spacing={8}>
                     {/* {events.map((event) => (
                         <Grid item key={event.id}>
                             <EventCard event={event} />
                         </Grid>
                     ))} */}
-                    {events.map((event) => (
+                    {Events.map((event) => (
                         <Grid item key={event._id}>
                             <EventCard event={event} />
                         </Grid>
