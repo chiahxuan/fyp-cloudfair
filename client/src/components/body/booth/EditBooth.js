@@ -8,7 +8,7 @@ import { Link, useHistory } from "react-router-dom";
 import { useParams } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { showSuccessMsg, showErrMsg } from "../../utils/notification/Notification";
-import { isEmpty, isLength, isValidDescription, isValidString, isValidDateTime } from "../../utils/validation/Validation";
+import { isEmpty, isLength, isValidDescription, isValidString, isInvalidDateTime } from "../../utils/validation/Validation";
 import { setCheckEventHost, fetchSingleEvent, dispatchGetSingleEvent, fetchEventHostStatus, dispatchEventHostStatus } from "../../../redux/actions/eventAction";
 import { fetchSingleBooth, dispatchSingleBooth } from "../../../redux/actions/boothAction";
 import dayjs from "dayjs";

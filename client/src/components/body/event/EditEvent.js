@@ -6,7 +6,7 @@ import { Link, useHistory } from "react-router-dom";
 import { useParams } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { showSuccessMsg, showErrMsg } from "../../utils/notification/Notification";
-import { isEmpty, isLength, isValidDescription, isValidString, isValidDateTime, isInValidDate } from "../../utils/validation/Validation";
+import { isEmpty, isLength, isValidDescription, isValidString, isInvalidDateTime, isInValidDate } from "../../utils/validation/Validation";
 import { setCheckEventHost, fetchSingleEvent, dispatchGetSingleEvent, fetchEventHostStatus, dispatchEventHostStatus } from "../../../redux/actions/eventAction";
 // import { getSingleEventParam, dispatchSetEventParam } from "../../../redux/actions/eventAction";
 import dayjs from "dayjs";
@@ -130,7 +130,7 @@ function EditEvent() {
         if (isValidString(eventName ? eventName : event.ename)) return setData({ ...event, err: "String input must be at least 3 to 50 characters.", success: "" });
         if (isValidDescription(description ? description : event.description))
             return setData({ ...event, err: "String input must be at least 3 to 2000 characters.", success: "" });
-        if (isValidDateTime(startDate, endDate)) return setData({ ...event, err: "End datetime be after start datetime. Start date should not be past.", success: "" });
+        if (isInvalidDateTime(startDate, endDate)) return setData({ ...event, err: "End datetime be after start datetime. Start date should not be past.", success: "" });
         // if (isInValidDate(startDate, endDate)) return setData({ ...event, success: "", err: "End datetime be after start datetime. Start date should not be past." });
 
         //validate date to ensure start date before end date

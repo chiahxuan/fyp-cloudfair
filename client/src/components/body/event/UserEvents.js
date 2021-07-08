@@ -3,7 +3,6 @@ import axios from "axios";
 import { Link, useHistory } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { showSuccessMsg, showErrMsg } from "../../utils/notification/Notification";
-import { isEmpty, isLength, isValidDescription, isValidString, isValidDateTime } from "../../utils/validation/Validation";
 import { fetchAllEventsByUserId, dispatchGetAllUserEvents } from "../../../redux/actions/eventAction";
 
 import { makeStyles } from "@material-ui/core/styles";

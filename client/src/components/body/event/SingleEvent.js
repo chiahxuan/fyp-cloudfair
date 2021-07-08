@@ -101,6 +101,15 @@ function SingleEvent() {
         setValue(newValue);
     };
 
+    const validateDateTime = () => {
+        // event.startDate
+        // event.endDate
+        var today = new Date();
+        var date = today.getFullYear() + "-" + (today.getMonth() + 1) + "-" + today.getDate();
+        // if (Date.parse(endDateTime) <= Date.parse(startDateTime)) return true;
+        return date;
+    };
+
     return (
         <Container>
             <CFcard>
@@ -128,6 +137,9 @@ function SingleEvent() {
                         <Grid item xs={12} align="center">
                             <Typography align="center" variant="h1">
                                 {event.ename}
+                            </Typography>
+                            <Typography align="center" variant="h1">
+                                {/* validate Time: {now} */}
                             </Typography>
                         </Grid>
                         <Grid item xs={12} align="center">

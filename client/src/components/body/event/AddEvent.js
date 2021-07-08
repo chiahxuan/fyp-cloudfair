@@ -3,7 +3,7 @@ import axios from "axios";
 import { Link } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { showSuccessMsg, showErrMsg } from "../../utils/notification/Notification";
-import { isEmpty, isValidDescription, isValidString, isValidDateTime } from "../../utils/validation/Validation";
+import { isEmpty, isValidDescription, isValidString, isInvalidDateTime } from "../../utils/validation/Validation";
 import { dispatchGetOrganization, fetchOrganization } from "../../../redux/actions/organizationAction";
 
 import { makeStyles } from "@material-ui/core/styles";
@@ -88,7 +88,8 @@ function AddEvent() {
         if (isValidDescription(description)) return setEvent({ ...event, err: "String input must be at least 3 to 2000 characters.", success: "" });
 
         //validate date to ensure start date before end date
-        if (isValidDateTime(startDate, endDate)) return setEvent({ ...event, err: "End datetime be after start datetime.", success: "" });
+        if (isInvalidDateTime(startDate, endDate))
+            return setEvent({ ...event, err: "Date condition wrong, End datetime be after start datetime. Start date must not before current time.", success: "" });
         try {
             // //CHECK DATA STATE CHANGES
             // console.log("description " + description);

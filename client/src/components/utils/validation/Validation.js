@@ -1,3 +1,5 @@
+import dayjs from "dayjs";
+
 export const isEmpty = (value) => {
     if (!value) return true;
     return false;
@@ -29,8 +31,12 @@ export const isValidDescription = (string) => {
     return false;
 };
 
-export const isValidDateTime = (startDateTime, endDateTime) => {
-    if (Date.parse(endDateTime) <= Date.parse(startDateTime)) return true;
+export const isInvalidDateTime = (startDateTime, endDateTime) => {
+    var today = new Date();
+    var date = today.getFullYear() + "-" + (today.getMonth() + 1) + "-" + today.getDate() + ":" + today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
+    var now = dayjs(date).format("YYYY-MM-DDThh:mm");
+
+    if (Date.parse(endDateTime) <= Date.parse(startDateTime) || Date.parse(startDateTime) <= Date.parse(now)) return true;
     return false;
 };
 
