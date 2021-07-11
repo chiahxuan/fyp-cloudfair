@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import ReactPlayer from "react-player";
-
 // import VideoPlayer from "react-video-js-player";
+import ReactGoogleSlides from "react-google-slides";
 
 import { Link, useHistory } from "react-router-dom";
 import { useParams } from "react-router-dom";
@@ -15,6 +15,8 @@ import dayjs from "dayjs";
 import { makeStyles } from "@material-ui/core/styles";
 import { Typography, Button, Container, TextField, Card, CardContent, Grid } from "@material-ui/core";
 import CFcard from "../../components/CFcard";
+import Slides from "../../components/slides";
+import SlideShow from "../../components/SlideShow";
 const { v4: uuidV4 } = require("uuid");
 
 // import { makeStyles } from "@material-ui/core/styles";
@@ -101,6 +103,7 @@ function SingleBooth() {
                     <Grid item xs={12}>
                         <ReactPlayer
                             playIcon
+                            controls
                             // url="https://fb.watch/6vVorE9gqT/"
                             url={booth.bvideo}
                             width="auto"
@@ -109,22 +112,31 @@ function SingleBooth() {
                             playing="true"
                         />
                     </Grid>
-                    <Grid item xs={12}>
+                    {/* <Grid item xs={12}>
                         video here:
                         <video id="vid" autoplay onClick={loadLiveVideo}></video>
-                    </Grid>
-                    <Grid item xs={4}>
-                        <Grid container spacing={8}>
-                            <Grid item xs={12} align="center">
-                                <img
+                    </Grid> */}
+                    <Grid item xs={6}>
+                        {/* <SlideShow slidesLink={booth.bslides} /> */}
+                        {/* <Slides slideLink={booth.bslides} /> */}
+                        <Slides />
+                        {/* <ReactGoogleSlides
+                            width={`100%`}
+                            height={480}
+                            slidesLink="https://drive.google.com/file/d/1W_hEDv6u1UUJKM13Vpkr7BqLshigz-nO/view?usp=sharing"
+                            slideDuration={5}
+                            showControls
+                            loop
+                        /> */}
+                        {/* {booth.bslides} */}
+                        {/* <img
                                     className={classes.bgImage}
                                     src={booth.bimage}
                                     // src={booth.bimage ? booth.bimage : "https://res.cloudinary.com/cloudfair/image/upload/v1624965698/Booth/modern-exhibition.jpg"}
-                                />
-                            </Grid>
-                        </Grid>
+                                /> */}
                     </Grid>
-                    <Grid item xs={8}>
+
+                    <Grid item xs={6}>
                         <Typography variant="h4">Booth Description: </Typography>
                         <br />
                         <Typography> {booth.description}</Typography>

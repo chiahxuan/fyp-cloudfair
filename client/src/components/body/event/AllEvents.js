@@ -80,11 +80,6 @@ function AllEvents() {
                 <br />
                 <Grid container spacing={8}></Grid>
                 <Grid container spacing={8}>
-                    {/* {events.map((event) => (
-                        <Grid item key={event.id}>
-                            <EventCard event={event} />
-                        </Grid>
-                    ))} */}
                     {Events.map((event) => (
                         <Grid item key={event._id}>
                             <EventCard event={event} />

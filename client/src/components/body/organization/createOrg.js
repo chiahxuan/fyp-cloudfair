@@ -3,8 +3,9 @@ import axios from "axios";
 import { useSelector, useDispatch } from "react-redux";
 import { showSuccessMsg, showErrMsg } from "../../utils/notification/Notification";
 import { fetchAllUsers, dispatchGetAllUsers } from "../../../redux/actions/usersAction";
+import { isValidDescription, isValidString, isEmpty } from "../../utils/validation/Validation";
 
-import { Typography, Button, Container, TextField, Card, CardContent } from "@material-ui/core";
+import { Typography, Button, Container, TextField } from "@material-ui/core";
 import CFcard from "../../components/CFcard";
 // import { makeStyles } from "@material-ui/core/styles";
 
@@ -49,6 +50,12 @@ function CreateOrg() {
         try {
             // console.log("userid: " + user._id);
             // console.log("org: " + orgName + orgEmail + orgAbout);
+            //isValidDescription, isValidString
+            if (isEmpty(orgName) || isEmpty(orgEmail) || isEmpty(orgAbout)) return setData({ ...user, err: "Please fill in all fields.", success: "" });
+
+            if (isValidString(orgName)) return setData({ ...data, err: "String input must be at least 3 to 50 characters.", success: "" });
+            if (isValidDescription(orgAbout)) return setData({ ...data, err: "String input must be at least 3 to 2000 characters.", success: "" });
+
             const res = await axios.post(
                 "/organization/new",
                 {

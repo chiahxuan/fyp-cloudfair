@@ -39,6 +39,7 @@ const initialState = {
     description: "",
     bimage: "",
     bvideo: "",
+    bslides: "",
     organizationId: "",
     userId: "",
     eventId: "",
@@ -69,7 +70,7 @@ function AddBooth() {
     const [booth, setBooth] = useState(initialState);
 
     //booth variables
-    const { bname, bslug, description, bimage, bvideo, userId, organizationId, eventId, err, success } = booth;
+    const { bname, bslug, description, bimage, bvideo, bslides, userId, organizationId, eventId, err, success } = booth;
 
     const [data, setData] = useState(initialState); // handle inputs
     const [singleEvent, setSingleEvent] = useState([]); //get singleEventObject
@@ -143,6 +144,7 @@ function AddBooth() {
                     bslug: slugify(bslug + "-" + Math.random().toString(36).substring(7)),
                     description: description,
                     bvideo: bvideo,
+                    bslides: bslides,
                     user: auth.user._id,
                     event: singleEvent._id,
                     organization: organization._id,
@@ -248,6 +250,23 @@ function AddBooth() {
                         label="Booth Video Streaming Link"
                         placeholder="Booth Video Streaming Link"
                         defaultValue={bvideo}
+                        onChange={handleChangeInput}
+                        required
+                        fullWidth
+                        InputLabelProps={{
+                            shrink: true,
+                        }}
+                        variant="outlined"
+                    />
+                    <br />
+                    <br />
+                    <TextField
+                        id="bslides"
+                        name="bslides"
+                        margin="dense"
+                        label="Booth Slides Link"
+                        placeholder="Booth Google Slide Link"
+                        defaultValue={bslides}
                         onChange={handleChangeInput}
                         required
                         fullWidth

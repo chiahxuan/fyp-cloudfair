@@ -8,6 +8,7 @@ import { showSuccessMsg, showErrMsg } from "../../utils/notification/Notificatio
 import { Typography, Button, Container, TextField } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import ArrowBackIcon from "@material-ui/icons/ArrowBack";
+import CFcard from "../../components/CFcard";
 
 const useStyles = makeStyles((theme) => ({}));
 
@@ -69,52 +70,54 @@ function EditUser() {
 
     return (
         <div className="profile_page edit_user">
-            <div className="row">
-                <Button onClick={() => history.goBack()}>
-                    <ArrowBackIcon /> Go Back
-                </Button>
-            </div>
-
-            <div className="col-left">
-                <h2>Edit User</h2>
-
-                <TextField
-                    name="name"
-                    label="Full Name"
-                    value={editUser.name}
-                    margin="dense"
-                    fullWidth
-                    InputLabelProps={{
-                        shrink: true,
-                    }}
-                    disabled
-                    variant="outlined"
-                />
-
-                <TextField
-                    id="email"
-                    name="email"
-                    label="Email Address"
-                    margin="dense"
-                    fullWidth
-                    disabled
-                    InputLabelProps={{
-                        shrink: true,
-                    }}
-                    variant="outlined"
-                    value={editUser.email}
-                />
-
-                <div className="form-group">
-                    <input type="checkbox" id="isAdmin" checked={checkAdmin} onChange={handleCheck} />
-                    <label htmlFor="isAdmin">isAdmin</label>
+            <CFcard>
+                <div className="row">
+                    <Button onClick={() => history.goBack()}>
+                        <ArrowBackIcon /> Go Back
+                    </Button>
                 </div>
 
-                <Button onClick={handleUpdate}>Update</Button>
+                <div className="col-left">
+                    <h2>Edit User</h2>
 
-                {err && showErrMsg(err)}
-                {success && showSuccessMsg(success)}
-            </div>
+                    <TextField
+                        name="name"
+                        label="Full Name"
+                        value={editUser.name}
+                        margin="dense"
+                        fullWidth
+                        InputLabelProps={{
+                            shrink: true,
+                        }}
+                        disabled
+                        variant="outlined"
+                    />
+
+                    <TextField
+                        id="email"
+                        name="email"
+                        label="Email Address"
+                        margin="dense"
+                        fullWidth
+                        disabled
+                        InputLabelProps={{
+                            shrink: true,
+                        }}
+                        variant="outlined"
+                        value={editUser.email}
+                    />
+
+                    <div className="form-group">
+                        <input type="checkbox" id="isAdmin" checked={checkAdmin} onChange={handleCheck} />
+                        <label htmlFor="isAdmin">isAdmin</label>
+                    </div>
+
+                    <Button onClick={handleUpdate}>Update</Button>
+
+                    {err && showErrMsg(err)}
+                    {success && showSuccessMsg(success)}
+                </div>
+            </CFcard>
         </div>
     );
 }

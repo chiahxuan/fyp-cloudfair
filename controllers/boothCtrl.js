@@ -8,7 +8,7 @@ const boothCtrl = {
     //ADD BOOTH
     addBooth: async (req, res) => {
         try {
-            const { bname, bslug, description, bvideo, user, organization, event } = req.body;
+            const { bname, bslug, description, bvideo, user, bslides, organization, event } = req.body;
             // console.log(req.headers);
             //VALIDATE ALL FIELD INSERTED
             if (!bname || !bslug || !description || !bvideo || !user || !organization || !event) return res.status(400).json({ msg: "Please fill in all fields." });
@@ -18,12 +18,14 @@ const boothCtrl = {
             if (bslug.length > 50 || bslug.length < 5) return res.status(400).json({ msg: "Input should not less than 5 characters, and more than 50 characters." });
             if (description.length > 2000 || description.length < 5)
                 return res.status(400).json({ msg: "Input should not less than 5 characters, and more than 2000 characters." });
+            if (!validateYoutube(bvideo)) return res.status(400).json({ msg: "Invalid Youtube link." });
 
             let addBooth = new Booth({
                 bname: bname,
                 bslug: bslug,
                 description: description,
                 bvideo: bvideo,
+                bslides: bslides,
                 user: user,
                 organization: organization,
                 event: event,
@@ -69,11 +71,7 @@ const boothCtrl = {
     },
     //edit  BOOTH
     editBooth: async (req, res) => {
-        // console.log(req.params);
         const { bslug, eslug } = req.params;
-        // console.log(req.body);
-        // console.log("success to controller");
-        // console.log(req.body.bimage);
 
         try {
             const event = await Event.findOne({ eslug: eslug });
@@ -132,5 +130,11 @@ const boothCtrl = {
         }
     },
 };
+
+function validateYoutube(url) {
+    var re = /^(?:https?:\/\/)?(?:www\.)?(?:youtu\.be\/|youtube\.com\/(?:embed\/|v\/|watch\?v=|watch\?.+&v=))((\w|-){11})(?:\S+)?$/;
+
+    return re.test(url);
+}
 
 module.exports = boothCtrl;

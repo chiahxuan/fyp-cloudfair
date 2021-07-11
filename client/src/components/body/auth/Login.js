@@ -68,7 +68,7 @@ function Login() {
 
             localStorage.setItem("firstLogin", true);
             dispatch(dispatchLogin());
-            history.push("/event/all_events");
+            window.location.href = `http://localhost:3000/event/all_events`;
         } catch (err) {
             err.response.data.msg && setUser({ ...user, err: err.response.data.msg, success: "" });
         }
@@ -82,7 +82,7 @@ function Login() {
             localStorage.setItem("firstLogin", true);
 
             dispatch(dispatchLogin());
-            history.push("/event/all_events");
+            window.location.href = `http://localhost:3000/event/all_events`;
         } catch (err) {
             err.response.data.msg && setUser({ ...user, err: err.response.data.msg, success: "" });
         }
@@ -99,7 +99,7 @@ function Login() {
             localStorage.setItem("firstLogin", true);
 
             dispatch(dispatchLogin());
-            history.push("/event/all_events");
+            window.location.href = `http://localhost:3000/event/all_events`;
         } catch (err) {
             err.response.data.msg && setUser({ ...user, err: err.response.data.msg, success: "" });
         }

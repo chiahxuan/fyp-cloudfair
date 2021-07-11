@@ -60,6 +60,7 @@ const eventCtrl = {
             return res.status(500).json({ msg: err.message });
         }
     },
+
     // SHOW SINGLE EVENT
     viewSingleEvent: async (req, res) => {
         // console.log(req.params.eslug);
@@ -70,6 +71,7 @@ const eventCtrl = {
             return res.status(500).json({ msg: err.message });
         }
     },
+
     //Edit EVENT
     editEvent: async (req, res) => {
         const { eslug } = req.params;
@@ -93,6 +95,7 @@ const eventCtrl = {
             return res.status(500).json({ msg: err.message });
         }
     },
+
     // DELETE SINGLE EVENT
     deleteEvent: async (req, res) => {
         const { eslug } = req.params;
@@ -107,6 +110,46 @@ const eventCtrl = {
             await Event.findByIdAndDelete(event._id);
 
             res.json({ msg: "Delete Event Success" });
+        } catch (err) {
+            return res.status(500).json({ msg: err.message });
+        }
+    },
+    //FIND PAST EVENTS
+    viewPastEvents: async (req, res) => {
+        try {
+            //endate < now
+            const pastEvent = await Event.find({
+                endDate: { $lt: new Date() },
+            });
+            console.log(pastEvent);
+
+            res.json(pastEvent);
+            // res.json({ msg: "Returned Message" });
+        } catch (err) {
+            return res.status(500).json({ msg: err.message });
+        }
+    },
+    //FIND UPCOMING EVENTS
+    viewUpcomingEvents: async (req, res) => {
+        try {
+            const upcomingEvent = await Event.find({
+                startDate: { $gt: new Date() },
+            });
+
+            res.json(upcomingEvent);
+            // res.json({ msg: "find UPCOMING events" });
+        } catch (err) {
+            return res.status(500).json({ msg: err.message });
+        }
+    },
+
+    //FIND HOSTING EVENT
+    viewHostingEvents: async (req, res) => {
+        try {
+            const hostingEvent = await Event.find({ startDate: { $lt: new Date() }, endDate: { $gt: new Date() } });
+
+            res.json(hostingEvent);
+            // res.json({ msg: "find UPCOMING events" });
         } catch (err) {
             return res.status(500).json({ msg: err.message });
         }

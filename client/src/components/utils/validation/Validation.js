@@ -45,3 +45,12 @@ export const isInValidDate = (startDateTime, endDateTime) => {
     var showcurrentdate = showdate.getDate() + "/" + showdate.getMonth() + "/" + showdate.getFullYear();
     if (Date.parse(endDateTime) < Date.parse(showcurrentdate) || Date.parse(startDateTime) < Date.parse(showcurrentdate)) return true;
 };
+
+export const isYoutubeUrl = (url) => {
+    var p = /^(?:https?:\/\/)?(?:www\.)?(?:youtu\.be\/|youtube\.com\/(?:embed\/|v\/|watch\?v=|watch\?.+&v=))((\w|-){11})(?:\S+)?$/;
+    // var matches = url.match(p);
+    // if (matches) {
+    //     return matches[1];
+    // }
+    return p.test(url);
+};

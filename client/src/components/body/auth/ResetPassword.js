@@ -5,6 +5,7 @@ import { showErrMsg, showSuccessMsg } from "../../utils/notification/Notificatio
 import { isLength, isMatch } from "../../utils/validation/Validation";
 import { Typography, Button, Container, TextField } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
+import CFcard from "../../components/CFcard";
 
 const initialState = {
     password: "",
@@ -52,49 +53,51 @@ function ResetPassword() {
     };
 
     return (
-        <Container className="fg_pass">
-            <Typography variant="h2">Reset Your Password</Typography>
-            <br />
-            <div>
-                {err && showErrMsg(err)}
-                {success && showSuccessMsg(success)}
+        <Container className="fg_pass" maxWidth="sm">
+            <CFcard>
+                <Typography variant="h2">Reset Your Password</Typography>
+                <br />
+                <div>
+                    {err && showErrMsg(err)}
+                    {success && showSuccessMsg(success)}
 
-                <Typography className={classes.label}>Enter your New Password: </Typography>
-                <TextField
-                    id="password"
-                    margin="dense"
-                    name="password"
-                    label="Password"
-                    placeholder="Password"
-                    type="password"
-                    required
-                    fullWidth
-                    InputLabelProps={{
-                        shrink: true,
-                    }}
-                    variant="outlined"
-                    value={password}
-                    onChange={handleChangeInput}
-                />
-                <TextField
-                    id="cf_password"
-                    margin="dense"
-                    name="cf_password"
-                    label="Confirm Password"
-                    placeholder="Confirm Password"
-                    type="password"
-                    required
-                    fullWidth
-                    InputLabelProps={{
-                        shrink: true,
-                    }}
-                    variant="outlined"
-                    value={cf_password}
-                    onChange={handleChangeInput}
-                />
-            </div>
-            <br></br>
-            <Button onClick={handleResetPass}>Reset Password</Button>
+                    <Typography className={classes.label}>Enter your New Password: </Typography>
+                    <TextField
+                        id="password"
+                        margin="dense"
+                        name="password"
+                        label="Password"
+                        placeholder="Password"
+                        type="password"
+                        required
+                        fullWidth
+                        InputLabelProps={{
+                            shrink: true,
+                        }}
+                        variant="outlined"
+                        value={password}
+                        onChange={handleChangeInput}
+                    />
+                    <TextField
+                        id="cf_password"
+                        margin="dense"
+                        name="cf_password"
+                        label="Confirm Password"
+                        placeholder="Confirm Password"
+                        type="password"
+                        required
+                        fullWidth
+                        InputLabelProps={{
+                            shrink: true,
+                        }}
+                        variant="outlined"
+                        value={cf_password}
+                        onChange={handleChangeInput}
+                    />
+                </div>
+                <br></br>
+                <Button onClick={handleResetPass}>Reset Password</Button>
+            </CFcard>
         </Container>
     );
 }
