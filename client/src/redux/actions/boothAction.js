@@ -19,7 +19,7 @@ export const dispatchEventBooths = (res, userId) => {
     for (let i = 0; i < events.length; i++) {
         if (events[i].user === userId) {
             hasOwnedBooth = true;
-            console.log(events[i]);
+            // console.log(events[i]);
             ownedBooth = events[i];
             break;
         }
@@ -38,6 +38,7 @@ export const fetchSingleBooth = async (token, eslug, bslug) => {
     const res = await axios.get(`/event/${eslug}/booth/${bslug}`, {
         headers: { Authorization: token },
     });
+
     return res;
 };
 
@@ -60,5 +61,23 @@ export const setSingleBoothParam = (param) => {
         payload: {
             event: param,
         },
+    };
+};
+
+//fetchBoothOrganizer, dispatchBoothOrganizer
+
+//FETCH BOOTH ORGANIZERS
+export const fetchBoothOrganizer = async (token, eslug, bslug) => {
+    const res = await axios.get(`/event/${eslug}/booth/${bslug}/org`, {
+        headers: { Authorization: token },
+    });
+    return res;
+};
+
+//DISPATCH BOOTH ORGANIZERS
+export const dispatchBoothOrganizer = (res) => {
+    return {
+        type: ACTIONS.GET_SINGLE_BOOTH_ORG,
+        payload: res.data,
     };
 };

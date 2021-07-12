@@ -18,7 +18,7 @@ const boothCtrl = {
             if (bslug.length > 50 || bslug.length < 5) return res.status(400).json({ msg: "Input should not less than 5 characters, and more than 50 characters." });
             if (description.length > 2000 || description.length < 5)
                 return res.status(400).json({ msg: "Input should not less than 5 characters, and more than 2000 characters." });
-            if (!validateYoutube(bvideo)) return res.status(400).json({ msg: "Invalid Youtube link." });
+            // if (!validateYoutube(bvideo)) return res.status(400).json({ msg: "Invalid Youtube link." });
 
             let addBooth = new Booth({
                 bname: bname,
@@ -55,6 +55,9 @@ const boothCtrl = {
         // console.log(req.params.bslug);
         try {
             const booth = await Booth.findOne({ bslug: req.params.bslug });
+
+            // const organization = await Organization.findById(booth.organization);
+
             res.json(booth);
         } catch (err) {
             return res.status(500).json({ msg: err.message });
@@ -78,14 +81,16 @@ const boothCtrl = {
             const booth = await Booth.findOne({ bslug: bslug });
 
             //FIX ENSURE THE INPUTS, REMOVE UNUSED VARIABLES, AND REMOVE BSLUG FOR CHANGES.
-            const { bname, bUpdatedslug, description, bimage, bvideo, user, organizationId } = req.body;
+            const { bname, bUpdatedslug, description, bimage, bvideo, bslides, user, organizationId } = req.body;
             await Booth.findOneAndUpdate(
                 { _id: booth._id },
                 {
                     bname: bname,
                     bslug: bslug,
+                    bimage: bimage,
                     description: description,
                     bvideo: bvideo,
+                    bslides: bslides,
                 }
             );
 
@@ -103,6 +108,18 @@ const boothCtrl = {
             await Booth.findByIdAndDelete(booth._id);
 
             res.json({ msg: "Delete booth success" });
+        } catch (err) {
+            return res.status(500).json({ msg: err.message });
+        }
+    },
+
+    viewBoothOrganizer: async (req, res) => {
+        const { bslug } = req.params;
+        try {
+            const booth = await Booth.findOne({ bslug: bslug });
+            const organization = await Organization.findById(booth.organization);
+
+            res.json(organization);
         } catch (err) {
             return res.status(500).json({ msg: err.message });
         }
@@ -132,6 +149,12 @@ const boothCtrl = {
 };
 
 function validateYoutube(url) {
+    var re = /^(?:https?:\/\/)?(?:www\.)?(?:youtu\.be\/|youtube\.com\/(?:embed\/|v\/|watch\?v=|watch\?.+&v=))((\w|-){11})(?:\S+)?$/;
+
+    return re.test(url);
+}
+
+function validateFacebook(url) {
     var re = /^(?:https?:\/\/)?(?:www\.)?(?:youtu\.be\/|youtube\.com\/(?:embed\/|v\/|watch\?v=|watch\?.+&v=))((\w|-){11})(?:\S+)?$/;
 
     return re.test(url);

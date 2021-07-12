@@ -109,7 +109,7 @@ function AllBooth() {
                 <br />
                 <Grid container spacing={8}>
                     {Booths.map((booth) => (
-                        <Grid item>
+                        <Grid item key={booth._id}>
                             <BoothListCard booth={booth} eslug={eslug} />
                         </Grid>
                     ))}

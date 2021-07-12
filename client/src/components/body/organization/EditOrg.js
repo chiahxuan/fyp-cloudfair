@@ -181,6 +181,9 @@ function EditOrg() {
                                 variant="outlined"
                                 onChange={handleChange}
                                 fullWidth
+                                multiline
+                                rows={8}
+                                rowsMax={10}
                             />
                         </Grid>
                         <Grid item xs={12} sm={4}>

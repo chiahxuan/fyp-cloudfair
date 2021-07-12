@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import ReactPlayer from "react-player/lazy";
+import ReactGoogleSlides from "react-google-slides";
 
 // import VideoPlayer from "react-video-js-player";
 
@@ -49,6 +50,7 @@ const initialState = {
     descriptionData: "",
     bimageData: "",
     bvideoData: "",
+    bslidesData: "",
     err: "",
     success: "",
 };
@@ -73,7 +75,7 @@ function EditBooth() {
     // HANDLE LOADING FUNCTION
     const [loading, setLoading] = useState(false);
     const [data, setData] = useState(initialState);
-    const { bnameData, descriptionData, bvideoData, err, success } = data;
+    const { bnameData, descriptionData, bvideoData, bslidesData, err, success } = data;
     const [callback, setCallback] = useState(false);
     const [checkVendor, setCheckVendor] = useState(false);
     const [backgroundImage, setBackgroundImage] = useState(false);
@@ -110,9 +112,11 @@ function EditBooth() {
         }
     };
 
+    const changeMediaState = async () => {};
+
     const updateInfo = () => {
         // console.log(bnameData, bslugData, descriptionData, bimageData, bvideoData, err, success);
-        // console.log("backgroundImage  " + backgroundImage);
+        console.log("backgroundImage  " + backgroundImage);
         // console.log("bvideoData  " + bvideoData);
 
         try {
@@ -123,6 +127,7 @@ function EditBooth() {
                     description: descriptionData ? descriptionData : booth.description,
                     bimage: backgroundImage ? backgroundImage : booth.bimage,
                     bvideo: bvideoData ? bvideoData : booth.bvideo,
+                    bslides: bslidesData ? bslidesData : booth.bslides,
                 },
                 {
                     headers: { Authorization: token },
@@ -130,7 +135,10 @@ function EditBooth() {
             );
 
             setData({ ...data, err: "", success: "Updated Success!" });
-            history.push(`/event/${eslug}/booth/${bslug}`);
+            // window.location.href = `/event/${eslug}/booth/all`;
+
+            // history.push(`/event/${eslug}/booth/${bslug}`);
+            history.push(`/event/${eslug}/booth/all`);
         } catch (err) {
             setData({ ...data, err: err.response.data.msg, success: "" });
             // console.log("cannot connect to controller");
@@ -161,6 +169,23 @@ function EditBooth() {
         setValue(newValue);
     };
 
+    const videoPlayer = () => {
+        return (
+            <ReactPlayer
+                controls
+                width="100%"
+                height="320px"
+                style={{ marginLeft: "auto", marginRight: "auto" }}
+                url={booth.bvideo ? booth.bvideo : "https://www.youtube.com/watch?v=DGvP3uIo7IE"}
+                playing={true}
+            />
+        );
+    };
+
+    const pptSlides = () => {
+        return <ReactGoogleSlides width={`100%`} height={360} slidesLink={booth.bslides} slideDuration={5} showControls loop />;
+    };
+
     return (
         <Container>
             <CFcard>
@@ -182,8 +207,6 @@ function EditBooth() {
                 {err && showErrMsg(err)}
                 {success && showSuccessMsg(success)}
                 {loading && <h3>Loading.....</h3>}
-                {/* <ReactPlayer controls url="https://www.youtube.com/watch?v=zg9ih6SVACc" width="100%" />  */}
-
                 <Grid container spacing={8}>
                     <Grid item xs={6}>
                         <form onSubmit={updateInfo}>
@@ -210,7 +233,7 @@ function EditBooth() {
                                         name="bnameData"
                                         label="Booth Name"
                                         placeholder={booth.bname}
-                                        defaultValue={bnameData}
+                                        defaultValue={booth.bname}
                                         margin="dense"
                                         fullWidth
                                         required
@@ -226,7 +249,6 @@ function EditBooth() {
                                 </Grid>
                                 <Grid item xs={12} sm={8}>
                                     {/* <Typography> {booth.description}</Typography> */}
-
                                     <TextField
                                         required
                                         id="descriptionData"
@@ -241,16 +263,10 @@ function EditBooth() {
                                         }}
                                         variant="outlined"
                                         onChange={handleChange}
-                                        rows={3}
-                                        rowsMax={4}
+                                        multiline
+                                        rows={5}
+                                        rowsMax={8}
                                     />
-                                </Grid>
-
-                                <Grid item xs={12} sm={4}>
-                                    <Typography variant="h4">Booth Image:</Typography>
-                                </Grid>
-                                <Grid item xs={12} sm={8}>
-                                    <input type="file" name="file" id="file_up" onChange={changeImage} />
                                 </Grid>
                                 <Grid item xs={12} sm={4}>
                                     <Typography variant="h4">Booth Video URL:</Typography>
@@ -273,7 +289,35 @@ function EditBooth() {
                                         onChange={handleChange}
                                     />
                                 </Grid>
-                            </Grid>{" "}
+                                <Grid item xs={12} sm={4}>
+                                    <Typography variant="h4">Booth Slides URL:</Typography>
+                                </Grid>
+                                <Grid item xs={12} sm={8}>
+                                    {/* <Typography> {booth.bvideo}</Typography> */}
+                                    <TextField
+                                        required
+                                        id="bslidesData"
+                                        name="bslidesData"
+                                        label="Booth Slides"
+                                        placeholder={booth.bslides}
+                                        defaultValue={booth.bslides}
+                                        margin="dense"
+                                        fullWidth
+                                        InputLabelProps={{
+                                            shrink: true,
+                                        }}
+                                        variant="outlined"
+                                        onChange={handleChange}
+                                    />
+                                </Grid>
+
+                                <Grid item xs={12} sm={4}>
+                                    <Typography variant="h4">Booth Image:</Typography>
+                                </Grid>
+                                <Grid item xs={12} sm={8}>
+                                    <input type="file" name="file" id="file_up" onChange={changeImage} />
+                                </Grid>
+                            </Grid>
                         </form>
                         <br />
                         {isVendorOwner == true ? (
@@ -290,6 +334,10 @@ function EditBooth() {
                         )}
                     </Grid>
                     <Grid item xs={6} align="center">
+                        {videoPlayer()}
+                        <br />
+                        <br />
+                        {pptSlides()}
                         {/* cannot display video- player */}
                         {/* <ReactPlayer controls url="https://www.youtube.com/watch?v=zg9ih6SVACc" width="100%" /> */}
                         {/* <ReactPlayer playIcon url={booth.bvideo ? booth.bvideo : "https://www.youtube.com/watch?v=DGvP3uIo7IE"} width="100%" /> */}
