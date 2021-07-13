@@ -1,23 +1,16 @@
-import React, { useState, useEffect } from "react";
-import axios from "axios";
+import { useState, useEffect } from "react";
 import ReactPlayer from "react-player";
 // import VideoPlayer from "react-video-js-player";
 import ReactGoogleSlides from "react-google-slides";
 
-import { Link, useHistory } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { useParams } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
-import { showSuccessMsg, showErrMsg } from "../../utils/notification/Notification";
-import { isEmpty, isLength, isValidDescription, isValidString, isValidDateTime } from "../../utils/validation/Validation";
 import { fetchSingleBooth, dispatchSingleBooth, fetchBoothOrganizer, dispatchBoothOrganizer } from "../../../redux/actions/boothAction";
-import dayjs from "dayjs";
 
 import { makeStyles } from "@material-ui/core/styles";
-import { Typography, Button, Container, TextField, Card, CardContent, Grid } from "@material-ui/core";
+import { Typography, Button, Container, Grid } from "@material-ui/core";
 import CFcard from "../../components/CFcard";
-import Slides from "../../components/slides";
-import SlideShow from "../../components/SlideShow";
-const { v4: uuidV4 } = require("uuid");
 
 // import { makeStyles } from "@material-ui/core/styles";
 const useStyles = makeStyles((theme) => ({
@@ -58,15 +51,11 @@ function SingleBooth() {
     const token = useSelector((state) => state.token);
     const booth = useSelector((state) => state.boothReducer.booth);
     const boothOrg = useSelector((state) => state.boothReducer.boothOrg);
-    const [boothInput, setBoothInput] = useState(initialState);
-    const [callback, setCallback] = useState(false);
+    const [callback] = useState(false);
     const dispatch = useDispatch();
     const { eslug, bslug } = useParams();
-    const [checkVendor, setCheckVendor] = useState(false);
 
     //CHECK AUTHORITY TO ACCESS TO EDIT
-    const checkEventHost = useSelector((state) => state.eventReducer.isEventHost); // EVENT HOST
-    const checkVendorOwner = useSelector((state) => state.eventReducer.isEventHost); // EVENT HOST
     const isVendorOwner = useSelector((state) => state.boothReducer.isVendorOwner);
 
     useEffect(() => {
@@ -81,27 +70,6 @@ function SingleBooth() {
         });
     }, [token, dispatch, callback]);
 
-    const loadLiveVideo = () => {
-        // navigator.mediaDevices
-        //     .getUserMedia({
-        //         video: {
-        //             width: {
-        //                 min: 640,
-        //                 ideal: 1280,
-        //                 max: 1280,
-        //             },
-        //             height: {
-        //                 min: 640,
-        //                 ideal: 1280,
-        //                 max: 1280,
-        //             },
-        //         },
-        //     })
-        //     .then((stream) => {
-        //         document.getElementById("vid"), (srcObject = stream);
-        //     });
-    };
-
     const videoPlayer = () => {
         return (
             <ReactPlayer
@@ -109,7 +77,7 @@ function SingleBooth() {
                 width="100%"
                 height="720px"
                 style={{ marginLeft: "auto", marginRight: "auto" }}
-                url={booth.bvideo}
+                url={booth.bvideo ? booth.bvideo : "https://www.youtube.com/watch?v=DGvP3uIo7IE"}
                 playing={true}
                 // config={{
                 //     youtube: {
@@ -154,7 +122,7 @@ function SingleBooth() {
                         <br />
                         <Grid container>
                             <Grid item xs={12} sm={4}>
-                                {isVendorOwner == true ? (
+                                {isVendorOwner === true ? (
                                     <>
                                         <Button className={classes.button} component={Link} to={`/event/${eslug}/booth/${bslug}/edit_booth`}>
                                             Edit Booth

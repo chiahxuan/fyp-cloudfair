@@ -42,7 +42,7 @@ function AddEvent() {
     const auth = useSelector((state) => state.auth);
     const token = useSelector((state) => state.token);
     const [event, setEvent] = useState(initialState);
-    const { eventName, eventSlug, description, startDate, endDate, organizationId, userId, err, success } = event;
+    const { eventName, eventSlug, description, startDate, endDate, err, success } = event;
     const [date, setDate] = useState(initialState);
 
     const { user } = auth; // to get user ID
@@ -125,7 +125,7 @@ function AddEvent() {
                 </Typography>
 
                 <Typography align="center">
-                    or back to <Link to="/events">Events</Link>{" "}
+                    or back to <Link to="/event/all_events">Events</Link>{" "}
                 </Typography>
                 <br />
                 <br />

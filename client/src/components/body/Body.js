@@ -1,6 +1,5 @@
 import React from "react";
 import { Switch, Route } from "react-router-dom";
-import { Container } from "@material-ui/core";
 
 import NotFound from "../utils/NotFound/NotFound";
 

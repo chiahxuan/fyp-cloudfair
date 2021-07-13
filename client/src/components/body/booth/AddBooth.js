@@ -10,7 +10,7 @@ import { dispatchGetOrganization, fetchOrganization } from "../../../redux/actio
 import { setSingleEventParam } from "../../../redux/actions/eventAction";
 
 import { makeStyles } from "@material-ui/core/styles";
-import { Typography, Button, Container, TextField, Tab, Tabs, Box, Card, CardContent } from "@material-ui/core";
+import { Typography, Button, Container, TextField, Tab, Tabs, Box } from "@material-ui/core";
 import CFcard from "../../components/CFcard";
 
 //ICONS IMPORT
@@ -20,18 +20,6 @@ import StorefrontIcon from "@material-ui/icons/Storefront";
 import EditIcon from "@material-ui/icons/Edit";
 
 var slugify = require("slug");
-
-const useStyles = makeStyles((theme) => ({
-    container: {
-        display: "flex",
-        flexWrap: "wrap",
-    },
-    textField: {
-        marginLeft: theme.spacing(1),
-        marginRight: theme.spacing(1),
-        width: 250,
-    },
-}));
 
 const initialState = {
     bname: "",
@@ -49,7 +37,6 @@ const initialState = {
 };
 
 function AddBooth() {
-    const classes = useStyles();
     const dispatch = useDispatch();
     const { eslug } = useParams();
     const history = useHistory();
@@ -57,7 +44,6 @@ function AddBooth() {
     //access to user state
     const auth = useSelector((state) => state.auth);
     const token = useSelector((state) => state.token);
-    const { user } = auth; // to get user ID
     const event = useSelector((state) => state.eventReducer.event);
 
     //access to event
@@ -70,13 +56,10 @@ function AddBooth() {
     const [booth, setBooth] = useState(initialState);
 
     //booth variables
-    const { bname, bslug, description, bimage, bvideo, bslides, userId, organizationId, eventId, err, success } = booth;
+    const { bname, bslug, description, bvideo, bslides, err, success } = booth;
 
-    const [data, setData] = useState(initialState); // handle inputs
     const [singleEvent, setSingleEvent] = useState([]); //get singleEventObject
     const [loading, setLoading] = useState(false); //i dunno
-    const [bgImage, setBgImage] = useState(false); //image update
-    const [wantEdit, setWantEdit] = useState(false);
 
     // const booths = useSelector((state) => state.boothReducer.booths);
     // const booth = useSelector((state) => state.boothReducer.booth);
@@ -123,7 +106,7 @@ function AddBooth() {
     };
 
     //SUBMIT FORM
-    const handleSubmit = async (e) => {
+    const handleSubmit = async () => {
         // console.log(auth.user._id);
         // console.log(singleEvent._id);
         // console.log(organization._id);
@@ -167,7 +150,7 @@ function AddBooth() {
 
     //HANDLE TAB CHANGES
     const tabNumber = () => {
-        if (checkEventHost == true) {
+        if (checkEventHost === true) {
             return 3;
         } else {
             return 2;
@@ -187,9 +170,9 @@ function AddBooth() {
                         <Tab icon={<StorefrontIcon />} label="Expo" component={Link} to={`/event/${eslug}/booth/all`} />
                         {/* {checkEventHost == true ? <Tab icon={<AddBoxIcon />} label="Add Booth" /> : ""} */}
 
-                        {checkEventHost == true ? <Tab icon={<EditIcon />} label="Edit Event" component={Link} to={`/event/${eslug}/edit_event`} /> : ""}
-                        {(hasOrganization == true && hasOwnedBooth == false) || checkEventHost == true ? <Tab icon={<AddBoxIcon />} label="Add Booth" /> : ""}
-                        {hasOrganization == true && hasOwnedBooth == true && checkEventHost == false ? (
+                        {checkEventHost === true ? <Tab icon={<EditIcon />} label="Edit Event" component={Link} to={`/event/${eslug}/edit_event`} /> : ""}
+                        {(hasOrganization === true && hasOwnedBooth === false) || checkEventHost === true ? <Tab icon={<AddBoxIcon />} label="Add Booth" /> : ""}
+                        {hasOrganization === true && hasOwnedBooth === true && checkEventHost === false ? (
                             <Tab icon={<EditIcon />} label="Edit Booth" component={Link} to={`/event/${eslug}/booth/${booth.bslug}/edit_booth`} />
                         ) : (
                             ""

@@ -102,6 +102,8 @@ function Register() {
                             defaultValue={name}
                             onChange={handleChangeInput}
                         />
+                        <br />
+                        <br />
                         <TextField
                             required
                             id="email"
@@ -117,6 +119,8 @@ function Register() {
                             defaultValue={name}
                             onChange={handleChangeInput}
                         />
+                        <br />
+                        <br />
                         <TextField
                             id="password"
                             margin="dense"
@@ -133,6 +137,8 @@ function Register() {
                             defaultValue={password}
                             onChange={handleChangeInput}
                         />
+                        <br />
+                        <br />
                         <TextField
                             id="cf_password"
                             margin="dense"
@@ -152,7 +158,7 @@ function Register() {
                     </div>
                     <br />
                     <div>
-                        <Button type="submit" variant="contained" color="primary">
+                        <Button type="submit" variant="contained">
                             <div className={classes.signupBtn}>
                                 <i className="fas fa-envelope"></i>
                             </div>

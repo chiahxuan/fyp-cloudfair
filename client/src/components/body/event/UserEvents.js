@@ -61,11 +61,15 @@ function UserEvents() {
                     </Grid>
                 </Grid>
                 <Grid container spacing={8}>
-                    {Events.map((event) => (
-                        <Grid item key={event._id}>
-                            <EventCard event={event} />
-                        </Grid>
-                    ))}
+                    {Events ? (
+                        Events.map((event) => (
+                            <Grid item key={event._id}>
+                                <EventCard event={event} />
+                            </Grid>
+                        ))
+                    ) : (
+                        <Typography>Hi</Typography>
+                    )}
                 </Grid>
             </CFcard>
         </Container>

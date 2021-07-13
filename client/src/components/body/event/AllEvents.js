@@ -12,7 +12,7 @@ function AllEvents() {
     const auth = useSelector((state) => state.auth);
     const token = useSelector((state) => state.token);
     const events = useSelector((state) => state.eventReducer.events);
-    const [callback, setCallback] = useState(false);
+    const [callback] = useState(false);
     const dispatch = useDispatch();
     const [Events, setEvents] = React.useState([]);
 

@@ -9,10 +9,7 @@ import { Link, useHistory } from "react-router-dom";
 import { useParams } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { showSuccessMsg, showErrMsg } from "../../utils/notification/Notification";
-import { isEmpty, isLength, isValidDescription, isValidString, isInvalidDateTime } from "../../utils/validation/Validation";
-import { setCheckEventHost, fetchSingleEvent, dispatchGetSingleEvent, fetchEventHostStatus, dispatchEventHostStatus } from "../../../redux/actions/eventAction";
 import { fetchSingleBooth, dispatchSingleBooth } from "../../../redux/actions/boothAction";
-import dayjs from "dayjs";
 
 import { makeStyles } from "@material-ui/core/styles";
 import { Typography, Button, Container, TextField, Grid, Tabs, Tab, Box } from "@material-ui/core";
@@ -21,7 +18,6 @@ import AddBoxIcon from "@material-ui/icons/AddBox";
 import StorefrontIcon from "@material-ui/icons/Storefront";
 import EditIcon from "@material-ui/icons/Edit";
 import CFcard from "../../components/CFcard";
-var slugify = require("slug");
 
 // import { makeStyles } from "@material-ui/core/styles";
 const useStyles = makeStyles((theme) => ({
@@ -63,10 +59,8 @@ function EditBooth() {
 
     const auth = useSelector((state) => state.auth);
     const token = useSelector((state) => state.token);
-    const event = useSelector((state) => state.eventReducer.event);
     const isVendorOwner = useSelector((state) => state.boothReducer.isVendorOwner);
 
-    const booths = useSelector((state) => state.boothReducer.booths);
     const booth = useSelector((state) => state.boothReducer.booth);
     const checkEventHost = useSelector((state) => state.eventReducer.isEventHost);
     const hasOrganization = useSelector((state) => state.organization.hasOrganization);
@@ -77,7 +71,6 @@ function EditBooth() {
     const [data, setData] = useState(initialState);
     const { bnameData, descriptionData, bvideoData, bslidesData, err, success } = data;
     const [callback, setCallback] = useState(false);
-    const [checkVendor, setCheckVendor] = useState(false);
     const [backgroundImage, setBackgroundImage] = useState(false);
 
     useEffect(() => {
@@ -111,8 +104,6 @@ function EditBooth() {
             setData({ ...data, err: err.response.data.msg, success: "" });
         }
     };
-
-    const changeMediaState = async () => {};
 
     const updateInfo = () => {
         // console.log(bnameData, bslugData, descriptionData, bimageData, bvideoData, err, success);
@@ -195,9 +186,9 @@ function EditBooth() {
                         <Tab icon={<StorefrontIcon />} label="Expo" component={Link} to={`/event/${eslug}/booth/all`} />
                         {/* {checkEventHost == true ? <Tab icon={<AddBoxIcon />} label="Add Booth" /> : ""} */}
 
-                        {checkEventHost == true ? <Tab icon={<EditIcon />} label="Edit Event" component={Link} to={`/event/${eslug}/edit_event`} /> : ""}
-                        {(hasOrganization == true && hasOwnedBooth == false) || checkEventHost == true ? <Tab icon={<AddBoxIcon />} label="Add Booth" /> : ""}
-                        {hasOrganization == true && hasOwnedBooth == true && checkEventHost == false ? (
+                        {checkEventHost === true ? <Tab icon={<EditIcon />} label="Edit Event" component={Link} to={`/event/${eslug}/edit_event`} /> : ""}
+                        {(hasOrganization === true && hasOwnedBooth === false) || checkEventHost === true ? <Tab icon={<AddBoxIcon />} label="Add Booth" /> : ""}
+                        {hasOrganization === true && hasOwnedBooth === true && checkEventHost === false ? (
                             <Tab icon={<EditIcon />} label="Edit Booth" component={Link} to={`/event/${eslug}/booth/${booth.bslug}/edit_booth`} />
                         ) : (
                             ""
@@ -216,6 +207,7 @@ function EditBooth() {
                                         onChange={changeImage}
                                         className={classes.bgImage}
                                         src={backgroundImage ? backgroundImage : booth.bimage || "https://material-ui.com/static/images/cards/contemplative-reptile.jpg"}
+                                        alt={booth.bname}
                                     />
                                 </Grid>
                                 <Grid item xs={12} align="center">
@@ -320,7 +312,7 @@ function EditBooth() {
                             </Grid>
                         </form>
                         <br />
-                        {isVendorOwner == true ? (
+                        {isVendorOwner === true ? (
                             <>
                                 <Button disabled={loading} onClick={updateInfo}>
                                     Update Booth

@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Link, useHistory } from "react-router-dom";
+import { Link } from "react-router-dom";
 import axios from "axios";
 import { showSuccessMsg, showErrMsg } from "../../utils/notification/Notification";
 import { dispatchLogin } from "../../../redux/actions/authAction";
@@ -49,7 +49,6 @@ const useStyles = makeStyles((theme) => ({
 
 function Login() {
     const classes = useStyles();
-    const history = useHistory();
     const dispatch = useDispatch();
 
     const [user, setUser] = useState(initialState);
@@ -130,7 +129,6 @@ function Login() {
                             id="email"
                             margin="dense"
                             label="Email Address"
-                            id="email"
                             name="email"
                             defaultValue={email}
                             onChange={handleChangeInput}
