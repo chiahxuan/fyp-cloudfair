@@ -1,23 +1,19 @@
-import React from "react";
+import React, { useState } from "react";
 import clsx from "clsx";
 import { useSelector } from "react-redux";
 import axios from "axios";
 
 import "@fontsource/roboto";
-import { Link } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 import { withRouter } from "react-router-dom";
 import { makeStyles, useTheme, withStyles } from "@material-ui/core/styles";
 import { AppBar, Avatar, Toolbar, Typography, Button, Menu, MenuItem, List, ListItem, ListItemText, ListItemIcon, CssBaseline, Drawer, Divider } from "@material-ui/core";
 
 import IconButton from "@material-ui/core/IconButton";
 import MenuIcon from "@material-ui/icons/Menu";
-import AccountBoxIcon from "@material-ui/icons/AccountBox";
 import EventIcon from "@material-ui/icons/Event";
 import ExitToAppIcon from "@material-ui/icons/ExitToApp";
 import HomeIcon from "@material-ui/icons/Home";
-import InboxIcon from "@material-ui/icons/MoveToInbox";
-import DraftsIcon from "@material-ui/icons/Drafts";
-import SendIcon from "@material-ui/icons/Send";
 import ChevronLeftIcon from "@material-ui/icons/ChevronLeft";
 import ChevronRightIcon from "@material-ui/icons/ChevronRight";
 import AccountCircleIcon from "@material-ui/icons/AccountCircle";
@@ -172,6 +168,15 @@ function Header() {
     const { user, isLogged } = auth;
     const [open, setOpen] = React.useState(false);
 
+    //VALIDATION
+    // DETERMINE USER HAS ORGANIZATION
+    const hasOrganization = useSelector((state) => state.organization.hasOrganization);
+
+    //DETERMINE USER HAS EVENT
+    const hasEvent = useSelector((state) => state.eventReducer.hasEvent);
+
+    // console.log(hasOrganization);
+
     //HANDLE DRAWER
     const handleDrawerOpen = () => {
         setOpen(true);
@@ -207,38 +212,38 @@ function Header() {
                     <Typography className={classes.userName}> {user.name}</Typography>
                 </Button>
                 <StyledMenu id="userMenu" anchorEl={anchorEl} keepMounted open={Boolean(anchorEl)} onClose={handleClose}>
-                    <Link to="/" className={classes.menuItemLink}>
+                    <NavLink to="/" className={classes.menuItemLink}>
                         <StyledMenuItem>
                             <ListItemIcon>
-                                <HomeIcon fontSize="medium" />
+                                <HomeIcon fontSize="small" />
                             </ListItemIcon>
                             <ListItemText primary="Home"></ListItemText>
                         </StyledMenuItem>
-                    </Link>
-                    <Link to="/" className={classes.menuItemLink}>
+                    </NavLink>
+                    <NavLink to="/" className={classes.menuItemLink}>
                         <StyledMenuItem>
                             <ListItemIcon>
-                                <EventIcon fontSize="medium" />
+                                <EventIcon fontSize="small" />
                             </ListItemIcon>
                             <ListItemText primary="Events"></ListItemText>
                         </StyledMenuItem>
-                    </Link>
-                    <Link to="/profile" className={classes.menuItemLink}>
+                    </NavLink>
+                    <NavLink to="/profile" className={classes.menuItemLink}>
                         <StyledMenuItem>
                             <ListItemIcon>
-                                <AccountBoxIcon fontSize="medium" />
+                                <AccountCircleIcon fontSize="small" />
                             </ListItemIcon>
                             <ListItemText primary="Profile"></ListItemText>{" "}
                         </StyledMenuItem>
-                    </Link>
-                    <Link to="/logout" className={classes.menuItemLink} onClick={handleLogout}>
+                    </NavLink>
+                    <NavLink to="/logout" className={classes.menuItemLink} onClick={handleLogout}>
                         <StyledMenuItem>
                             <ListItemIcon>
-                                <ExitToAppIcon fontSize="medium" />
+                                <ExitToAppIcon fontSize="small" />
                             </ListItemIcon>
                             <ListItemText primary="Logout"></ListItemText>
                         </StyledMenuItem>
-                    </Link>
+                    </NavLink>
                 </StyledMenu>
             </div>
         );
@@ -267,7 +272,7 @@ function Header() {
                     {itemsList.map((item, index) => {
                         const { text, icon, link } = item;
                         return (
-                            <ListItemLink to={link}>
+                            <ListItemLink to={link} key={index}>
                                 {<ListItemIcon>{icon}</ListItemIcon>}
                                 <ListItemText primary={text}></ListItemText>
                             </ListItemLink>
@@ -279,7 +284,7 @@ function Header() {
                     {itemsList2.map((item, index) => {
                         const { text, icon, link } = item;
                         return (
-                            <ListItemLink to={link}>
+                            <ListItemLink to={link} key={index}>
                                 {<ListItemIcon>{icon}</ListItemIcon>}
                                 <ListItemText primary={text}></ListItemText>
                             </ListItemLink>
@@ -291,7 +296,7 @@ function Header() {
     };
 
     function ListItemLink(props) {
-        return <ListItem button component={Link} {...props} />;
+        return <ListItem button component={NavLink} {...props} />;
     }
     const menuIcon = () => {
         return (
@@ -313,24 +318,27 @@ function Header() {
         {
             text: "Home",
             icon: <HomeIcon fontSize="small" />,
-            link: "/",
+            link: "/event/all_events",
+        },
+        {
+            text: "Event",
+            icon: <EventIcon fontSize="small" />,
+            link: hasEvent ? "/event/user_events" : "/event/add_event",
+            // ******settle routing problem
         },
         {
             text: "Profile",
             icon: <AccountCircleIcon fontSize="small" />,
             link: "/profile",
         },
-        {
-            text: "Event",
-            icon: <ChevronRightIcon fontSize="small" />,
-            link: "/event",
-        },
     ];
     const itemsList2 = [
         {
             text: "Organization",
             icon: <GroupIcon fontSize="small" />,
-            link: "/organization/overview",
+            link: hasOrganization ? "/organization/overview" : "/organization/new",
+
+            //hasOrganization
         },
     ];
 
@@ -357,7 +365,7 @@ function Header() {
                     {isLogged ? (
                         userLink()
                     ) : (
-                        <Button color="secondary" className={classes.toolBarBtn} component={Link} to="/login">
+                        <Button color="secondary" className={classes.toolBarBtn} component={NavLink} to="/login">
                             <AccountCircleIcon fontSize="small" />
                             <Typography align="left">Log In</Typography>
                         </Button>

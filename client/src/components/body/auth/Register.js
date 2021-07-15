@@ -5,6 +5,7 @@ import axios from "axios";
 import { makeStyles } from "@material-ui/core/styles";
 import TextField from "@material-ui/core/TextField";
 import { Button, Container, Typography } from "@material-ui/core";
+import CFcard from "../../components/CFcard";
 
 import { showSuccessMsg, showErrMsg } from "../../utils/notification/Notification";
 import { isEmpty, isEmail, isLength, isMatch } from "../../utils/validation/Validation";
@@ -76,91 +77,99 @@ function Register() {
 
     return (
         <Container maxWidth="sm">
-            <br />
-            <Typography variant="h1" align="center">
-                Register
-            </Typography>
-            <br />
-            {err && showErrMsg(err)}
-            {success && showSuccessMsg(success)}
-            <form onSubmit={handleSubmit}>
-                <div>
-                    <TextField
-                        required
-                        id="name"
-                        name="name"
-                        label="Full Name"
-                        placeholder="Name"
-                        margin="dense"
-                        fullWidth
-                        InputLabelProps={{
-                            shrink: true,
-                        }}
-                        variant="outlined"
-                        defaultValue={name}
-                        onChange={handleChangeInput}
-                    />
-                    <TextField
-                        required
-                        id="email"
-                        name="email"
-                        label="Email Address"
-                        placeholder="Email Address"
-                        margin="dense"
-                        fullWidth
-                        InputLabelProps={{
-                            shrink: true,
-                        }}
-                        variant="outlined"
-                        defaultValue={name}
-                        onChange={handleChangeInput}
-                    />
-                    <TextField
-                        id="password"
-                        margin="dense"
-                        name="password"
-                        label="Password"
-                        placeholder="Password"
-                        type="password"
-                        required
-                        fullWidth
-                        InputLabelProps={{
-                            shrink: true,
-                        }}
-                        variant="outlined"
-                        defaultValue={password}
-                        onChange={handleChangeInput}
-                    />
-                    <TextField
-                        id="cf_password"
-                        margin="dense"
-                        name="cf_password"
-                        label="Confirm Password"
-                        placeholder="Confirm Password"
-                        type="password"
-                        required
-                        fullWidth
-                        InputLabelProps={{
-                            shrink: true,
-                        }}
-                        variant="outlined"
-                        defaultValue={cf_password}
-                        onChange={handleChangeInput}
-                    />
-                </div>
+            <CFcard>
                 <br />
-                <div>
-                    <Button type="submit" variant="contained" color="primary">
-                        <div className={classes.signupBtn}>
-                            <i className="fas fa-envelope"></i>
-                        </div>
-                        Sign up with email
-                    </Button>
-                    <Link to="/login" className={classes.loginLink}>
-                        Already have an account?
-                    </Link>
-                </div>
-            </form>
+                <Typography variant="h1" align="center">
+                    Register
+                </Typography>
+                <br />
+                {err && showErrMsg(err)}
+                {success && showSuccessMsg(success)}
+                <form onSubmit={handleSubmit}>
+                    <div>
+                        <TextField
+                            required
+                            id="name"
+                            name="name"
+                            label="Full Name"
+                            placeholder="Name"
+                            margin="dense"
+                            fullWidth
+                            InputLabelProps={{
+                                shrink: true,
+                            }}
+                            variant="outlined"
+                            defaultValue={name}
+                            onChange={handleChangeInput}
+                        />
+                        <br />
+                        <br />
+                        <TextField
+                            required
+                            id="email"
+                            name="email"
+                            label="Email Address"
+                            placeholder="Email Address"
+                            margin="dense"
+                            fullWidth
+                            InputLabelProps={{
+                                shrink: true,
+                            }}
+                            variant="outlined"
+                            defaultValue={name}
+                            onChange={handleChangeInput}
+                        />
+                        <br />
+                        <br />
+                        <TextField
+                            id="password"
+                            margin="dense"
+                            name="password"
+                            label="Password"
+                            placeholder="Password"
+                            type="password"
+                            required
+                            fullWidth
+                            InputLabelProps={{
+                                shrink: true,
+                            }}
+                            variant="outlined"
+                            defaultValue={password}
+                            onChange={handleChangeInput}
+                        />
+                        <br />
+                        <br />
+                        <TextField
+                            id="cf_password"
+                            margin="dense"
+                            name="cf_password"
+                            label="Confirm Password"
+                            placeholder="Confirm Password"
+                            type="password"
+                            required
+                            fullWidth
+                            InputLabelProps={{
+                                shrink: true,
+                            }}
+                            variant="outlined"
+                            defaultValue={cf_password}
+                            onChange={handleChangeInput}
+                        />
+                    </div>
+                    <br />
+                    <div>
+                        <Button type="submit" variant="contained">
+                            <div className={classes.signupBtn}>
+                                <i className="fas fa-envelope"></i>
+                            </div>
+                            Sign up with email
+                        </Button>
+                        <Link to="/login" className={classes.loginLink}>
+                            Already have an account?
+                        </Link>
+                    </div>
+                </form>
+            </CFcard>
         </Container>
     );
 }

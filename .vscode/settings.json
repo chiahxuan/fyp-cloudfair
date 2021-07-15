@@ -2,9 +2,25 @@
     "git.ignoreLimitWarning": true,
     "cSpell.words": [
         "Infor",
+        "bdescription",
+        "bimage",
+        "bname",
+        "bslides",
+        "bslug",
+        "bvideo",
+        "c",
         "cloudinary",
+        "datetime",
+        "default",
+        "eimage",
+        "ename",
+        "eslug",
+        "fcard",
         "fileupload",
-        "refreshtoken"
+        "refreshtoken",
+        "showcurrentdate",
+        "showdate",
+        "value"
     ]
     // "git.ignoreLimitWarning": true
 }

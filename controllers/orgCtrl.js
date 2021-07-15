@@ -1,5 +1,7 @@
 const Organizations = require("../models/Organization");
 const Users = require("../models/userModel");
+const Booth = require("../models/Booth");
+const Event = require("../models/Event");
 
 const organizationCtrl = {
     createOrg: async (req, res) => {
@@ -48,7 +50,42 @@ const organizationCtrl = {
             return res.status(500).json({ msg: err.message });
         }
     },
-    editOrg: {},
+    editOrg: async (req, res) => {
+        const user = await Users.findById(req.user.id).select("-password");
+        const organization = await Organizations.findOne({ organizationCreatorId: user._id });
+        const { organizationName, organizationAbout, organizationBackground, organizationEmail } = req.body;
+
+        // console.log(organizationName, organizationAbout, organizationBackground, organizationEmail);
+        console.log(organization._id);
+        await Organizations.findOneAndUpdate(
+            { _id: organization._id },
+            {
+                organizationName: organizationName,
+                organizationAbout: organizationAbout,
+                organizationBackground: organizationBackground,
+                organizationEmail: organizationEmail,
+            }
+        );
+        res.json({ msg: "Update Organization Success" });
+    },
+    deleteOrg: async (req, res) => {
+        try {
+            const user = await Users.findById(req.user.id).select("-password");
+            const organization = await Organizations.findOne({ organizationCreatorId: user._id });
+
+            console.log(organization);
+            //REMOVE ALL EVENTS AND BOOTH THAT RELATED WITH THE ORGANIZATION
+            await Booth.deleteMany({ organization: organization._id });
+            await Event.deleteMany({ organization: organization._id });
+
+            // //remove the event
+            await Organizations.findByIdAndDelete(organization._id);
+
+            res.json({ msg: "Delete Event Success" });
+        } catch (err) {
+            return res.status(500).json({ msg: err.message });
+        }
+    },
 };
 
 function validateEmail(email) {

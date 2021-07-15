@@ -4,13 +4,12 @@ import { makeStyles } from "@material-ui/styles";
 
 const useStyles = makeStyles(() => ({
     root: {
-        padding: "2rem, 1rem",
-        width: 1200,
+        padding: "2rem 0",
         maxWidth: "100%",
         margin: "4rem auto"
     },
     cardBg: {
-        padding: "1rem",
+        padding: "2rem",
         backgroundColor: "white",
         boxShadow: "1 5px 15px 1 rgba(0,0,0.25)",
         borderRadius: "3px",
