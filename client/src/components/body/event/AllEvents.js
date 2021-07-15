@@ -32,7 +32,7 @@ function AllEvents() {
         setEvents(
             events.filter((event) => {
                 var validate = event.ename.toLowerCase().includes(search.toLowerCase());
-                if (validate == true) {
+                if (validate === true) {
                     return <EventCard event={event} />;
                 }
             })

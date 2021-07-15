@@ -6,11 +6,8 @@ import { showSuccessMsg, showErrMsg } from "../../utils/notification/Notificatio
 
 //User Interface Imports
 import { Button, TextField } from "@material-ui/core";
-import { makeStyles } from "@material-ui/core/styles";
 import ArrowBackIcon from "@material-ui/icons/ArrowBack";
 import CFcard from "../../components/CFcard";
-
-const useStyles = makeStyles((theme) => ({}));
 
 function EditUser() {
     const { id } = useParams();
@@ -26,7 +23,6 @@ function EditUser() {
     const [num, setNum] = useState(0);
 
     //user interface variables
-    const classes = useStyles();
     useEffect(() => {
         if (users.length !== 0) {
             users.forEach((user) => {

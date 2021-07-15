@@ -8,7 +8,7 @@ import { fetchBooth, dispatchEventBooths } from "../../../redux/actions/boothAct
 import dayjs from "dayjs";
 
 import { makeStyles } from "@material-ui/core/styles";
-import { Typography, Button, Container, Grid, Tabs, Tab, Box } from "@material-ui/core";
+import { Typography, Container, Grid, Tabs, Tab, Box } from "@material-ui/core";
 import PersonPinIcon from "@material-ui/icons/PersonPin";
 import AddBoxIcon from "@material-ui/icons/AddBox";
 import StorefrontIcon from "@material-ui/icons/Storefront";
@@ -37,20 +37,6 @@ const useStyles = makeStyles((theme) => ({
         maxWidth: 500,
     },
 }));
-
-const initialState = {
-    eventName: "",
-    eventSlug: "",
-    description: "",
-    startDate: "",
-    endDate: "",
-    organizationId: "",
-    userId: "",
-    err: "",
-    success: "",
-};
-
-//dispatchSingleEvent
 
 function SingleEvent() {
     const classes = useStyles();
@@ -98,13 +84,13 @@ function SingleEvent() {
                     <Tabs value={value} onChange={handleTabsChange} variant="fullWidth" indicatorColor="secondary" textColor="secondary" aria-label="icon label tabs example">
                         <Tab icon={<PersonPinIcon />} label="Reception" />
                         <Tab icon={<StorefrontIcon />} label="Expo" component={Link} to={`/event/${eslug}/booth/all`} />
-                        {checkEventHost == true ? <Tab icon={<EditIcon />} label="Edit Event" component={Link} to={`/event/${eslug}/edit_event`} /> : ""}
-                        {(hasOrganization == true && hasOwnedBooth == false) || checkEventHost == true ? (
+                        {checkEventHost === true ? <Tab icon={<EditIcon />} label="Edit Event" component={Link} to={`/event/${eslug}/edit_event`} /> : ""}
+                        {(hasOrganization === true && hasOwnedBooth === false) || checkEventHost === true ? (
                             <Tab icon={<AddBoxIcon />} label="Add Booth" component={Link} to={`/event/${event.eslug}/booth/add_booth`} />
                         ) : (
                             ""
                         )}
-                        {hasOrganization == true && hasOwnedBooth == true && checkEventHost == false ? (
+                        {hasOrganization === true && hasOwnedBooth === true && checkEventHost === false ? (
                             <Tab icon={<EditIcon />} label="Edit Booth" component={Link} to={`/event/${eslug}/booth/${booth.bslug}/edit_booth`} />
                         ) : (
                             ""
@@ -125,6 +111,7 @@ function SingleEvent() {
                         </Grid>
                         <Grid item xs={12} align="center">
                             <img
+                                alt=""
                                 className={classes.bgImage}
                                 src={bgImage ? bgImage : event.eBackground || "https://material-ui.com/static/images/cards/contemplative-reptile.jpg"}
                             />

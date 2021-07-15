@@ -116,7 +116,7 @@ function AddEvent() {
                 {success && showSuccessMsg(success)}
                 <br />
                 <br />
-                {hasOrganization == true ? (
+                {hasOrganization === true ? (
                     <section>
                         <form onSubmit={handleSubmit}>
                             <TextField

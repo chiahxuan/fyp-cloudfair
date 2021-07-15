@@ -33,9 +33,7 @@ function CreateOrg() {
 
     const dispatch = useDispatch();
     const token = useSelector((state) => state.token);
-    const auth = useSelector((state) => state.auth);
     const organization = useSelector((state) => state.organization);
-    const { id, organizationName } = organization;
     const [callback] = useState(false);
 
     // ASSIGN ORGANIZATION DATA TO VARIABLE
@@ -60,6 +58,7 @@ function CreateOrg() {
                 <Grid container spacing={8}>
                     <Grid item xs={12} align="center">
                         <img
+                            alt=""
                             className={classes.bgImage}
                             src={
                                 organizationData.organizationBackground

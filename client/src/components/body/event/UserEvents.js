@@ -13,7 +13,7 @@ function UserEvents() {
     const token = useSelector((state) => state.token);
     const events = useSelector((state) => state.eventReducer.events);
     const hasEvent = useSelector((state) => state.eventReducer.hasEvent);
-    const [callback, setCallback] = useState(false);
+    const [callback] = useState(false);
     const dispatch = useDispatch();
 
     const [Events, setEvents] = React.useState([]);
@@ -33,7 +33,7 @@ function UserEvents() {
         setEvents(
             events.filter((event) => {
                 var validate = event.ename.toLowerCase().includes(search.toLowerCase());
-                if (validate == true) {
+                if (validate === true) {
                     return <EventCard event={event} />;
                 }
             })

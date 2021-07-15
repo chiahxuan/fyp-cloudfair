@@ -33,8 +33,6 @@ import AddBooth from "./booth/AddBooth";
 import AllBooth from "./booth/AllBooth";
 import SingleBooth from "./booth/SingleBooth";
 import EditBooth from "./booth/EditBooth";
-import StreamingRoom from "./booth/StreamingRoom";
-import testBooth from "./booth/testBooth";
 
 const useStyles = makeStyles((theme) => ({
     //default layout for body
@@ -83,8 +81,6 @@ function Body() {
                 <Route path="/event/:eslug/booth/all" component={isLogged ? AllBooth : NotFound} exact />
                 <Route path="/event/:eslug/booth/:bslug" component={isLogged ? SingleBooth : NotFound} exact />
                 <Route path="/event/:eslug/booth/:bslug/edit_booth" component={isLogged ? EditBooth : NotFound} exact />
-                <Route path="/event/:eslug/booth/:bslug/streaming_room/:room" component={isLogged ? StreamingRoom : NotFound} exact />
-                <Route path="/event/:eslug/booth/:bslug/testBooth" component={isLogged ? testBooth : NotFound} exact />
             </Switch>
         </div>
     );

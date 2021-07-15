@@ -4,7 +4,7 @@ import { useSelector } from "react-redux";
 import axios from "axios";
 
 import "@fontsource/roboto";
-import { Link, NavLink } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 import { withRouter } from "react-router-dom";
 import { makeStyles, useTheme, withStyles } from "@material-ui/core/styles";
 import { AppBar, Avatar, Toolbar, Typography, Button, Menu, MenuItem, List, ListItem, ListItemText, ListItemIcon, CssBaseline, Drawer, Divider } from "@material-ui/core";
@@ -89,18 +89,10 @@ const useStyles = makeStyles((theme) => ({
         flexGrow: 1,
         padding: theme.spacing(3),
     },
-
-    title: {
-        marginLeft: 16,
-        flexGrow: 1,
-        color: "#2c3242",
-    },
-
     signinLink: {
         textDecoration: "none",
         paddingLeft: "10px",
     },
-
     menuButton: {
         margin: 0,
     },
@@ -109,10 +101,6 @@ const useStyles = makeStyles((theme) => ({
     },
     toolBarBtn: {
         marginRight: 16,
-    },
-    signinLink: {
-        textDecoration: "none",
-        paddingLeft: "10px",
     },
     menuItemLink: {
         textDecoration: "none",
@@ -353,7 +341,7 @@ function Header() {
 
                         <Typography variant="h6" noWrap className={classes.title}>
                             CloudFair Logo
-                            <img scr={`images/CloudFairLogo.png`}></img>
+                            <img scr={`images/CloudFairLogo.png`} alt=""></img>
                         </Typography>
                     </div>
 

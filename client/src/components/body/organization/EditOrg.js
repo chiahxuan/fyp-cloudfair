@@ -1,7 +1,7 @@
 import { useState } from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
-import { useSelector, useDispatch } from "react-redux";
+import { useSelector } from "react-redux";
 
 import { showSuccessMsg, showErrMsg } from "../../utils/notification/Notification";
 
@@ -48,7 +48,7 @@ function EditOrg() {
     const organization = useSelector((state) => state.organization.organization);
 
     const [data, setData] = useState(initialState);
-    const { orgName, orgEmail, orgAbout, orgImage, err, success } = data;
+    const { orgName, orgEmail, orgAbout, err, success } = data;
 
     //HANDLE CHANGE OF DATA BY USING USESTATE
     const handleChange = (e) => {
@@ -131,6 +131,7 @@ function EditOrg() {
                     <Grid container spacing={8}>
                         <Grid item xs={12} align="center">
                             <img
+                                alt=""
                                 className={classes.bgImage}
                                 src={
                                     bgImage

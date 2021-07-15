@@ -1,9 +1,9 @@
 import React, { useState } from "react";
 
 import axios from "axios";
-import { Link, useHistory } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { useParams } from "react-router-dom";
-import { useSelector, useDispatch } from "react-redux";
+import { useSelector } from "react-redux";
 import { showSuccessMsg, showErrMsg } from "../../utils/notification/Notification";
 import { isValidDescription, isValidString, isInvalidDateTime } from "../../utils/validation/Validation";
 // import { getSingleEventParam, dispatchSetEventParam } from "../../../redux/actions/eventAction";
@@ -19,7 +19,6 @@ import StorefrontIcon from "@material-ui/icons/Storefront";
 import EditIcon from "@material-ui/icons/Edit";
 
 import CFcard from "../../components/CFcard";
-var slugify = require("slug");
 
 // import { makeStyles } from "@material-ui/core/styles";
 const useStyles = makeStyles((theme) => ({
