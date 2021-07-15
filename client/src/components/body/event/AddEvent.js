@@ -63,17 +63,12 @@ function AddEvent() {
     }, [token, dispatch]);
 
     // test data retrieve
-    // console.log("user data here : " + auth.user._id);
-    // console.log("organization here: " + organizationData._id);
 
     //HANDLE THEN STATE OF THE INPUT
     const handleChangeInput = (e) => {
         const { name, value } = e.target;
         setEvent({ ...event, [name]: value, err: "", success });
         setDate({ startDate: startDate, endDate: endDate });
-        // setDate({ endDate: startDate });
-        // console.log("description " + description);
-        // console.log(event);
     };
 
     //SUBMIT FORM
@@ -91,13 +86,6 @@ function AddEvent() {
         if (isInvalidDateTime(startDate, endDate))
             return setEvent({ ...event, err: "Date condition wrong, End datetime be after start datetime. Start date must not before current time.", success: "" });
         try {
-            // //CHECK DATA STATE CHANGES
-            // console.log("description " + description);
-            // console.log("eventName " + eventName);
-            // console.log("eventSlug " + eventSlug);
-            // console.log("startDate " + startDate);
-            // console.log("endDate " + endDate);
-
             const res = await axios.post("/event/add_event", {
                 ename: eventName,
                 eslug: slugify(eventSlug + "-" + Math.random().toString(36).substring(7)),
@@ -107,10 +95,7 @@ function AddEvent() {
                 userId: user._id,
                 organizationId: organizationData._id,
             });
-            // setEvent({ ...event, err: "", success: "pass val" });
             setEvent({ ...event, err: "", success: res.data.msg });
-            // history.push("/event");
-            // console.log("success");
             window.location.href = `http://localhost:3000/event/all_events`;
         } catch (err) {
             err.response.data.msg && setEvent({ ...user, err: err.response.data.msg, success: "" });

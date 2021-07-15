@@ -48,14 +48,9 @@ const eventCtrl = {
             const user = await Users.findById(req.user.id).select("-password");
             const organization = await Organization.find({ organizationCreatorId: user._id });
 
-            //search events by organizationId
-            // const event = await Event.find({ organization: organization[0]._id});
-
             //search events by userId
             const event = await Event.find({ user: user._id });
             res.json(event);
-
-            // res.json({ msg: "Returned Message" });
         } catch (err) {
             return res.status(500).json({ msg: err.message });
         }
@@ -63,7 +58,6 @@ const eventCtrl = {
 
     // SHOW SINGLE EVENT
     viewSingleEvent: async (req, res) => {
-        // console.log(req.params.eslug);
         try {
             const event = await Event.find({ eslug: req.params.eslug });
             res.json(event);
@@ -77,7 +71,6 @@ const eventCtrl = {
         const { eslug } = req.params;
         try {
             const event = await Event.findOne({ eslug: eslug });
-            // console.log(event);
             const { ename, eBackground, startDate, endDate, description } = req.body;
 
             await Event.findOneAndUpdate(
@@ -99,7 +92,6 @@ const eventCtrl = {
     // DELETE SINGLE EVENT
     deleteEvent: async (req, res) => {
         const { eslug } = req.params;
-        // console.log(eslug);
         try {
             const event = await Event.findOne({ eslug: eslug });
 
@@ -117,14 +109,12 @@ const eventCtrl = {
     //FIND PAST EVENTS
     viewPastEvents: async (req, res) => {
         try {
-            //endate < now
             const pastEvent = await Event.find({
                 endDate: { $lt: new Date() },
             });
             console.log(pastEvent);
 
             res.json(pastEvent);
-            // res.json({ msg: "Returned Message" });
         } catch (err) {
             return res.status(500).json({ msg: err.message });
         }
@@ -137,7 +127,6 @@ const eventCtrl = {
             });
 
             res.json(upcomingEvent);
-            // res.json({ msg: "find UPCOMING events" });
         } catch (err) {
             return res.status(500).json({ msg: err.message });
         }
@@ -149,7 +138,6 @@ const eventCtrl = {
             const hostingEvent = await Event.find({ startDate: { $lt: new Date() }, endDate: { $gt: new Date() } });
 
             res.json(hostingEvent);
-            // res.json({ msg: "find UPCOMING events" });
         } catch (err) {
             return res.status(500).json({ msg: err.message });
         }
