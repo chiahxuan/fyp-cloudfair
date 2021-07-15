@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import axios from "axios";
 import { useSelector, useDispatch } from "react-redux";
 import { Link, useHistory } from "react-router-dom";
@@ -7,10 +7,8 @@ import { showSuccessMsg, showErrMsg } from "../../utils/notification/Notificatio
 import { fetchAllUsers, dispatchGetAllUsers } from "../../../redux/actions/usersAction";
 
 import CFcard from "../../components/CFcard";
-import { Typography, Button, Container, TextField } from "@material-ui/core";
-import { makeStyles } from "@material-ui/core/styles";
+import { Button, Container, TextField } from "@material-ui/core";
 import PhotoCameraIcon from "@material-ui/icons/PhotoCamera";
-import { LaptopWindows } from "@material-ui/icons";
 
 const initialState = {
     name: "",
