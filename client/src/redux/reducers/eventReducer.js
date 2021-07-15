@@ -34,7 +34,7 @@ const eventReducer = (state = initialState, action) => {
                 isEventHost: action.isEventHost,
             };
         case ACTIONS.GET_SINGLE_EVENT:
-            console.log(action.isEventHost);
+            // console.log(action.isEventHost);
             return {
                 ...state,
                 event: action.payload,

@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Link, useHistory } from "react-router-dom";
+import { Link } from "react-router-dom";
 import axios from "axios";
 import { showSuccessMsg, showErrMsg } from "../../utils/notification/Notification";
 import { dispatchLogin } from "../../../redux/actions/authAction";
@@ -42,11 +42,13 @@ const useStyles = makeStyles((theme) => ({
             alignItems: "center",
         },
     },
+    button: {
+        width: "50%",
+    },
 }));
 
 function Login() {
     const classes = useStyles();
-    const history = useHistory();
     const dispatch = useDispatch();
 
     const [user, setUser] = useState(initialState);
@@ -65,7 +67,7 @@ function Login() {
 
             localStorage.setItem("firstLogin", true);
             dispatch(dispatchLogin());
-            history.push("/event/all_events");
+            window.location.href = `http://localhost:3000/event/all_events`;
         } catch (err) {
             err.response.data.msg && setUser({ ...user, err: err.response.data.msg, success: "" });
         }
@@ -79,7 +81,7 @@ function Login() {
             localStorage.setItem("firstLogin", true);
 
             dispatch(dispatchLogin());
-            history.push("/event/all_events");
+            window.location.href = `http://localhost:3000/event/all_events`;
         } catch (err) {
             err.response.data.msg && setUser({ ...user, err: err.response.data.msg, success: "" });
         }
@@ -96,7 +98,7 @@ function Login() {
             localStorage.setItem("firstLogin", true);
 
             dispatch(dispatchLogin());
-            history.push("/event/all_events");
+            window.location.href = `http://localhost:3000/event/all_events`;
         } catch (err) {
             err.response.data.msg && setUser({ ...user, err: err.response.data.msg, success: "" });
         }
@@ -127,7 +129,6 @@ function Login() {
                             id="email"
                             margin="dense"
                             label="Email Address"
-                            id="email"
                             name="email"
                             defaultValue={email}
                             onChange={handleChangeInput}
@@ -165,7 +166,7 @@ function Login() {
                         </Link>
                         <br />
                         <br />
-                        <Button type="submit" variant="contained" color="secondary">
+                        <Button type="submit" variant="contained" color="secondary" className={classes.button}>
                             Login
                         </Button>
                     </Box>

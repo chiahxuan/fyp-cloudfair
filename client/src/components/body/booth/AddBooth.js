@@ -6,12 +6,11 @@ import axios from "axios";
 import { Link, useHistory } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { showSuccessMsg, showErrMsg } from "../../utils/notification/Notification";
-import { isEmpty, isLength, isValidDescription, isValidString, isValidDateTime } from "../../utils/validation/Validation";
 import { dispatchGetOrganization, fetchOrganization } from "../../../redux/actions/organizationAction";
 import { setSingleEventParam } from "../../../redux/actions/eventAction";
 
 import { makeStyles } from "@material-ui/core/styles";
-import { Typography, Button, Container, TextField, Tab, Tabs, Box, Card, CardContent } from "@material-ui/core";
+import { Typography, Button, Container, TextField, Tab, Tabs, Box } from "@material-ui/core";
 import CFcard from "../../components/CFcard";
 
 //ICONS IMPORT
@@ -22,24 +21,13 @@ import EditIcon from "@material-ui/icons/Edit";
 
 var slugify = require("slug");
 
-const useStyles = makeStyles((theme) => ({
-    container: {
-        display: "flex",
-        flexWrap: "wrap",
-    },
-    textField: {
-        marginLeft: theme.spacing(1),
-        marginRight: theme.spacing(1),
-        width: 250,
-    },
-}));
-
 const initialState = {
     bname: "",
     bslug: "",
     description: "",
     bimage: "",
     bvideo: "",
+    bslides: "",
     organizationId: "",
     userId: "",
     eventId: "",
@@ -49,7 +37,6 @@ const initialState = {
 };
 
 function AddBooth() {
-    const classes = useStyles();
     const dispatch = useDispatch();
     const { eslug } = useParams();
     const history = useHistory();
@@ -57,7 +44,6 @@ function AddBooth() {
     //access to user state
     const auth = useSelector((state) => state.auth);
     const token = useSelector((state) => state.token);
-    const { user } = auth; // to get user ID
     const event = useSelector((state) => state.eventReducer.event);
 
     //access to event
@@ -70,14 +56,16 @@ function AddBooth() {
     const [booth, setBooth] = useState(initialState);
 
     //booth variables
-    const { bname, bslug, description, bimage, bvideo, userId, organizationId, eventId, err, success } = booth;
+    const { bname, bslug, description, bvideo, bslides, err, success } = booth;
 
-    const [data, setData] = useState(initialState); // handle inputs
     const [singleEvent, setSingleEvent] = useState([]); //get singleEventObject
-    const [checkEventHost, setCheckEventHost] = useState(false); //boolean to check even organizerId
     const [loading, setLoading] = useState(false); //i dunno
-    const [bgImage, setBgImage] = useState(false); //image update
-    const [wantEdit, setWantEdit] = useState(false);
+
+    // const booths = useSelector((state) => state.boothReducer.booths);
+    // const booth = useSelector((state) => state.boothReducer.booth);
+    const checkEventHost = useSelector((state) => state.eventReducer.isEventHost);
+    const hasOrganization = useSelector((state) => state.organization.hasOrganization);
+    const hasOwnedBooth = useSelector((state) => state.boothReducer.hasOwnedBooth);
 
     //Dispatch organization
     useEffect(() => {
@@ -97,7 +85,6 @@ function AddBooth() {
             events.forEach((event) => {
                 if (event.eslug === eslug) {
                     setSingleEvent(event);
-                    setCheckEventHost(event.user === auth.user._id ? true : false);
                     setSingleEventParam(event);
                 }
             });
@@ -119,7 +106,7 @@ function AddBooth() {
     };
 
     //SUBMIT FORM
-    const handleSubmit = async (e) => {
+    const handleSubmit = async () => {
         // console.log(auth.user._id);
         // console.log(singleEvent._id);
         // console.log(organization._id);
@@ -140,6 +127,7 @@ function AddBooth() {
                     bslug: slugify(bslug + "-" + Math.random().toString(36).substring(7)),
                     description: description,
                     bvideo: bvideo,
+                    bslides: bslides,
                     user: auth.user._id,
                     event: singleEvent._id,
                     organization: organization._id,
@@ -154,13 +142,21 @@ function AddBooth() {
             // setBooth({ ...booth, err: "", success: "pass val" });
             setBooth({ ...booth, err: "", success: res.data.msg });
             // history.push(`/event/${eslug}`); // change location
+            window.location.href = `http://localhost:3000/event/${eslug}/booth/all`;
         } catch (err) {
             err.response.data.msg && setBooth({ ...booth, err: err.response.data.msg, success: "" });
         }
     };
 
     //HANDLE TAB CHANGES
-    const [value, setValue] = React.useState(2);
+    const tabNumber = () => {
+        if (checkEventHost === true) {
+            return 3;
+        } else {
+            return 2;
+        }
+    };
+    const [value, setValue] = React.useState(tabNumber);
     const handleTabsChange = (event, newValue) => {
         setValue(newValue);
     };
@@ -172,8 +168,15 @@ function AddBooth() {
                     <Tabs value={value} onChange={handleTabsChange} variant="fullWidth" indicatorColor="secondary" textColor="secondary" aria-label="icon label tabs example">
                         <Tab icon={<PersonPinIcon />} label="Reception" component={Link} to={`/event/${eslug}`} />
                         <Tab icon={<StorefrontIcon />} label="Expo" component={Link} to={`/event/${eslug}/booth/all`} />
-                        {checkEventHost == true ? <Tab icon={<AddBoxIcon />} label="Add Booth" /> : ""}
-                        {checkEventHost == true ? <Tab icon={<EditIcon />} label="Edit Event" component={Link} to={`/event/${eslug}/edit_event`} /> : ""}
+                        {/* {checkEventHost == true ? <Tab icon={<AddBoxIcon />} label="Add Booth" /> : ""} */}
+
+                        {checkEventHost === true ? <Tab icon={<EditIcon />} label="Edit Event" component={Link} to={`/event/${eslug}/edit_event`} /> : ""}
+                        {(hasOrganization === true && hasOwnedBooth === false) || checkEventHost === true ? <Tab icon={<AddBoxIcon />} label="Add Booth" /> : ""}
+                        {hasOrganization === true && hasOwnedBooth === true && checkEventHost === false ? (
+                            <Tab icon={<EditIcon />} label="Edit Booth" component={Link} to={`/event/${eslug}/booth/${booth.bslug}/edit_booth`} />
+                        ) : (
+                            ""
+                        )}
                     </Tabs>
                 </Box>
                 <Typography align="center" variant="h1">
@@ -230,6 +233,23 @@ function AddBooth() {
                         label="Booth Video Streaming Link"
                         placeholder="Booth Video Streaming Link"
                         defaultValue={bvideo}
+                        onChange={handleChangeInput}
+                        required
+                        fullWidth
+                        InputLabelProps={{
+                            shrink: true,
+                        }}
+                        variant="outlined"
+                    />
+                    <br />
+                    <br />
+                    <TextField
+                        id="bslides"
+                        name="bslides"
+                        margin="dense"
+                        label="Booth Slides Link"
+                        placeholder="Booth Google Slide Link"
+                        defaultValue={bslides}
                         onChange={handleChangeInput}
                         required
                         fullWidth

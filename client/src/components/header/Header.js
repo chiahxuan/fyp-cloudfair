@@ -215,7 +215,7 @@ function Header() {
                     <NavLink to="/" className={classes.menuItemLink}>
                         <StyledMenuItem>
                             <ListItemIcon>
-                                <HomeIcon fontSize="medium" />
+                                <HomeIcon fontSize="small" />
                             </ListItemIcon>
                             <ListItemText primary="Home"></ListItemText>
                         </StyledMenuItem>
@@ -223,7 +223,7 @@ function Header() {
                     <NavLink to="/" className={classes.menuItemLink}>
                         <StyledMenuItem>
                             <ListItemIcon>
-                                <EventIcon fontSize="medium" />
+                                <EventIcon fontSize="small" />
                             </ListItemIcon>
                             <ListItemText primary="Events"></ListItemText>
                         </StyledMenuItem>
@@ -231,7 +231,7 @@ function Header() {
                     <NavLink to="/profile" className={classes.menuItemLink}>
                         <StyledMenuItem>
                             <ListItemIcon>
-                                <AccountCircleIcon fontSize="medium" />
+                                <AccountCircleIcon fontSize="small" />
                             </ListItemIcon>
                             <ListItemText primary="Profile"></ListItemText>{" "}
                         </StyledMenuItem>
@@ -239,7 +239,7 @@ function Header() {
                     <NavLink to="/logout" className={classes.menuItemLink} onClick={handleLogout}>
                         <StyledMenuItem>
                             <ListItemIcon>
-                                <ExitToAppIcon fontSize="medium" />
+                                <ExitToAppIcon fontSize="small" />
                             </ListItemIcon>
                             <ListItemText primary="Logout"></ListItemText>
                         </StyledMenuItem>
@@ -272,7 +272,7 @@ function Header() {
                     {itemsList.map((item, index) => {
                         const { text, icon, link } = item;
                         return (
-                            <ListItemLink to={link}>
+                            <ListItemLink to={link} key={index}>
                                 {<ListItemIcon>{icon}</ListItemIcon>}
                                 <ListItemText primary={text}></ListItemText>
                             </ListItemLink>
@@ -284,7 +284,7 @@ function Header() {
                     {itemsList2.map((item, index) => {
                         const { text, icon, link } = item;
                         return (
-                            <ListItemLink to={link}>
+                            <ListItemLink to={link} key={index}>
                                 {<ListItemIcon>{icon}</ListItemIcon>}
                                 <ListItemText primary={text}></ListItemText>
                             </ListItemLink>

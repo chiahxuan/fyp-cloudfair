@@ -12,6 +12,9 @@ router.get("/:eslug/booth/all", auth, boothCtrl.viewBooth);
 //VIEW SINGLE BOOTH
 router.get("/:eslug/booth/:bslug", auth, boothCtrl.viewSingleBooth);
 
+//VIEW SINGLE BOOTH
+router.get("/:eslug/booth/:bslug/org", auth, boothCtrl.viewBoothOrganizer);
+
 //EDIT BOOTH
 router.patch("/:eslug/booth/:bslug/edit_booth", auth, boothCtrl.editBooth);
 

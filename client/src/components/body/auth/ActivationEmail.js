@@ -2,6 +2,9 @@ import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import axios from "axios";
 import { showErrMsg, showSuccessMsg } from "../../utils/notification/Notification";
+import { Button, Container } from "@material-ui/core";
+import { Link } from "react-router-dom";
+import CFcard from "../../components/CFcard";
 
 function ActivationEmail() {
     const { activation_token } = useParams();
@@ -23,10 +26,19 @@ function ActivationEmail() {
     }, [activation_token]);
 
     return (
-        <div className="active_page">
-            {err && showErrMsg(err)}
-            {success && showSuccessMsg(success)}
-        </div>
+        <Container className="active_page" maxWidth="sm">
+            <CFcard>
+                <br />
+                {err && showErrMsg(err)}
+                {success && showSuccessMsg(success)}
+                <br />
+                <br />
+                <Button component={Link} to="/login">
+                    Login
+                </Button>
+                <br />
+            </CFcard>
+        </Container>
     );
 }
 

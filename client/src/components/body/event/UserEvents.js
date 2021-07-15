@@ -3,7 +3,6 @@ import axios from "axios";
 import { Link, useHistory } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { showSuccessMsg, showErrMsg } from "../../utils/notification/Notification";
-import { isEmpty, isLength, isValidDescription, isValidString, isValidDateTime } from "../../utils/validation/Validation";
 import { fetchAllEventsByUserId, dispatchGetAllUserEvents } from "../../../redux/actions/eventAction";
 
 import { makeStyles } from "@material-ui/core/styles";
@@ -31,6 +30,7 @@ function UserEvents() {
         });
     }, [token, dispatch, callback]);
 
+    //SEARCH EVENTS
     const onChange = (search) => {
         setEvents(
             events.filter((event) => {
@@ -61,11 +61,15 @@ function UserEvents() {
                     </Grid>
                 </Grid>
                 <Grid container spacing={8}>
-                    {Events.map((event) => (
-                        <Grid item key={event._id}>
-                            <EventCard event={event} />
-                        </Grid>
-                    ))}
+                    {Events ? (
+                        Events.map((event) => (
+                            <Grid item key={event._id}>
+                                <EventCard event={event} />
+                            </Grid>
+                        ))
+                    ) : (
+                        <Typography>Hi</Typography>
+                    )}
                 </Grid>
             </CFcard>
         </Container>

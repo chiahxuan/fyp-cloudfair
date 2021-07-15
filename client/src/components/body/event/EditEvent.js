@@ -6,7 +6,7 @@ import { Link, useHistory } from "react-router-dom";
 import { useParams } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { showSuccessMsg, showErrMsg } from "../../utils/notification/Notification";
-import { isEmpty, isLength, isValidDescription, isValidString, isValidDateTime, isInValidDate } from "../../utils/validation/Validation";
+import { isEmpty, isLength, isValidDescription, isValidString, isInvalidDateTime, isInValidDate } from "../../utils/validation/Validation";
 import { setCheckEventHost, fetchSingleEvent, dispatchGetSingleEvent, fetchEventHostStatus, dispatchEventHostStatus } from "../../../redux/actions/eventAction";
 // import { getSingleEventParam, dispatchSetEventParam } from "../../../redux/actions/eventAction";
 import dayjs from "dayjs";
@@ -71,7 +71,12 @@ function EditEvent() {
     const token = useSelector((state) => state.token);
     const event = useSelector((state) => state.eventReducer.event);
     const organization = useSelector((state) => state.organization.organization);
+
+    const booths = useSelector((state) => state.boothReducer.booths);
+    const booth = useSelector((state) => state.boothReducer.booth);
     const checkEventHost = useSelector((state) => state.eventReducer.isEventHost);
+    const hasOrganization = useSelector((state) => state.organization.hasOrganization);
+    const hasOwnedBooth = useSelector((state) => state.boothReducer.hasOwnedBooth);
 
     const [data, setData] = useState(initialState);
     const { eventName, description, startDate, endDate, eBgImage, err, success } = data;
@@ -87,7 +92,7 @@ function EditEvent() {
     //GET CURRENT DATE TIME
 
     //HANDLE TAB CHANGES
-    const [value, setValue] = React.useState(3);
+    const [value, setValue] = React.useState(2);
     const handleTabsChange = (event, newValue) => {
         setValue(newValue);
     };
@@ -125,7 +130,7 @@ function EditEvent() {
         if (isValidString(eventName ? eventName : event.ename)) return setData({ ...event, err: "String input must be at least 3 to 50 characters.", success: "" });
         if (isValidDescription(description ? description : event.description))
             return setData({ ...event, err: "String input must be at least 3 to 2000 characters.", success: "" });
-        if (isValidDateTime(startDate, endDate)) return setData({ ...event, err: "End datetime be after start datetime. Start date should not be past.", success: "" });
+        if (isInvalidDateTime(startDate, endDate)) return setData({ ...event, err: "End datetime be after start datetime. Start date should not be past.", success: "" });
         // if (isInValidDate(startDate, endDate)) return setData({ ...event, success: "", err: "End datetime be after start datetime. Start date should not be past." });
 
         //validate date to ensure start date before end date
@@ -152,7 +157,7 @@ function EditEvent() {
     const handleDelete = async () => {
         try {
             // ADD VALIDATE EVENT HOST
-            if (window.confirm("Are you sure you want to delete this event?")) {
+            if (window.confirm("Are you sure you want to delete this event? All booths in this event")) {
                 setLoading(true);
                 await axios.delete(`/event/${eslug}/delete_event`, {
                     headers: { Authorization: token },
@@ -174,8 +179,17 @@ function EditEvent() {
                     <Tabs value={value} onChange={handleTabsChange} variant="fullWidth" indicatorColor="secondary" textColor="secondary" aria-label="icon label tabs example">
                         <Tab icon={<PersonPinIcon />} label="Reception" component={Link} to={`/event/${eslug}`} />
                         <Tab icon={<StorefrontIcon />} label="Expo" component={Link} to={`/event/${eslug}/booth/all`} />
-                        {checkEventHost == true ? <Tab icon={<AddBoxIcon />} label="Add Booth" component={Link} to={`/event/${event.eslug}/booth/add_booth`} /> : ""}
                         {checkEventHost == true ? <Tab icon={<EditIcon />} label="Edit Event" /> : ""}
+                        {(hasOrganization == true && hasOwnedBooth == false) || checkEventHost == true ? (
+                            <Tab icon={<AddBoxIcon />} label="Add Booth" component={Link} to={`/event/${event.eslug}/booth/add_booth`} />
+                        ) : (
+                            ""
+                        )}
+                        {hasOrganization == true && hasOwnedBooth == true && checkEventHost == false ? (
+                            <Tab icon={<EditIcon />} label="Edit Booth" component={Link} to={`/event/${eslug}/booth/${booth.bslug}/edit_booth`} />
+                        ) : (
+                            ""
+                        )}
                     </Tabs>
                 </Box>
                 <Typography variant="h2" align="center">

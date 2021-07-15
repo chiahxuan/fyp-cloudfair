@@ -3,8 +3,10 @@ import axios from "axios";
 import { useSelector, useDispatch } from "react-redux";
 import { showSuccessMsg, showErrMsg } from "../../utils/notification/Notification";
 import { fetchAllUsers, dispatchGetAllUsers } from "../../../redux/actions/usersAction";
+import { isValidDescription, isValidString, isEmpty } from "../../utils/validation/Validation";
 
-import { Typography, Button, Container, TextField, Card, CardContent } from "@material-ui/core";
+import { Typography, Button, Container, TextField } from "@material-ui/core";
+import CFcard from "../../components/CFcard";
 // import { makeStyles } from "@material-ui/core/styles";
 
 const initialState = {
@@ -48,6 +50,12 @@ function CreateOrg() {
         try {
             // console.log("userid: " + user._id);
             // console.log("org: " + orgName + orgEmail + orgAbout);
+            //isValidDescription, isValidString
+            if (isEmpty(orgName) || isEmpty(orgEmail) || isEmpty(orgAbout)) return setData({ ...user, err: "Please fill in all fields.", success: "" });
+
+            if (isValidString(orgName)) return setData({ ...data, err: "String input must be at least 3 to 50 characters.", success: "" });
+            if (isValidDescription(orgAbout)) return setData({ ...data, err: "String input must be at least 3 to 2000 characters.", success: "" });
+
             const res = await axios.post(
                 "/organization/new",
                 {
@@ -61,6 +69,7 @@ function CreateOrg() {
                 }
             );
             localStorage.setItem("orgCreated", true);
+            window.location.href = `http://localhost:3000/organization/overview`;
             // setData({ ...data, err: "", success: "Create Success!" });
             setData({ ...user, err: "", success: res.data.msg });
         } catch (err) {
@@ -70,69 +79,70 @@ function CreateOrg() {
 
     return (
         <Container maxWidth="sm">
-            <Card>
-                <CardContent>
+            <CFcard>
+                <Typography variant="h2">Create a new organization! </Typography>
+                <br />
+                {err && showErrMsg(err)}
+                {success && showSuccessMsg(success)}
+                <form>
+                    <TextField
+                        id="orgName"
+                        margin="dense"
+                        label="Organization Name"
+                        name="orgName"
+                        value={orgName}
+                        onChange={handleChange}
+                        placeholder="Organization Name"
+                        required
+                        fullWidth
+                        InputLabelProps={{
+                            shrink: true,
+                        }}
+                        variant="outlined"
+                    />
                     <br />
-                    <Typography variant="h2">Create a new organization! </Typography>
                     <br />
-                    {err && showErrMsg(err)}
-                    {success && showSuccessMsg(success)}
-                    <form>
-                        <TextField
-                            id="orgName"
-                            margin="dense"
-                            label="Organization Name"
-                            name="orgName"
-                            value={orgName}
-                            onChange={handleChange}
-                            placeholder="Organization Name"
-                            required
-                            fullWidth
-                            InputLabelProps={{
-                                shrink: true,
-                            }}
-                            variant="outlined"
-                        />
-                        <TextField
-                            id="orgEmail"
-                            name="orgEmail"
-                            value={orgEmail}
-                            margin="dense"
-                            label="Organization Email"
-                            onChange={handleChange}
-                            placeholder="Organization Email"
-                            required
-                            fullWidth
-                            InputLabelProps={{
-                                shrink: true,
-                            }}
-                            variant="outlined"
-                        />
-                        <TextField
-                            id="orgAbout"
-                            name="orgAbout"
-                            value={orgAbout}
-                            margin="dense"
-                            label="Organization About"
-                            onChange={handleChange}
-                            placeholder="Organization About"
-                            required
-                            fullWidth
-                            InputLabelProps={{
-                                shrink: true,
-                            }}
-                            variant="outlined"
-                            multiline
-                            rows={3}
-                            rowsMax={4}
-                        />
-                    </form>
+                    <TextField
+                        id="orgEmail"
+                        name="orgEmail"
+                        value={orgEmail}
+                        margin="dense"
+                        label="Organization Email"
+                        onChange={handleChange}
+                        placeholder="Organization Email"
+                        required
+                        fullWidth
+                        InputLabelProps={{
+                            shrink: true,
+                        }}
+                        variant="outlined"
+                    />
                     <br />
-                    <Button type="submit" variant="contained" onClick={createNewOrg}>
-                        Create
-                    </Button>
-                </CardContent>
-            </Card>
+                    <br />
+                    <TextField
+                        id="orgAbout"
+                        name="orgAbout"
+                        value={orgAbout}
+                        margin="dense"
+                        label="Organization About"
+                        onChange={handleChange}
+                        placeholder="Organization About"
+                        required
+                        fullWidth
+                        InputLabelProps={{
+                            shrink: true,
+                        }}
+                        variant="outlined"
+                        multiline
+                        rows={3}
+                        rowsMax={4}
+                    />
+                </form>
+                <br />
+                <Button type="submit" variant="contained" onClick={createNewOrg}>
+                    Create
+                </Button>
+            </CFcard>
         </Container>
     );
 }

@@ -53,7 +53,7 @@ export const dispatchGetSingleEvent = (res, userId) => {
     return {
         type: ACTIONS.GET_SINGLE_EVENT,
         payload: res.data[0],
-        isEventHost: res.data[0].user == userId ? true : false,
+        isEventHost: res.data[0].user === userId ? true : false,
         // !res.data[0] ? false : true,
         // isAdmin: res.data.role === 1 ? true : false,
     };

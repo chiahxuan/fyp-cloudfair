@@ -17,8 +17,9 @@ import EditUser from "../body/profile/EditUser";
 import ForgotPassword from "./auth/ForgotPassword";
 import ResetPassword from "./auth/ResetPassword";
 //ORGANIZATION IMPORTS
-import CreateOrg from "../body/organization/createOrg";
+import CreateOrg from "./organization/createOrg";
 import ViewOrg from "./organization/viewOrg";
+import EditOrg from "./organization/EditOrg";
 
 //EVENT IMPORTS
 import AddEvent from "./event/AddEvent";
@@ -33,12 +34,14 @@ import AllBooth from "./booth/AllBooth";
 import SingleBooth from "./booth/SingleBooth";
 import EditBooth from "./booth/EditBooth";
 import StreamingRoom from "./booth/StreamingRoom";
+import testBooth from "./booth/testBooth";
 
 const useStyles = makeStyles((theme) => ({
     //default layout for body
     layout: {
         // maxWidth: "1200px",
         margin: "4em auto 0 auto",
+        height: 1500,
         // backgroundColor: "linear-gradient(#1359da, #142e4e)",
         // backgroundColor: "linear-gradient(to right, #1359da, #142e4e)",
         // background: "linear-gradient(45deg, #FE6B8B 30%, #FF8E53 90%)",
@@ -54,6 +57,7 @@ function Body() {
         <div className={classes.layout}>
             <Header />
             <Switch>
+                <Route path="/" component={isLogged ? UserEvents : Login} exact />
                 <Route path="/login" component={isLogged ? NotFound : Login} exact />
                 <Route path="/register" component={isLogged ? NotFound : Register} exact />
                 <Route path="/forgot_password" component={isLogged ? NotFound : ForgotPassword} exact />
@@ -64,6 +68,7 @@ function Body() {
                 {/* ORGANIZATION ROUTES */}
                 <Route path="/organization/new" component={isLogged ? CreateOrg : NotFound} exact />
                 <Route path="/organization/overview" component={isLogged ? ViewOrg : NotFound} exact />
+                <Route path="/organization/edit_organization" component={isLogged ? EditOrg : NotFound} exact />
 
                 {/* EVENT ROUTES */}
                 <Route path="/event/add_event" component={isLogged ? AddEvent : NotFound} exact />
@@ -78,6 +83,7 @@ function Body() {
                 <Route path="/event/:eslug/booth/:bslug" component={isLogged ? SingleBooth : NotFound} exact />
                 <Route path="/event/:eslug/booth/:bslug/edit_booth" component={isLogged ? EditBooth : NotFound} exact />
                 <Route path="/event/:eslug/booth/:bslug/streaming_room/:room" component={isLogged ? StreamingRoom : NotFound} exact />
+                <Route path="/event/:eslug/booth/:bslug/testBooth" component={isLogged ? testBooth : NotFound} exact />
             </Switch>
         </div>
     );

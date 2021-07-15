@@ -5,6 +5,7 @@ const initialState = {
     booths: [],
     isVendorOwner: false,
     hasOwnedBooth: false,
+    boothOrg: "",
 };
 
 const boothReducer = (state = initialState, action) => {
@@ -13,6 +14,8 @@ const boothReducer = (state = initialState, action) => {
             return {
                 ...state,
                 booths: action.payload,
+                hasOwnedBooth: action.hasOwnedBooth,
+                booth: action.booth,
             };
         case ACTIONS.GET_SINGLE_BOOTH:
             return {
@@ -20,6 +23,12 @@ const boothReducer = (state = initialState, action) => {
                 booth: action.payload,
                 isVendorOwner: action.isVendorOwner,
                 hasOwnedBooth: true,
+            };
+
+        case ACTIONS.GET_SINGLE_BOOTH_ORG:
+            return {
+                ...state,
+                boothOrg: action.payload,
             };
         case ACTIONS.ADD_BOOTH:
             return {
