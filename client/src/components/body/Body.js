@@ -17,8 +17,8 @@ import EditUser from "../body/profile/EditUser";
 import ForgotPassword from "./auth/ForgotPassword";
 import ResetPassword from "./auth/ResetPassword";
 //ORGANIZATION IMPORTS
-import CreateOrg from "../body/organization/CreateOrg";
-import ViewOrg from "./organization/ViewOrg";
+import CreateOrg from "../body/organization/createOrg";
+import ViewOrg from "./organization/viewOrg";
 
 //EVENT IMPORTS
 import AddEvent from "./event/AddEvent";
