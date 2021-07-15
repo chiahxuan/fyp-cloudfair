@@ -18,7 +18,6 @@ import ChevronLeftIcon from "@material-ui/icons/ChevronLeft";
 import ChevronRightIcon from "@material-ui/icons/ChevronRight";
 import AccountCircleIcon from "@material-ui/icons/AccountCircle";
 import GroupIcon from "@material-ui/icons/Group";
-// import { auth } from "googleapis/build/src/apis/abusiveexperiencereport";
 const drawerWidth = 240;
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -174,8 +173,6 @@ function Header() {
 
     //DETERMINE USER HAS EVENT
     const hasEvent = useSelector((state) => state.eventReducer.hasEvent);
-
-    // console.log(hasOrganization);
 
     //HANDLE DRAWER
     const handleDrawerOpen = () => {

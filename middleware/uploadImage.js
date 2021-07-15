@@ -5,7 +5,6 @@ module.exports = async function (req, res, next) {
         if (!req.files || Object.keys(req.files).length === 0) return res.status(400).json({ msg: "No files were uploaded." });
 
         const file = req.files.file;
-        // console.log(file);
 
         if (file.size > 1024 * 1024) {
             removeTmp(file.tempFilePath);

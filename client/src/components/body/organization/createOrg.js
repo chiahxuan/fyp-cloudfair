@@ -7,7 +7,6 @@ import { isValidDescription, isValidString, isEmpty } from "../../utils/validati
 
 import { Typography, Button, Container, TextField } from "@material-ui/core";
 import CFcard from "../../components/CFcard";
-// import { makeStyles } from "@material-ui/core/styles";
 
 const initialState = {
     orgName: "",
@@ -21,16 +20,10 @@ const initialState = {
 function CreateOrg() {
     const auth = useSelector((state) => state.auth);
     const token = useSelector((state) => state.token);
-
     const { user, isAdmin } = auth;
     const [data, setData] = useState(initialState);
-    // const { name, password, cf_password, err, success } = data;
     const { orgName, orgEmail, orgAbout, err, success, LoggedUserId } = data;
-
-    // const [avatar, setAvatar] = useState(false);
-    // const [loading, setLoading] = useState(false);
     const [callback, setCallback] = useState(false);
-
     const dispatch = useDispatch();
 
     useEffect(() => {
@@ -48,9 +41,6 @@ function CreateOrg() {
 
     const createNewOrg = async () => {
         try {
-            // console.log("userid: " + user._id);
-            // console.log("org: " + orgName + orgEmail + orgAbout);
-            //isValidDescription, isValidString
             if (isEmpty(orgName) || isEmpty(orgEmail) || isEmpty(orgAbout)) return setData({ ...user, err: "Please fill in all fields.", success: "" });
 
             if (isValidString(orgName)) return setData({ ...data, err: "String input must be at least 3 to 50 characters.", success: "" });

@@ -19,7 +19,6 @@ export const dispatchEventBooths = (res, userId) => {
     for (let i = 0; i < events.length; i++) {
         if (events[i].user === userId) {
             hasOwnedBooth = true;
-            // console.log(events[i]);
             ownedBooth = events[i];
             break;
         }
@@ -44,9 +43,6 @@ export const fetchSingleBooth = async (token, eslug, bslug) => {
 
 //DISPATCH SINGLE BOOTH
 export const dispatchSingleBooth = (res, userId) => {
-    // console.log(res);
-    // console.log(res.data);
-    // console.log(userId);
     return {
         type: ACTIONS.GET_SINGLE_BOOTH,
         payload: res.data,

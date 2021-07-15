@@ -79,9 +79,7 @@ function SingleEvent() {
     const [callback, setCallback] = useState(false);
 
     const { eslug } = useParams();
-    // console.log(eslug);
 
-    // console.log(singleEvent);
     useEffect(() => {
         fetchSingleEvent(eslug, token).then((res) => {
             dispatch(dispatchGetSingleEvent(res, auth.user._id));

@@ -11,7 +11,6 @@ const uploadCtrl = {
     uploadAvatar: (req, res) => {
         try {
             const file = req.files.file;
-            // console.log(file);
 
             cloudinary.v2.uploader.upload(
                 file.tempFilePath,
@@ -25,7 +24,6 @@ const uploadCtrl = {
                     if (err) throw err;
 
                     removeTmp(file.tempFilePath);
-                    // console.log(result);
 
                     res.json({ url: result.secure_url });
                 }

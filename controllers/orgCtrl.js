@@ -32,7 +32,6 @@ const organizationCtrl = {
             await newOrg.save();
             res.json;
 
-            // console.log(req.body)
             res.json({ msg: "Organization has been created " });
         } catch (err) {
             return res.status(500).json({ msg: err.message });
@@ -44,7 +43,6 @@ const organizationCtrl = {
             const user = await Users.findById(req.user.id).select("-password");
             const organization = await Organizations.find({ organizationCreatorId: user._id });
 
-            // const user = await Users.findById(req.user.id).select("-password");
             res.json(organization);
         } catch (err) {
             return res.status(500).json({ msg: err.message });
@@ -55,8 +53,6 @@ const organizationCtrl = {
         const organization = await Organizations.findOne({ organizationCreatorId: user._id });
         const { organizationName, organizationAbout, organizationBackground, organizationEmail } = req.body;
 
-        // console.log(organizationName, organizationAbout, organizationBackground, organizationEmail);
-        console.log(organization._id);
         await Organizations.findOneAndUpdate(
             { _id: organization._id },
             {
@@ -73,12 +69,11 @@ const organizationCtrl = {
             const user = await Users.findById(req.user.id).select("-password");
             const organization = await Organizations.findOne({ organizationCreatorId: user._id });
 
-            console.log(organization);
             //REMOVE ALL EVENTS AND BOOTH THAT RELATED WITH THE ORGANIZATION
             await Booth.deleteMany({ organization: organization._id });
+            //remove the event
             await Event.deleteMany({ organization: organization._id });
 
-            // //remove the event
             await Organizations.findByIdAndDelete(organization._id);
 
             res.json({ msg: "Delete Event Success" });

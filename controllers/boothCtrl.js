@@ -9,7 +9,6 @@ const boothCtrl = {
     addBooth: async (req, res) => {
         try {
             const { bname, bslug, description, bvideo, user, bslides, organization, event } = req.body;
-            // console.log(req.headers);
             //VALIDATE ALL FIELD INSERTED
             if (!bname || !bslug || !description || !bvideo || !user || !organization || !event) return res.status(400).json({ msg: "Please fill in all fields." });
 
@@ -18,7 +17,6 @@ const boothCtrl = {
             if (bslug.length > 50 || bslug.length < 5) return res.status(400).json({ msg: "Input should not less than 5 characters, and more than 50 characters." });
             if (description.length > 2000 || description.length < 5)
                 return res.status(400).json({ msg: "Input should not less than 5 characters, and more than 2000 characters." });
-            // if (!validateYoutube(bvideo)) return res.status(400).json({ msg: "Invalid Youtube link." });
 
             let addBooth = new Booth({
                 bname: bname,
@@ -38,7 +36,6 @@ const boothCtrl = {
     },
     //SHOW HOSTING EVENTS, EVENT ARCHIVE
     viewBooth: async (req, res) => {
-        // console.log(req.body);
         try {
             //search events by organizationId
             const event = await Event.find({ eslug: req.params.eslug });
@@ -52,7 +49,6 @@ const boothCtrl = {
 
     // SHOW SINGLE BOOTH
     viewSingleBooth: async (req, res) => {
-        // console.log(req.params.bslug);
         try {
             const booth = await Booth.findOne({ bslug: req.params.bslug });
 
@@ -132,7 +128,6 @@ const boothCtrl = {
     streamingRoom: async (req, res) => {
         // const { bslug } = req.params;
         const { room } = req.params.room;
-        console.log(room);
         // res.render("room", { roomId: req.params.room });
 
         // res.Render("room", { roomId: req.params.room });

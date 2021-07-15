@@ -25,8 +25,6 @@ function ResetPassword() {
     const { token } = useParams();
     const { password, cf_password, err, success } = data;
 
-    // console.log(useParams());
-    // console.log(token);
     const handleChangeInput = (e) => {
         const { name, value } = e.target;
         setData({ ...data, [name]: value, err: "", success: "" });

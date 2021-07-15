@@ -123,7 +123,6 @@ const userCtrl = {
     resetPassword: async (req, res) => {
         try {
             const { password } = req.body;
-            // console.log(password);
             const passwordHash = await bcrypt.hash(password, 12);
 
             await Users.findOneAndUpdate(

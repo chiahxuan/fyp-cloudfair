@@ -93,33 +93,15 @@ function AddBooth() {
         }
     }, [events, eslug, history]);
 
-    // console.log(singleEvent._id + " single evnet");
-    // console.log(organization._id + " organizaiton");
-
     //HANDLE THEN STATE OF THE INPUT
     const handleChangeInput = (e) => {
         const { name, value } = e.target;
         setBooth({ ...booth, [name]: value, err: "", success });
-        // setDate({ endDate: startDate });
-        // console.log("description " + description);
-        // console.log(event);
     };
 
     //SUBMIT FORM
     const handleSubmit = async () => {
-        // console.log(auth.user._id);
-        // console.log(singleEvent._id);
-        // console.log(organization._id);
-        // console.log(token);
-        // console.log(slugify(bslug + "-" + Math.random().toString(36).substring(7)));
-
         try {
-            //CHECK DATA STATE CHANGES
-            // console.log("bname " + bname);
-            // console.log("bslug " + slugify(bslug + "-" + Math.random().toString(36).substring(7)));
-            // console.log("description " + description);
-            // console.log("bvideo " + bvideo);
-            // console.log("bvideo " + auth.user._id);
             const res = await axios.post(
                 `/event/${eslug}/booth/add_booth`,
                 {
@@ -139,9 +121,7 @@ function AddBooth() {
 
             //update isVendorOwner status and update already owned booth
 
-            // setBooth({ ...booth, err: "", success: "pass val" });
             setBooth({ ...booth, err: "", success: res.data.msg });
-            // history.push(`/event/${eslug}`); // change location
             window.location.href = `http://localhost:3000/event/${eslug}/booth/all`;
         } catch (err) {
             err.response.data.msg && setBooth({ ...booth, err: err.response.data.msg, success: "" });
@@ -168,8 +148,6 @@ function AddBooth() {
                     <Tabs value={value} onChange={handleTabsChange} variant="fullWidth" indicatorColor="secondary" textColor="secondary" aria-label="icon label tabs example">
                         <Tab icon={<PersonPinIcon />} label="Reception" component={Link} to={`/event/${eslug}`} />
                         <Tab icon={<StorefrontIcon />} label="Expo" component={Link} to={`/event/${eslug}/booth/all`} />
-                        {/* {checkEventHost == true ? <Tab icon={<AddBoxIcon />} label="Add Booth" /> : ""} */}
-
                         {checkEventHost === true ? <Tab icon={<EditIcon />} label="Edit Event" component={Link} to={`/event/${eslug}/edit_event`} /> : ""}
                         {(hasOrganization === true && hasOwnedBooth === false) || checkEventHost === true ? <Tab icon={<AddBoxIcon />} label="Add Booth" /> : ""}
                         {hasOrganization === true && hasOwnedBooth === true && checkEventHost === false ? (

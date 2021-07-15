@@ -55,8 +55,6 @@ function CreateOrg() {
 
     // ASSIGN ORGANIZATION DATA TO VARIABLE
     const organizationData = organization.organization;
-    //check console.log for structure
-    // console.log(organizationData);
 
     // DISPATCH DATA FROM res.data, update the state of organization
     // organization contains all organization information.

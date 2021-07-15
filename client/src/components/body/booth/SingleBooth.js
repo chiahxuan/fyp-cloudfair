@@ -79,17 +79,11 @@ function SingleBooth() {
                 style={{ marginLeft: "auto", marginRight: "auto" }}
                 url={booth.bvideo ? booth.bvideo : "https://www.youtube.com/watch?v=DGvP3uIo7IE"}
                 playing={true}
-                // config={{
-                //     youtube: {
-                //         playerVars: { showinfo: 1 },
-                //     },
-                // }}
             />
         );
     };
 
     const pptSlides = () => {
-        console.log(booth.bslides);
         return (
             <ReactGoogleSlides
                 width={`100%`}
@@ -108,7 +102,6 @@ function SingleBooth() {
                 <Grid container spacing={8}>
                     <Grid item xs={12}>
                         <Typography variant="h2" align="center">
-                            {" "}
                             {booth.bname}
                         </Typography>
                         <br />

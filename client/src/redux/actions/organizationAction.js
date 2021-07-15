@@ -9,7 +9,6 @@ export const fetchOrganization = async (token) => {
 };
 
 export const dispatchGetOrganization = (res) => {
-    // console.log(res.data[0]);
     return {
         type: ACTIONS.GET_ORGANIZATION,
         payload: {
