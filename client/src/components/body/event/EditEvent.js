@@ -1,18 +1,16 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 
-import { render } from "react-dom";
 import axios from "axios";
 import { Link, useHistory } from "react-router-dom";
 import { useParams } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { showSuccessMsg, showErrMsg } from "../../utils/notification/Notification";
-import { isEmpty, isLength, isValidDescription, isValidString, isInvalidDateTime, isInValidDate } from "../../utils/validation/Validation";
-import { setCheckEventHost, fetchSingleEvent, dispatchGetSingleEvent, fetchEventHostStatus, dispatchEventHostStatus } from "../../../redux/actions/eventAction";
+import { isValidDescription, isValidString, isInvalidDateTime } from "../../utils/validation/Validation";
 // import { getSingleEventParam, dispatchSetEventParam } from "../../../redux/actions/eventAction";
 import dayjs from "dayjs";
 
 import { makeStyles } from "@material-ui/core/styles";
-import { Typography, Button, Container, TextField, Card, CardContent, Grid, Tabs, Tab, Paper, Box } from "@material-ui/core";
+import { Typography, Button, Container, TextField, Grid, Tabs, Tab, Box } from "@material-ui/core";
 
 //ICONS IMPORT
 import PersonPinIcon from "@material-ui/icons/PersonPin";
@@ -64,15 +62,10 @@ const initialState = {
 function EditEvent() {
     const classes = useStyles();
     const { eslug } = useParams();
-    const history = useHistory();
-    const dispatch = useDispatch();
 
-    const auth = useSelector((state) => state.auth);
     const token = useSelector((state) => state.token);
     const event = useSelector((state) => state.eventReducer.event);
-    const organization = useSelector((state) => state.organization.organization);
 
-    const booths = useSelector((state) => state.boothReducer.booths);
     const booth = useSelector((state) => state.boothReducer.booth);
     const checkEventHost = useSelector((state) => state.eventReducer.isEventHost);
     const hasOrganization = useSelector((state) => state.organization.hasOrganization);
@@ -82,11 +75,8 @@ function EditEvent() {
     const { eventName, description, startDate, endDate, eBgImage, err, success } = data;
     const [date, setDate] = useState(initialState);
 
-    // const [singleEvent, setSingleEvent] = useState([]);
-    // const [checkEventHost, setCheckEventHost] = useState(false);
     const [loading, setLoading] = useState(false);
     const [bgImage, setBgImage] = useState(false); // background Image
-    const [wantEdit, setWantEdit] = useState(false);
     const [callback, setCallback] = useState(false);
 
     //GET CURRENT DATE TIME
@@ -179,13 +169,13 @@ function EditEvent() {
                     <Tabs value={value} onChange={handleTabsChange} variant="fullWidth" indicatorColor="secondary" textColor="secondary" aria-label="icon label tabs example">
                         <Tab icon={<PersonPinIcon />} label="Reception" component={Link} to={`/event/${eslug}`} />
                         <Tab icon={<StorefrontIcon />} label="Expo" component={Link} to={`/event/${eslug}/booth/all`} />
-                        {checkEventHost == true ? <Tab icon={<EditIcon />} label="Edit Event" /> : ""}
-                        {(hasOrganization == true && hasOwnedBooth == false) || checkEventHost == true ? (
+                        {checkEventHost === true ? <Tab icon={<EditIcon />} label="Edit Event" /> : ""}
+                        {(hasOrganization === true && hasOwnedBooth === false) || checkEventHost === true ? (
                             <Tab icon={<AddBoxIcon />} label="Add Booth" component={Link} to={`/event/${event.eslug}/booth/add_booth`} />
                         ) : (
                             ""
                         )}
-                        {hasOrganization == true && hasOwnedBooth == true && checkEventHost == false ? (
+                        {hasOrganization === true && hasOwnedBooth === true && checkEventHost === false ? (
                             <Tab icon={<EditIcon />} label="Edit Booth" component={Link} to={`/event/${eslug}/booth/${booth.bslug}/edit_booth`} />
                         ) : (
                             ""

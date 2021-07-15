@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-import axios from "axios";
 import { Link } from "react-router-dom";
 import { useParams } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
@@ -15,7 +14,6 @@ import AddBoxIcon from "@material-ui/icons/AddBox";
 import StorefrontIcon from "@material-ui/icons/Storefront";
 import EditIcon from "@material-ui/icons/Edit";
 import CFcard from "../../components/CFcard";
-var slugify = require("slug");
 
 // import { makeStyles } from "@material-ui/core/styles";
 const useStyles = makeStyles((theme) => ({
@@ -60,23 +58,17 @@ function SingleEvent() {
     const token = useSelector((state) => state.token);
     const event = useSelector((state) => state.eventReducer.event);
     const checkEventHost = useSelector((state) => state.eventReducer.isEventHost);
-    const organization = useSelector((state) => state.organization.organization);
     const hasOrganization = useSelector((state) => state.organization.hasOrganization);
 
-    const [Booths, setBooths] = React.useState([]);
     const hasOwnedBooth = useSelector((state) => state.boothReducer.hasOwnedBooth);
-    const booths = useSelector((state) => state.boothReducer.booths);
     const booth = useSelector((state) => state.boothReducer.booth);
 
     const dispatch = useDispatch();
 
-    const [data, setData] = useState(initialState);
     // const [singleEvent, setSingleEvent] = useState([]);
-    const [loading, setLoading] = useState(false);
-    const [bgImage, setBgImage] = useState(false);
+    const [bgImage] = useState(false);
 
-    const [wantEdit, setWantEdit] = useState(false);
-    const [callback, setCallback] = useState(false);
+    const [callback] = useState(false);
 
     const { eslug } = useParams();
 
@@ -97,15 +89,6 @@ function SingleEvent() {
     const [value, setValue] = React.useState(0);
     const handleTabsChange = (event, newValue) => {
         setValue(newValue);
-    };
-
-    const validateDateTime = () => {
-        // event.startDate
-        // event.endDate
-        var today = new Date();
-        var date = today.getFullYear() + "-" + (today.getMonth() + 1) + "-" + today.getDate();
-        // if (Date.parse(endDateTime) <= Date.parse(startDateTime)) return true;
-        return date;
     };
 
     return (

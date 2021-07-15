@@ -22,8 +22,8 @@ function CreateOrg() {
     const token = useSelector((state) => state.token);
     const { user, isAdmin } = auth;
     const [data, setData] = useState(initialState);
-    const { orgName, orgEmail, orgAbout, err, success, LoggedUserId } = data;
-    const [callback, setCallback] = useState(false);
+    const { orgName, orgEmail, orgAbout, err, success } = data;
+    const [callback] = useState(false);
     const dispatch = useDispatch();
 
     useEffect(() => {

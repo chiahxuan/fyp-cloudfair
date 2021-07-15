@@ -1,25 +1,12 @@
-import React, { useState, useEffect } from "react";
-import axios from "axios";
+import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
-import { showSuccessMsg, showErrMsg } from "../../utils/notification/Notification";
-import { fetchAllUsers, dispatchGetAllUsers } from "../../../redux/actions/usersAction";
 import { dispatchGetOrganization, fetchOrganization } from "../../../redux/actions/organizationAction";
-import { dispatchLogin, fetchUser, dispatchGetUser } from "../../../redux/actions/authAction";
 
 import { makeStyles } from "@material-ui/core/styles";
-import { Typography, Button, Container, TextField, Card, CardContent, Grid } from "@material-ui/core";
+import { Typography, Button, Container, Grid } from "@material-ui/core";
 import CFcard from "../../components/CFcard";
 
-const initialState = {
-    orgName: "",
-    orgEmail: "",
-    orgAbout: "",
-    err: "",
-    success: "",
-    createId: "",
-};
-// import { makeStyles } from "@material-ui/core/styles";
 const useStyles = makeStyles((theme) => ({
     container: {
         display: "flex",
@@ -32,7 +19,6 @@ const useStyles = makeStyles((theme) => ({
     },
     bgImage: {
         align: "center",
-        // width: "100%",
         height: 300,
         marginLeft: "auto",
         marginRight: "auto",
@@ -50,8 +36,7 @@ function CreateOrg() {
     const auth = useSelector((state) => state.auth);
     const organization = useSelector((state) => state.organization);
     const { id, organizationName } = organization;
-    const { user, isAdmin } = auth;
-    const [callback, setCallback] = useState(false);
+    const [callback] = useState(false);
 
     // ASSIGN ORGANIZATION DATA TO VARIABLE
     const organizationData = organization.organization;

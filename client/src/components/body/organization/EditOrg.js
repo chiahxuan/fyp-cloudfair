@@ -1,13 +1,9 @@
-import React, { useState, useEffect } from "react";
+import { useState } from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 
 import { showSuccessMsg, showErrMsg } from "../../utils/notification/Notification";
-
-import { fetchAllUsers, dispatchGetAllUsers } from "../../../redux/actions/usersAction";
-import { dispatchGetOrganization, fetchOrganization } from "../../../redux/actions/organizationAction";
-import { dispatchLogin, fetchUser, dispatchGetUser } from "../../../redux/actions/authAction";
 
 import { makeStyles } from "@material-ui/core/styles";
 import { Typography, Button, Container, TextField, Grid } from "@material-ui/core";
@@ -47,14 +43,12 @@ const useStyles = makeStyles((theme) => ({
 function EditOrg() {
     const classes = useStyles();
 
-    const dispatch = useDispatch();
     const token = useSelector((state) => state.token);
-    const auth = useSelector((state) => state.auth);
 
     const organization = useSelector((state) => state.organization.organization);
 
     const [data, setData] = useState(initialState);
-    const { orgName, orgEmail, orgAbout, orgImage, err, success, createId } = data;
+    const { orgName, orgEmail, orgAbout, orgImage, err, success } = data;
 
     //HANDLE CHANGE OF DATA BY USING USESTATE
     const handleChange = (e) => {

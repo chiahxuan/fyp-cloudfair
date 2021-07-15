@@ -38,14 +38,11 @@ function AllEvents() {
             })
         );
     };
-    // const imgLink = "https://material-ui.com/static/images/cards/contemplative-reptile.jpg";
-    // ("https://res.cloudinary.com/cloudfair/image/upload/v1625756739/avatar/colleagues-preparing-corporate-party-time-management-deadline-brand-event-event-brand-management-sponsored-event-organization-concept_335657-120_j56m8s.jpg");
-    // const imgLink = "/images/event.jpg";
 
     return (
         <Container>
             <CFcard>
-                <Grid container spacing={10} style={{ padding: "0 50px" /*backgroundColor: "#f1f2f5"*/ }}>
+                <Grid container spacing={10} style={{ padding: "0 50px" }}>
                     <Grid item xs={12}>
                         <Typography variant="h1" align="center">
                             All Events

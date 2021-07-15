@@ -11,7 +11,6 @@ import { Typography, Button, Container, TextField } from "@material-ui/core";
 import CFcard from "../../components/CFcard";
 var slugify = require("slug");
 
-// import { makeStyles } from "@material-ui/core/styles";
 const useStyles = makeStyles((theme) => ({
     container: {
         display: "flex",
@@ -38,7 +37,6 @@ const initialState = {
 
 function AddEvent() {
     const classes = useStyles();
-    // const history = useHistory();
     const auth = useSelector((state) => state.auth);
     const token = useSelector((state) => state.token);
     const [event, setEvent] = useState(initialState);
