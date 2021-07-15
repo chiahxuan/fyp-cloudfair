@@ -74,19 +74,15 @@ const boothCtrl = {
     },
     //edit  BOOTH
     editBooth: async (req, res) => {
-        const { bslug, eslug } = req.params;
+        const { bslug } = req.params;
 
         try {
-            const event = await Event.findOne({ eslug: eslug });
             const booth = await Booth.findOne({ bslug: bslug });
-
-            //FIX ENSURE THE INPUTS, REMOVE UNUSED VARIABLES, AND REMOVE BSLUG FOR CHANGES.
-            const { bname, bUpdatedslug, description, bimage, bvideo, bslides, user, organizationId } = req.body;
+            const { bname, description, bimage, bvideo, bslides } = req.body;
             await Booth.findOneAndUpdate(
                 { _id: booth._id },
                 {
                     bname: bname,
-                    bslug: bslug,
                     bimage: bimage,
                     description: description,
                     bvideo: bvideo,

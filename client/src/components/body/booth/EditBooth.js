@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import ReactPlayer from "react-player/lazy";
+import ReactPlayer from "react-player";
 import ReactGoogleSlides from "react-google-slides";
 
 // import VideoPlayer from "react-video-js-player";
@@ -106,10 +106,6 @@ function EditBooth() {
     };
 
     const updateInfo = () => {
-        // console.log(bnameData, bslugData, descriptionData, bimageData, bvideoData, err, success);
-        console.log("backgroundImage  " + backgroundImage);
-        // console.log("bvideoData  " + bvideoData);
-
         try {
             axios.patch(
                 `/event/${eslug}/booth/${bslug}/edit_booth`,
@@ -124,15 +120,10 @@ function EditBooth() {
                     headers: { Authorization: token },
                 }
             );
-
             setData({ ...data, err: "", success: "Updated Success!" });
-            // window.location.href = `/event/${eslug}/booth/all`;
-
-            // history.push(`/event/${eslug}/booth/${bslug}`);
             history.push(`/event/${eslug}/booth/all`);
         } catch (err) {
             setData({ ...data, err: err.response.data.msg, success: "" });
-            // console.log("cannot connect to controller");
         }
     };
 
@@ -167,19 +158,29 @@ function EditBooth() {
                 width="100%"
                 height="320px"
                 style={{ marginLeft: "auto", marginRight: "auto" }}
-                url={booth.bvideo ? booth.bvideo : "https://www.youtube.com/watch?v=DGvP3uIo7IE"}
+                url={booth.bvideo ? booth.bvideo : "https://www.youtube.com/watch?v=ts8i-6AtDfc"}
                 playing={true}
             />
         );
     };
-
+    <ReactPlayer />;
     const pptSlides = () => {
-        return <ReactGoogleSlides width={`100%`} height={360} slidesLink={booth.bslides} slideDuration={5} showControls loop />;
+        return (
+            <ReactGoogleSlides
+                width={`100%`}
+                height={360}
+                slidesLink={booth.bslides ? booth.bslides : "https://docs.google.com/presentation/d/1Q7wKZZ6BiFCDUFm5YhY5-nCR-emk6OPk1tSRMcI9F8c/edit?usp=sharing"}
+                slideDuration={5}
+                showControls
+                loop
+            />
+        );
     };
 
     return (
-        <Container>
+        <Container maxWidth="lg">
             <CFcard>
+                {/** TAB COMPONENT **/}
                 <Box align="center" mb={8}>
                     <Tabs value={value} onChange={handleTabsChange} variant="fullWidth" indicatorColor="secondary" textColor="secondary" aria-label="icon label tabs example">
                         <Tab icon={<PersonPinIcon />} label="Reception" component={Link} to={`/event/${eslug}`} />

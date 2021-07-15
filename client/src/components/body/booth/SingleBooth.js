@@ -89,7 +89,17 @@ function SingleBooth() {
     };
 
     const pptSlides = () => {
-        return <ReactGoogleSlides width={`100%`} height={480} slidesLink={booth.bslides} slideDuration={5} showControls loop />;
+        console.log(booth.bslides);
+        return (
+            <ReactGoogleSlides
+                width={`100%`}
+                height={480}
+                slidesLink={booth.bslides ? booth.bslides : "https://docs.google.com/presentation/d/1Q7wKZZ6BiFCDUFm5YhY5-nCR-emk6OPk1tSRMcI9F8c/edit?usp=sharing"}
+                slideDuration={5}
+                showControls
+                loop
+            />
+        );
     };
 
     return (
