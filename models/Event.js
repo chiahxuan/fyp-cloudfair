@@ -19,7 +19,7 @@ const eventSchema = new mongoose.Schema(
         },
         eBackground: {
             type: String,
-            default: "https://res.cloudinary.com/cloudfair/image/upload/v1624370050/organization/orgBackground/default_background.jpg",
+            default: "https://res.cloudinary.com/cloudfair/image/upload/v1626333383/avatar/event-default-bg.jpg",
         },
         startDate: {
             type: Date,

@@ -29,11 +29,11 @@ const organizationSchema = new mongoose.Schema(
         },
         organizationAvatar: {
             type: String,
-            default: "https://res.cloudinary.com/cloudfair/image/upload/v1624369488/organization/orgAvatar/organization_default.png",
+            default: "https://res.cloudinary.com/cloudfair/image/upload/v1626333528/avatar/org-vector.jpg",
         },
         organizationBackground: {
             type: String,
-            default: "https://res.cloudinary.com/cloudfair/image/upload/v1624370050/organization/orgBackground/default_background.jpg",
+            default: "https://res.cloudinary.com/cloudfair/image/upload/v1626333528/avatar/org-vector.jpg",
         },
     },
     {

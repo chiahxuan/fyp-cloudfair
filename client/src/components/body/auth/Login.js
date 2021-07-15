@@ -67,7 +67,7 @@ function Login() {
 
             localStorage.setItem("firstLogin", true);
             dispatch(dispatchLogin());
-            window.location.href = `http://localhost:3000/event/all_events`;
+            window.location.href = `http://localhost:3000/`;
         } catch (err) {
             err.response.data.msg && setUser({ ...user, err: err.response.data.msg, success: "" });
         }

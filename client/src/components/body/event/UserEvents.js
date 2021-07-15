@@ -15,6 +15,7 @@ function UserEvents() {
     const auth = useSelector((state) => state.auth);
     const token = useSelector((state) => state.token);
     const events = useSelector((state) => state.eventReducer.events);
+    const hasEvent = useSelector((state) => state.eventReducer.hasEvent);
     const [callback, setCallback] = useState(false);
     const dispatch = useDispatch();
 
@@ -60,15 +61,28 @@ function UserEvents() {
                         </Button>
                     </Grid>
                 </Grid>
+                <br />
+                <hr />
+                <br />
                 <Grid container spacing={8}>
-                    {Events ? (
+                    {hasEvent ? (
                         Events.map((event) => (
                             <Grid item key={event._id}>
                                 <EventCard event={event} />
                             </Grid>
                         ))
                     ) : (
-                        <Typography>Hi</Typography>
+                        <Grid item xs={10}>
+                            <Typography variant="h3">
+                                Looks like you have not created any events yet... You are one step away from hosting an event! Go to the{" "}
+                                <Link to="/event/add_event">add event page</Link> to host an event.
+                            </Typography>
+                            <br />
+                            <br />
+                            <Typography variant="h3">
+                                Or go to <Link to="/event/all_events">all events page</Link> to explore events. event.
+                            </Typography>
+                        </Grid>
                     )}
                 </Grid>
             </CFcard>

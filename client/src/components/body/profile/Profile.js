@@ -126,7 +126,7 @@ function Profile() {
     const handleDelete = async (id) => {
         try {
             if (user._id !== id) {
-                if (window.confirm("Are you sure you want to delete this account?")) {
+                if (window.confirm("Are you sure you want to delete this account? ALL ORGANIZATION, EVENTS CREATED AND BOOTHS CREATED will be DELETED")) {
                     setLoading(true);
                     await axios.delete(`/user/delete/${id}`, {
                         headers: { Authorization: token },
@@ -234,7 +234,7 @@ function Profile() {
                     </div>
 
                     <div className="col-right">
-                        <h2>{isAdmin ? "Users" : "My Orders"}</h2>
+                        <h2>{isAdmin ? "Users" : "Don't have admin access to user list"}</h2>
 
                         <div style={{ overflowX: "auto" }}>
                             <table className="customers">

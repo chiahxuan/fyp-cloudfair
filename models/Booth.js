@@ -17,7 +17,7 @@ const boothSchema = new mongoose.Schema(
         bimage: {
             type: String,
             required: true,
-            default: "https://res.cloudinary.com/cloudfair/image/upload/v1624965698/Booth/modern-exhibition.jpg",
+            default: "https://res.cloudinary.com/cloudfair/image/upload/v1626333119/avatar/modern-exhibition.jpg",
         },
         bvideo: {
             type: String,
