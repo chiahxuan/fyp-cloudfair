@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { useSelector, useDispatch } from "react-redux";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import { isLength, isMatch } from "../../utils/validation/Validation";
 import { showSuccessMsg, showErrMsg } from "../../utils/notification/Notification";
 import { fetchAllUsers, dispatchGetAllUsers } from "../../../redux/actions/usersAction";
@@ -10,6 +10,7 @@ import CFcard from "../../components/CFcard";
 import { Typography, Button, Container, TextField } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import PhotoCameraIcon from "@material-ui/icons/PhotoCamera";
+import { LaptopWindows } from "@material-ui/icons";
 
 const initialState = {
     name: "",
@@ -23,6 +24,7 @@ function Profile() {
     const auth = useSelector((state) => state.auth);
     const token = useSelector((state) => state.token);
     const users = useSelector((state) => state.users);
+    const history = useHistory();
 
     const { user, isAdmin } = auth;
     const [data, setData] = useState(initialState);
@@ -88,6 +90,9 @@ function Profile() {
             );
 
             setData({ ...data, err: "", success: "Updated Success!" });
+
+            history.push("/profile");
+            window.location.href = `http://localhost:3000/profile`;
         } catch (err) {
             setData({ ...data, err: err.response.data.msg, success: "" });
         }

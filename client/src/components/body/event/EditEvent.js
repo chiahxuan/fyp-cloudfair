@@ -241,8 +241,8 @@ function EditEvent() {
                                 onChange={handleChange}
                                 fullWidth
                                 multiline
-                                rows={3}
-                                rowsMax={4}
+                                rows={8}
+                                rowsMax={10}
                             />
                         </Grid>
                         <Grid item xs={12} sm={4}>

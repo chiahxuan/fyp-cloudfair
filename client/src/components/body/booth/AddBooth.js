@@ -275,8 +275,8 @@ function AddBooth() {
                         }}
                         variant="outlined"
                         multiline
-                        rows={3}
-                        rowsMax={4}
+                        rows={8}
+                        rowsMax={10}
                     />
                     <br />
                     <br />

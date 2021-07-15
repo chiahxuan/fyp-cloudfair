@@ -257,8 +257,8 @@ function EditBooth() {
                                         variant="outlined"
                                         onChange={handleChange}
                                         multiline
-                                        rows={5}
-                                        rowsMax={8}
+                                        rows={8}
+                                        rowsMax={10}
                                     />
                                 </Grid>
                                 <Grid item xs={12} sm={4}>

@@ -1,4 +1,6 @@
 const Users = require("../models/userModel");
+const Booth = require("../models/Booth");
+const Event = require("../models/Event");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const sendMail = require("./sendMail");
@@ -6,6 +8,7 @@ const sendMail = require("./sendMail");
 const { google } = require("googleapis");
 const { OAuth2 } = google.auth;
 const fetch = require("node-fetch");
+const Organization = require("../models/Organization");
 
 const client = new OAuth2(process.env.MAILING_SERVICE_CLIENT_ID);
 
@@ -195,7 +198,14 @@ const userCtrl = {
     },
     deleteUser: async (req, res) => {
         try {
-            await Users.findByIdAndDelete(req.params.id);
+            const user = await Users.findByIdAndDelete(req.params.id);
+
+            //remove all booths that matches the event
+            await Booth.deleteMany({ user: user._id });
+            //remove all user events
+            await Event.deleteMany({ user: user._id });
+            //remove all user's organization
+            await Organization.deleteMany({ organizationCreatorId: user._id });
 
             res.json({ msg: "Deleted Success!" });
         } catch (err) {

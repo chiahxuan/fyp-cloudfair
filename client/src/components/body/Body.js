@@ -41,7 +41,8 @@ const useStyles = makeStyles((theme) => ({
     layout: {
         // maxWidth: "1200px",
         margin: "4em auto 0 auto",
-        height: 1500,
+        height: "100%",
+        minHeight: 1500,
         // backgroundColor: "linear-gradient(#1359da, #142e4e)",
         // backgroundColor: "linear-gradient(to right, #1359da, #142e4e)",
         // background: "linear-gradient(45deg, #FE6B8B 30%, #FF8E53 90%)",
