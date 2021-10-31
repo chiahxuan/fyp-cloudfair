@@ -27,6 +27,9 @@ app.use("/event", require("./routes/eventRouter"));
 //BOOTH
 app.use(`/event`, require("./routes/boothRouter"));
 
+//PHONE
+app.use(`/phonebook`, require("./routes/phoneBookRouter"));
+
 // Connect to mongodb
 const URI = process.env.MONGODB_URL;
 mongoose.connect(

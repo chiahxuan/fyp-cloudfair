@@ -34,6 +34,10 @@ import AllBooth from "./booth/AllBooth";
 import SingleBooth from "./booth/SingleBooth";
 import EditBooth from "./booth/EditBooth";
 
+// PHONE BOOK IMPORTS
+import ViewAllContact from "./phonebook/ViewAllContact";
+import AddContact from "./phonebook/AddContact";
+
 const useStyles = makeStyles((theme) => ({
     //default layout for body
     layout: {
@@ -81,11 +85,13 @@ function Body() {
                 <Route path="/event/:eslug/booth/all" component={isLogged ? AllBooth : NotFound} exact />
                 <Route path="/event/:eslug/booth/:bslug" component={isLogged ? SingleBooth : NotFound} exact />
                 <Route path="/event/:eslug/booth/:bslug/edit_booth" component={isLogged ? EditBooth : NotFound} exact />
+
+                {/* PHONE BOOK ROUTES */}
+                <Route path="/phonebook/view_all_contact" component={isLogged ? ViewAllContact : NotFound} exact />
+                <Route path="/phonebook/add_contact" component={isLogged ? AddContact : NotFound} exact />
             </Switch>
         </div>
     );
 }
 
 export default Body;
-
-//commit this

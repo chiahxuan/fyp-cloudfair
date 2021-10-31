@@ -17,10 +17,12 @@
         "eslug",
         "fcard",
         "fileupload",
+        "phonebook",
         "refreshtoken",
         "showcurrentdate",
         "showdate",
-        "value"
+        "value",
+        "viewallcontact"
     ]
     // "git.ignoreLimitWarning": true
 }
